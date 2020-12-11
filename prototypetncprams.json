@@ -1,0 +1,16 @@
+{"account": "account",
+"password": "password",
+"fromemail": "fromemail@jnk.com",
+"toemail": ["to1@jnk.com", "to2@jnk.com", "to3r@junk.com"],
+"rmslogdir": "absolute path to the RMS log",
+"program": "CommandApp_USBRelay",
+"powerofftime": 10,
+"othermoduleid": "another module id --comment -- ",
+"moduleid": "moduleid",
+"relay": "relay number",
+"emsub": "TNC was reset",
+"age": 0,
+"count": 0,
+"timers": [60,600],
+"comments": ["c1: program adds 'testing', 'emailonly', and 'emacnt' values",""]
+}

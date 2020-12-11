@@ -1,0 +1,11 @@
+# ignore all wing admin files
+*.wp[ru]
+
+# ignore all files in the cache
+__pychache__/
+
+# ignore all files in the logs dir
+logs/
+
+# my private prams file
+tncprams.json
