@@ -1,0 +1,640 @@
+2018-06-21 11:02:24,355 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-21 11:02:24,357 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-21 11:03:04,287 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-21 11:03:04,289 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-21 14:43:13,509 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-21 14:43:13,513 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-21 14:43:13,514 - root - <listcomp> - INFO - args:loginfo, True
+2018-06-21 14:43:13,514 - root - <listcomp> - INFO - args:logdebug, False
+2018-06-21 14:43:13,515 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-06-21 14:43:13,515 - root - _main - INFO - 
+    *****************************
+    Starting
+    *****************************
+        
+2018-06-22 11:14:34,461 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-22 11:14:41,635 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-22 11:14:44,623 - root - <listcomp> - INFO - args:loginfo, True
+2018-06-22 11:14:44,624 - root - <listcomp> - INFO - args:logdebug, False
+2018-06-22 11:14:44,624 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-06-22 11:14:47,710 - root - _main - INFO - 
+    *****************************
+    Starting
+    *****************************
+        
+2018-06-22 11:43:54,621 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-22 11:43:54,623 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-22 11:43:54,625 - root - <listcomp> - INFO - args:loginfo, True
+2018-06-22 11:43:54,625 - root - <listcomp> - INFO - args:logdebug, False
+2018-06-22 11:43:54,625 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-06-22 11:43:54,625 - root - _main - INFO - 
+    *****************************
+    Starting
+    *****************************
+        
+2018-06-22 11:44:19,314 - resettnc - powerup - WARNING - Powerup returned error code 1
+2018-06-22 11:46:48,962 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-22 11:46:48,964 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-22 11:46:48,966 - root - <listcomp> - INFO - args:loginfo, True
+2018-06-22 11:46:48,966 - root - <listcomp> - INFO - args:logdebug, False
+2018-06-22 11:46:48,966 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-06-22 11:46:48,966 - root - _main - INFO - 
+    *****************************
+    Starting
+    *****************************
+        
+2018-06-22 11:46:54,973 - resettnc - powerup - WARNING - Powerup returned error code 1
+2018-06-22 11:46:57,110 - __main__ - _main - CRITICAL - The Relay is not connected or misconfigured
+2018-06-22 11:47:12,303 - root - <module> - INFO - 
+    *****************************
+    EXITING
+    *****************************
+        
+2018-06-22 11:47:45,020 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-22 11:47:45,022 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-22 11:47:45,023 - root - <listcomp> - INFO - args:loginfo, True
+2018-06-22 11:47:45,024 - root - <listcomp> - INFO - args:logdebug, False
+2018-06-22 11:47:45,024 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-06-22 11:47:45,024 - root - _main - INFO - 
+    *****************************
+    Starting
+    *****************************
+        
+2018-06-22 12:33:03,278 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-22 12:33:03,279 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-22 12:33:19,451 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-06-22 12:33:19,452 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-06-22 12:33:19,452 - root - <listcomp> - INFO - args:loginfo, False
+2018-06-22 12:33:19,453 - root - <listcomp> - INFO - args:logdebug, False
+2018-06-22 12:33:19,453 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-06-22 12:33:19,453 - root - _main - INFO - 
+    *****************************
+    Starting
+    *****************************
+        
+2018-06-22 12:33:19,475 - resettnc - powerup - WARNING - Powerup returned error code 1
+2018-06-22 12:33:19,475 - __main__ - _main - CRITICAL - The Relay is not connected or misconfigured
+2018-06-22 12:33:19,476 - root - <module> - INFO - 
+    *****************************
+    EXITING
+    *****************************
+        
+2018-07-09 09:04:44,415 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 09:04:44,442 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 09:04:44,444 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 09:04:44,444 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 09:04:44,444 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 09:04:44,444 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 09:04:44,445 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 09:05:00,939 - root - _main - INFO - 
+    *****************************
+    Starting v0.0 20180707
+    *****************************
+        
+2018-07-09 09:06:58,186 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 09:06:58,188 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 09:06:58,190 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 09:06:58,190 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 09:06:58,190 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 09:06:58,190 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 09:06:58,191 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 09:07:02,791 - root - _main - INFO - 
+    *****************************
+    Starting v0.0 20180707
+    *****************************
+        
+2018-07-09 09:07:23,777 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 09:07:23,780 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 09:07:23,781 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 09:07:23,782 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 09:07:23,782 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 09:07:23,782 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 09:07:23,782 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 09:07:23,782 - root - _main - INFO - 
+    *****************************
+    Starting v0.0 20180707
+    *****************************
+        
+2018-07-09 09:09:54,141 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 09:09:54,144 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 09:09:54,146 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 09:09:54,146 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 09:09:54,147 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 09:09:54,147 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 09:09:54,147 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 09:09:54,147 - root - _main - INFO - 
+    *****************************
+    Starting v0.0 20180707
+    *****************************
+        
+2018-07-09 09:11:11,421 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 09:11:11,424 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 09:11:11,426 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 09:11:11,426 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 09:11:11,426 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 09:11:11,426 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 09:11:11,427 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 09:11:11,427 - root - _main - INFO - 
+    *****************************
+    Starting v0.0 20180707
+    *****************************
+        
+2018-07-09 09:12:56,914 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 09:12:56,916 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 09:12:56,918 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 09:12:56,918 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 09:12:56,918 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 09:12:56,919 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 09:12:56,919 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 09:12:56,919 - root - _main - INFO - 
+    *****************************
+    Starting v0.0 20180707
+    *****************************
+        
+2018-07-09 09:17:18,094 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 09:17:18,096 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 09:17:18,098 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 09:17:18,098 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 09:17:18,098 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 09:17:18,098 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 09:17:18,099 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 09:17:18,099 - root - _main - INFO - 
+    *****************************
+    Starting v0.0 20180707
+    *****************************
+        
+2018-07-09 09:20:04,296 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 09:20:04,299 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 09:20:04,301 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 09:20:04,301 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 09:20:04,301 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 09:20:04,301 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 09:20:04,302 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 09:20:04,302 - root - _main - INFO - 
+    *****************************
+    Starting v0.0 20180707
+    *****************************
+        
+2018-07-09 12:20:53,730 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 12:20:53,732 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 12:20:53,734 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 12:20:53,734 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 12:20:53,734 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 12:20:53,735 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 12:20:53,735 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 12:20:58,677 - root - _main - INFO - 
+    *****************************
+    Starting {}
+    *****************************
+        
+2018-07-09 12:21:17,435 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 12:21:17,437 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 12:21:17,439 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 12:21:17,439 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 12:21:17,439 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 12:21:17,440 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 12:21:17,440 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 12:21:20,421 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.1 20180709
+    *****************************
+        
+2018-07-09 20:10:25,534 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 20:10:25,538 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 20:10:25,540 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 20:10:25,540 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 20:10:25,540 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 20:10:25,540 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 20:10:25,540 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 20:10:34,603 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.1 20180709
+    *****************************
+        
+2018-07-09 20:39:10,032 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 20:39:10,032 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 20:39:10,038 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.1 20180709
+    *****************************
+        
+2018-07-09 20:40:06,182 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-07-09 20:40:06,182 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-07-09 20:40:06,188 - root - <listcomp> - INFO - args:loginfo, True
+2018-07-09 20:40:06,189 - root - <listcomp> - INFO - args:logdebug, False
+2018-07-09 20:40:06,189 - root - <listcomp> - INFO - args:emailonly, False
+2018-07-09 20:40:06,189 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2018-07-09 20:40:06,190 - root - <listcomp> - INFO - args:emstartend, True
+2018-07-09 20:40:06,190 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.1 20180709
+    *****************************
+        
+2018-09-02 14:14:43,875 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2018-09-02 14:14:43,876 - root - _main - INFO - Current Path is: K:\Python3_packages\tncmonitor
+2018-09-02 14:14:43,878 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.1 20180709
+    *****************************
+        
+2020-11-12 19:34:59,456 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-12 19:34:59,457 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-12 19:34:59,467 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.1 20180709
+    *****************************
+        
+2020-11-26 17:48:51,392 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-26 17:49:12,530 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-26 17:50:27,879 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.2 20201126
+    *****************************
+        
+2020-11-29 20:44:05,478 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-29 20:44:05,485 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-29 20:44:46,765 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-29 20:44:46,766 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 13:38:38,672 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 13:38:46,106 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 13:41:43,203 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 13:41:43,205 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 13:43:20,264 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 13:43:20,266 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 13:45:50,921 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 13:45:50,924 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 13:46:23,205 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 13:46:23,208 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 13:50:15,110 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 13:50:15,113 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 13:58:38,460 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 13:58:38,463 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 14:07:13,756 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 14:07:13,756 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 14:07:13,762 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.2 20201126
+    *****************************
+        
+2020-11-30 14:09:23,388 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 14:09:23,388 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 14:09:23,399 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.2 20201126
+    *****************************
+        
+2020-11-30 14:10:11,439 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 14:10:11,442 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 22:13:50,586 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-11-30 22:13:50,588 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-11-30 22:15:07,014 - root - <listcomp> - INFO - args:loginfo, False
+2020-11-30 22:15:07,016 - root - <listcomp> - INFO - args:logdebug, True
+2020-11-30 22:15:07,016 - root - <listcomp> - INFO - args:emailonly, True
+2020-11-30 22:15:07,017 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-11-30 22:15:07,017 - root - <listcomp> - INFO - args:emstartend, True
+2020-11-30 22:16:59,885 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-11-30 22:21:46,102 - __main__ - _main - CRITICAL - path K:\Python3_packages\tncmonitor\tests\testLogData either does not exist or is not a directory
+2020-11-30 22:22:13,120 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-01 09:47:42,467 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-01 09:47:42,495 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-01 09:47:57,891 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-01 09:47:57,891 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-01 09:47:57,891 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-01 09:47:57,892 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-01 09:47:57,892 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-01 09:48:13,134 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-01 09:48:42,954 - __main__ - _main - CRITICAL - path M:\Python3_packages\tncmonitor\tests\testLogData either does not exist or is not a directory
+2020-12-01 09:49:18,071 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-01 09:51:11,290 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-01 09:51:11,292 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-01 09:51:11,306 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-01 09:51:11,306 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-01 09:51:11,307 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-01 09:51:11,307 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-01 09:51:11,307 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-01 09:51:23,309 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-02 18:48:27,937 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-02 18:48:27,939 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-02 18:48:27,945 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-02 18:48:27,946 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-02 18:48:27,946 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-02 18:48:27,946 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-02 18:48:27,946 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-02 18:48:39,951 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-02 18:54:29,734 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-02 18:54:29,735 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-02 18:54:29,742 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-02 18:54:29,742 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-02 18:54:29,742 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-02 18:54:29,743 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-02 18:54:29,743 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-02 18:54:41,744 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-02 18:55:46,490 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-02 18:55:46,491 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-02 18:55:46,497 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-02 18:55:46,497 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-02 18:55:46,498 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-02 18:55:46,498 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-02 18:55:46,498 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-02 18:55:58,502 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-02 20:06:48,502 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-02 20:06:48,503 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-02 20:06:48,509 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-02 20:06:48,509 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-02 20:06:48,510 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-02 20:06:48,510 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-02 20:06:48,510 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-02 20:07:00,516 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-02 20:08:35,594 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-02 20:08:35,595 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-02 20:08:35,600 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-02 20:08:35,601 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-02 20:08:35,601 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-02 20:08:35,601 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-02 20:08:35,601 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-02 20:08:47,601 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-03 09:13:15,982 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-03 09:13:15,985 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-03 09:13:35,127 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-03 09:13:35,129 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-03 09:13:35,134 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-03 09:13:35,135 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-03 09:13:35,135 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-03 09:13:35,135 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-03 09:13:35,135 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-03 09:13:47,137 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-03 09:17:53,273 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-03 09:17:53,274 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-03 09:17:53,280 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-03 09:17:53,280 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-03 09:17:53,280 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-03 09:17:53,280 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-03 09:17:53,281 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-03 09:18:05,288 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-03 09:21:00,877 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-03 09:21:00,878 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-03 09:21:00,884 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-03 09:21:00,885 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-03 09:21:00,885 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-03 09:21:00,885 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-03 09:21:00,885 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-03 09:21:12,898 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-06 16:09:05,282 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-06 16:09:05,283 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-06 16:09:05,289 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-06 16:09:05,289 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-06 16:09:05,289 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-06 16:09:05,289 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-06 16:09:05,289 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-06 16:09:17,303 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-06 16:09:18,093 - root - _main - WARNING - startup email failed
+2020-12-07 10:16:45,246 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-07 10:16:45,246 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-07 10:16:45,253 - root - <module> - INFO - 
+    *****************************
+    EXITING tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-07 10:32:00,541 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-07 10:32:00,542 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-07 10:32:00,548 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-07 10:32:00,548 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-07 10:32:00,549 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-07 10:32:00,549 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-07 10:32:00,549 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-07 10:32:00,549 - root - <listcomp> - INFO - args:testdata, True
+2020-12-07 10:32:12,551 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-07 10:32:13,262 - root - _main - WARNING - startup email failed
+2020-12-07 10:33:02,495 - root - _main - INFO - 
+****************************************************
+tncmonitor executed as main
+****************************************************
+2020-12-07 10:33:02,496 - root - _main - INFO - Current Path is: M:\Python\Python3_packages\tncmonitor
+2020-12-07 10:33:02,502 - root - <listcomp> - INFO - args:loginfo, False
+2020-12-07 10:33:02,502 - root - <listcomp> - INFO - args:logdebug, True
+2020-12-07 10:33:02,502 - root - <listcomp> - INFO - args:emailonly, True
+2020-12-07 10:33:02,503 - root - <listcomp> - INFO - args:pramfile, tncprams.json
+2020-12-07 10:33:02,503 - root - <listcomp> - INFO - args:emstartend, True
+2020-12-07 10:33:02,503 - root - <listcomp> - INFO - args:testdata, True
+2020-12-07 10:33:14,514 - root - _main - INFO - 
+    *****************************
+    Starting tncmonitor v0.2 20201126
+    *****************************
+        
+2020-12-07 10:33:15,226 - root - _main - WARNING - startup email failed

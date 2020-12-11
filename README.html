@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.16: http://docutils.sourceforge.net/" />
+<title>Overview</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="overview">
+<h1 class="title">Overview</h1>
+
+<!-- This is the README file for the tncmonitor Python 3 module.
+From inside a python 3 virtual environment that has spinx installed,
+use "rst2html README.rst readme.html" to convert file to html -->
+<p>This module is a tool for detecting when the RMS Packet software has lost communications with the attached TNC.</p>
+<div class="section" id="the-problem">
+<h1>The problem</h1>
+<p>The problem has been that the RMS communication with the TNC would stop working after 2-3 months or thereabouts.
+Once this happened, the TNC needed to be reset at which point the RMS Packet software would successfully connect.</p>
+<p>The RMS Packet Software keeps a logs of various information on disk files in a specific directory.</p>
+<p>This program (<cite>tncmonitor.py</cite>) periodically reads that directory, looks for the files that have the communication logging information,
+reads backwards through the most current logging file to find records that show if the communication has
+been successful, or not.</p>
+<p>If everything is ok, the program sleeps for 10 minutes.
+If a problem is detected, the program tuns off the power to the TNC for 60 seconds, restores power and checks again.
+An email is sent to specific addresses when this happens.</p>
+<p>We used the &quot;KNACRO SRD-05VDC-SL-C 2-way 5V Relay Module Free driver USB control switch PC intelligent control&quot; USB
+board that we purchased from Amazon.  It comes with a program that will send commands to the board to open and close
+relays on the board.  The relay module has a unique <em>moduleid</em> that must be included as one of the subsequently described parameters.</p>
+<p>The software for Windows and Linux can be found at <a class="reference external" href="http://www.giga.co.za/ocart/index.php?route=product/product&amp;product_id=229">http://www.giga.co.za/ocart/index.php?route=product/product&amp;product_id=229</a> .</p>
+<dl class="docutils">
+<dt>For windows:</dt>
+<dd><p class="first">The application can be invoked from the cmd command line as CommandApp_USBRelay.exe [device id] [close / open] [relay nr]</p>
+<p class="last">And if you want a GUI interface, use GuiApp_Engilish.exe</p>
+</dd>
+</dl>
+<p>Linux instructions can be found at <a class="reference external" href="https://github.com/darrylb123/usbrelay">https://github.com/darrylb123/usbrelay</a> . I have not tried a linux implementation of tncmonitor at this time.</p>
+<dl class="docutils">
+<dt>To test if you have the software correctly installed on Windows 10:</dt>
+<dd><ol class="first last loweralpha simple">
+<li>go to cmd in the same directory as CommandApp_USBRelay.exe and execute <tt class="docutils literal">CommandApp_USBRelay.exe relayid [open|close] NN</tt> where <tt class="docutils literal">NN</tt> is a 2 digit number.</li>
+<li>go to cmd in the same directory as GuiApp_English.exe and execute it.  It will open a window that is pretty obvious how to use it.</li>
+</ol>
+</dd>
+</dl>
+<div class="section" id="usage-to-monitor-the-tnc-error-logs">
+<h2>Usage to Monitor the TNC Error Logs</h2>
+<dl class="docutils">
+<dt>Invoke the program in accordance with::</dt>
+<dd><p class="first">usage: <tt class="docutils literal">tncmonitor.py <span class="pre">[-h]</span> <span class="pre">[-li]</span> <span class="pre">[-ld]</span> <span class="pre">[-eo]</span> <span class="pre">[-ese]</span> <span class="pre">[-t]</span> pramfile</tt></p>
+<blockquote class="last">
+<dl class="docutils">
+<dt>Required argument :</dt>
+<dd><dl class="first last docutils">
+<dt><cite>pramfile</cite></dt>
+<dd>where <cite>pramfile</cite> is a Parameter file that is a subsequently described <tt class="docutils literal">.json</tt> file.</dd>
+</dl>
+</dd>
+<dt>optional arguments :</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="7%" />
+<col width="19%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">opt</th>
+<th class="head">lopt</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>-h</td>
+<td>--help</td>
+<td>show this help message and exit</td>
+</tr>
+<tr><td>-li</td>
+<td>--loginfo</td>
+<td>enable INFO logging</td>
+</tr>
+<tr><td>-ld</td>
+<td>--logdebug</td>
+<td>enable DEBUG logging</td>
+</tr>
+<tr><td>-eo</td>
+<td>--emailonly</td>
+<td>do not unpower the tnc just send email</td>
+</tr>
+<tr><td>-ese</td>
+<td>--emstartend</td>
+<td>send email when program starts and when it ends</td>
+</tr>
+<tr><td>-t</td>
+<td>--testing</td>
+<td>use testing data from the ./tests/testLogData dir</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</blockquote>
+</dd>
+</dl>
+</div>
+<div class="section" id="parameter-file">
+<h2>Parameter file</h2>
+<p>The parameters are in the file <tt class="docutils literal">tncprams.json</tt> which contains:</p>
+<pre class="literal-block">
+{
+    &quot;account&quot;: &quot;email account&quot;,
+    &quot;password&quot;: &quot;email password&quot;,
+    &quot;fromemail&quot;: &quot;from_email address&quot;,
+    &quot;toemail&quot;: [&quot;person1&#64;gmail.com&quot;, &quot;person2&#64;outlook.com&quot;, &quot;from_email address&quot;],
+    &quot;rmslogdir&quot;: &quot;an absolute path to ../RMS/RMS Packet/Logs&quot;,
+    &quot;program&quot;: &quot;CommandApp_USBRelay&quot;,
+    &quot;powerofftime&quot;: 10,
+    &quot;moduleid&quot;: &quot;3X9XI&quot;,
+    &quot;relay&quot;: &quot;01&quot;,
+    &quot;emsub&quot;: &quot;TNC was reset&quot;,
+    &quot;age&quot;: 0,
+    &quot;count&quot;: 0,
+    &quot;timers&quot;: [60,600]
+}
+</pre>
+<p>Additional Parameters are added to the dict created by the above file by the program.
+These include:</p>
+<ul class="simple">
+<li><em>emailonly</em> -- boolean, if True does the email operations without trying to reset the relay</li>
+<li><em>testing</em>  -- boolean, if True, then do not use the &quot;rmslogdir&quot; as the source to the rms logger data</li>
+</ul>
+<p>Where:</p>
+<ol class="arabic simple">
+<li><em>account, password,</em> and <em>fromemail</em> specify the login information for the mail server.</li>
+<li><em>toemail</em> is a list of the email addresses that are to receive the email.</li>
+<li><em>rmslogdir</em> is the absolute path to the RMS logging directory (click on logs in the RMS program to get the path).</li>
+<li><em>program</em> is the name of the program in that executes the commands to open and close a relay and that was provided with the relay board. <strong>Depending</strong> on the above program, resettnc.py may need to be modified to invoke that program.</li>
+<li><em>powerofftime</em> is the time in seconds for which the power will be removed from the TNC.</li>
+<li><em>moduleid</em> is the ID of the relay board if needed for your board.</li>
+<li><em>relay</em> is the disignator for a specific relay on the board that controls the power to the TNC.</li>
+<li><em>emsub</em> is the subject line for the email messages.</li>
+<li><em>age</em> and <em>count</em> are for debugging.</li>
+<li><em>timers</em> is a list of seconds to wait after a power reset before reattempting the checks, and the number of seconds to wait between normal checks.</li>
+</ol>
+</div>
+<div class="section" id="starting-the-program">
+<h2>Starting the program</h2>
+<p>The program can be manually executed by running <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor tncprams.json</tt> in the tncmonitor directory.
+The tncmonitor program maintains a log at ./log/tncMonitor.  The program runs checks the RMS log file directory every 10 minutes
+and responds to the communication error as previously specified.</p>
+<p>Generally, the program should be executed out of the distribution directory when the computer is restarted, or at least at the same time RMS is started.</p>
+</div>
+</div>
+</div>
+</body>
+</html>

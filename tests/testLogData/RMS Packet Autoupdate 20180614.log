@@ -1,0 +1,28 @@
+2018/06/14 03:33:03  ---  Autoupdate process starting  ---
+2018/06/14 03:33:13  Start Autoupdate Check
+2018/06/14 03:33:13  Fetch inforation for:RMS Packet
+2018/06/14 03:33:25  [Autoupdate.CheckForUpdateFile.HTTP] Unable to connect to Autoupdate server.
+2018/06/14 03:33:25  Current RMS Packet version is 2.1.28.0
+2018/06/14 03:33:25  No appropriate update found
+2018/06/14 03:33:25  Autoupdate check is finished
+2018/06/14 04:33:25  Start Autoupdate Check
+2018/06/14 04:33:25  Fetch inforation for:RMS Packet
+2018/06/14 04:33:25  Checking location: http://192.16.73.125:8776/Autoupdate/Files.txt
+2018/06/14 04:33:26  Current RMS Packet version is 2.1.28.0
+2018/06/14 04:33:26  Checking update file: RMS Packet_2-1-24-0_2-1-28-0.zip
+2018/06/14 04:33:26  No appropriate update found
+2018/06/14 04:33:26  Autoupdate check is finished
+2018/06/14 10:01:59  ---  Autoupdate process starting  ---
+2018/06/14 10:02:09  Start Autoupdate Check
+2018/06/14 10:02:09  Fetch inforation for:RMS Packet
+2018/06/14 10:02:21  [Autoupdate.CheckForUpdateFile.HTTP] Unable to connect to Autoupdate server.
+2018/06/14 10:02:21  Current RMS Packet version is 2.1.28.0
+2018/06/14 10:02:21  No appropriate update found
+2018/06/14 10:02:21  Autoupdate check is finished
+2018/06/14 11:02:22  Start Autoupdate Check
+2018/06/14 11:02:22  Fetch inforation for:RMS Packet
+2018/06/14 11:02:22  Checking location: http://192.16.73.125:8776/Autoupdate/Files.txt
+2018/06/14 11:02:23  Current RMS Packet version is 2.1.28.0
+2018/06/14 11:02:23  Checking update file: RMS Packet_2-1-24-0_2-1-28-0.zip
+2018/06/14 11:02:23  No appropriate update found
+2018/06/14 11:02:23  Autoupdate check is finished

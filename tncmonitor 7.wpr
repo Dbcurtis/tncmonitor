@@ -1,0 +1,41 @@
+#!wing
+#!version=7.0
+##################################################################
+# Wing project file                                              #
+##################################################################
+[project attributes]
+debug.launch-configs = (2,
+                        {'launch-fFXYrDqGZaPdRA8U': ({'shared': True},
+        {'buildcmd': ('project',
+                      None),
+         'env': ('project',
+                 [u'']),
+         'name': 'one',
+         'pyexec': ('project',
+                    u''),
+         'pypath': ('project',
+                    []),
+         'pyrunargs': ('project',
+                       '-u'),
+         'runargs': u'',
+         'rundir': ('project',
+                    u'')})})
+proj.directory-list = [{'dirloc': loc('tests'),
+                        'excludes': (),
+                        'filter': u'*',
+                        'include_hidden': False,
+                        'recursive': True,
+                        'watch_for_changes': True}]
+proj.file-list = [loc('myemail.py'),
+                  loc('README.rst'),
+                  loc('requirements.txt'),
+                  loc('resettnc.py'),
+                  loc('tncmonitor.py'),
+                  loc('tncprams.json'),
+                  loc('__init__.py')]
+proj.file-type = 'shared'
+proj.launch-config = {loc('tncmonitor.py'): ('project',
+        (u'tncprams.json -li -ese\n',
+         ''))}
+testing.auto-test-file-specs = (('glob',
+                                 'tests/test_*.py'),)

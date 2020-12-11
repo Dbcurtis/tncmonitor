@@ -1,0 +1,8 @@
+2018/06/10 10:02:03  ---  Autoupdate process starting  ---
+2018/06/10 10:02:13  Start Autoupdate Check
+2018/06/10 10:02:13  Fetch inforation for:RMS Packet
+2018/06/10 10:02:14  Checking location: http://192.16.73.125:8776/Autoupdate/Files.txt
+2018/06/10 10:02:14  Current RMS Packet version is 2.1.28.0
+2018/06/10 10:02:14  Checking update file: RMS Packet_2-1-24-0_2-1-28-0.zip
+2018/06/10 10:02:14  No appropriate update found
+2018/06/10 10:02:14  Autoupdate check is finished
