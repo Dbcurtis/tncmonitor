@@ -40,23 +40,23 @@ class Check4noInit:
         dirpath is a Path to the directory with the logging files used for debugging.
         The Path usually used, is obtained from the rmslogdir key of the prams dict.
         dirpath is ususally used for debugging.
-        
+
         The prarm dict is explained in the README.rst file
 
         """
         self.prams: Dict[str, str] = copy.copy(prams)
         if dirpath is None:
-            self.dirpath = Path(self.prams.get('rmslogdir',None))
+            self.dirpath = Path(self.prams.get('rmslogdir', None))
         else:
-            self.dirpath=dirpath
+            self.dirpath = dirpath
 
-        self.filepath:Path = None
+        self.filepath: Path = None
         self.detectedline = None
 
     def __repr__(self) -> str:
         return '%s(%r)' % (self.__class__, self.__dict__)
 
-    def __str__(self)->str:
+    def __str__(self) -> str:
         return f'path: {self.filepath}, dline: {self.detectedline}'
 
     def doit(self, age=None) -> Tuple[bool, bool, str]:
@@ -84,8 +84,8 @@ class Check4noInit:
             lines = [line.strip() for line in linesraw]
             lines.reverse()
             #?
-            #? The returns in the ifs withing the for are used to simplify the
-            #? code because of the No detection logger message should only happen after 
+            #? The returns in the ifs within the for are used to simplify the
+            #? code because of the No detection logger message should only happen after
             #? all the lines are read, but once the first trigger line is found, no need to complete reading
             #? the entire file
             #?
@@ -118,14 +118,14 @@ def _main():
         * prints out 'Starting' and the filename and version id
 
     """
-    TEST_DIR:Path = None
+    TEST_DIR: Path = None
     lastpart = Path.cwd().parts[-1]
 
-    if  lastpart !='tests' or lastpart != 'tncmonitor':
-        if lastpart=='tncmonitor':
-            TEST_DIR=Path.cwd() / 'tests'
+    if lastpart != 'tests' or lastpart != 'tncmonitor':
+        if lastpart == 'tncmonitor':
+            TEST_DIR = Path.cwd() / 'tests'
         else:
-            TEST_DIR=Path.cwd()
+            TEST_DIR = Path.cwd()
     else:
         print('Fail not on .../tncmonitor/tests/')
         raise ValueError
@@ -133,12 +133,12 @@ def _main():
     TEST_DIR = TEST_DIR / 'testLogData'
     try:
 
-        prams:Dict[str,str]={}
-        c4init: Check4noInit = Check4noInit(prams,dirpath=TEST_DIR)
+        prams: Dict[str, str] = {}
+        c4init: Check4noInit = Check4noInit(prams, dirpath=TEST_DIR)
         result: Check4noInit.Result = c4init.doit()
-        print('next line should be "2018/06/15 02:06:49 [10] *** DISCONNECTED"')
+        print(
+            'next line should be "2018/06/15 02:06:49 [10] *** DISCONNECTED"')
         print(result.dl)
-
 
     except subprocess.TimeoutExpired as toe:
         THE_LOGGER.exception(toe)

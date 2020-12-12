@@ -9,27 +9,15 @@ import inspect
 import os
 import sys
 from typing import Any, List, Dict
-#import context
-# aa=os.path.join(os.path.dirname(__file__), '..')
-# ab= os.path.abspath(
-#                     os.path.join(os.path.dirname(__file__), '..'))
-# ppath=os.path.abspath(
-#                     os.path.join(os.path.dirname(__file__), '..'))
-# sys.path.append(ppath)
 
 ppath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ppath)
 from tncmonitor import FindLogFile, Check4noInit, PsudoMain, internet_on, _setup_parser, \
     _send_end_email, _send_start_email, INResponse
 
-
-#from .context import tncmonitor
-
-
-def execution_path(filename) -> Path:
+def execution_path(filename) -> Path: #! TODO you do not know what this is for or what it does
     result: Path = Path(os.path.dirname(
         inspect.getfile(sys._getframe(1)))) / filename
-    # return os.path.join(os.path.dirname(inspect.getfile(sys._getframe(1))), filename)
     return result
 
 
@@ -93,7 +81,6 @@ class TestTncmonitor(unittest.TestCase):
         s.assertTrue('20180613' in pm.c4ni.filepath.name)
         s.assertTrue('initialization failed' in pm.c4ni.detectedline)
         
-        
     def test_07AAA(self):
         pt: Path = execution_path('testLogData')
         pm = PsudoMain({'rmslogdir': str(pt), 'moduleid': '1234a', 'age': 0, 'program': './tests/testecho.bat',
@@ -108,10 +95,8 @@ class TestTncmonitor(unittest.TestCase):
                         'testing': True,
                         'testingaccount': 'junk',
                         'password': 'password'
-                   
-                        
-
         })
+        
         from myemail import MyEmail
         acnt:MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(accountid='K7RVM.R',password='pEPbjVu4hkZctZJKVWlJ', )
         pm.prams['emacnt']=acnt 

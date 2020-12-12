@@ -24,13 +24,15 @@ from check4noInit import Check4noInit
 INResponse = namedtuple('INResponse', 'ok rescode')
 
 LOGGER = logging.getLogger(__name__)
-VERSION_DATE = 'tncmonitor v0.2 20201126'
+VERSION_DATE: str = 'tncmonitor v0.2 20201126'
 
 LOG_DIR: Path = Path(os.path.dirname(os.path.abspath(__file__))) / 'logs'
 _dirok: bool = False
+
 try:
     LOG_DIR.mkdir(exist_ok=True)
     _dirok = True
+    
 except FileNotFoundError as fnfe:
     print(f'Parent file not found in {LOG_DIR}: {fnfe}')
     raise fnfe
@@ -38,9 +40,6 @@ except FileNotFoundError as fnfe:
 if not _dirok and LOG_DIR.is_file():
     print(f'Specified path is not to a directory: {LOG_DIR}')
     raise FileExistsError(f'{LOG_DIR} exists and is not a directory')
-
-
-#LOG_FILE: Path = LOG_DIR / 'tncmonitor'
 
 LF_HANDLER = logging.handlers.RotatingFileHandler(
     LOG_DIR / 'tncmonitor',
@@ -57,11 +56,6 @@ THE_LOGGER = logging.getLogger()
 _FOR_10_MIN: int = 60 * 10
 _FOR_1_MIN: int = 60
 
-#START_END_EMAIL: bool = False
-
-#PRAMS: Dict[str, str] = {} #!TODO why is this a global?
-
-
 def _send_end_email(prams:Dict[str, Any]):
     """_send_end_email()
     """
@@ -72,7 +66,6 @@ def _send_end_email(prams:Dict[str, Any]):
             addto=prams.get('toemail'),
             addcc=None,
         )
-        
         _em = myemail.MyEmail(prams.get('emacnt'),emheader)
         _em.send(
             f'The {VERSION_DATE} is Ending at {asctime(localtime(time()))}')
@@ -87,7 +80,6 @@ def _send_start_email(prams:Dict[str, Any]):
             addto=prams.get('toemail'),
             addcc=None,
         )
-        
         _em = myemail.MyEmail(prams.get('emacnt'),emheader)
         _em.send(
             f'The {VERSION_DATE} is Starting at {asctime(localtime(time()))}')
@@ -99,22 +91,20 @@ class PsudoMain:
 
     def __init__(self, prams):
         """__init__(self, prams)
-
         prams is a dict with all the parameters
         """
 
         self.c4ni = None
-        #self.email = myemail.MyEmail(prams)
         self.prams = copy.copy(prams)
-        self.timeinc = [0.0, 2 * 60.0, 10 * 60.0,
+        self.timeinc:List[float] = [0.0, 2 * 60.0, 10 * 60.0,
                         30 * 60.0, 60 * 60.0, 120 * 60.0]  # seconds between each email
-        self.timeidx = 0
-        self.time_of_last_email = None
+        self.timeidx:int = 0
+        self.time_of_last_email:float = None
 
-    def __repr__(self):
+    def __repr__(self)->str:
         return '%s(%r)' % (self.__class__, self.__dict__)
 
-    def gettimeidx(self):
+    def gettimeidx(self)->int:
         """gettimeids()
 
         """
@@ -128,7 +118,7 @@ class PsudoMain:
 
         routine to send the e-mail
         """
-        timenow = time()
+        timenow:float = time()
         self.time_of_last_email = timenow
         self.gettimeidx()
         problems: Dict[str, str]={}
@@ -161,7 +151,7 @@ class PsudoMain:
             problems['donotsend']=f'mailtime {asctime(localtime(timenow))}'
         return problems
 
-    def doit(self, timers=None, count=None, age1=None, donotsend=False):
+    def doit(self, timers=None, count=None, age1:int=None, donotsend:bool=False):
         """doit
 
         timers is a tuple for setting the delay between reset attempts and check attempts
@@ -183,49 +173,12 @@ class PsudoMain:
             """set_reset_email()
 
             """
-            #--------------------------
-            # def _send_email():
-            #     """_send_email  
-
-            #     routine to send the e-mail
-            #     """
-            #     timenow = time()
-            #     self.time_of_last_email = timenow
-            #     self.gettimeidx()
-            #     if not donotsend:
-            #         emheader: MyEmail.Email_Arg = MyEmail.Email_Arg(
-            #             subj=f"{self.prams.get('emsub')}",
-            #             fremail=self.prams.get('fromemail'),
-            #             addto=self.prams.get('toemail'),
-            #             addcc=None,
-            #         )
-            #         problems: Dict[str, str]={}
-            #         if (self.prams.get('emacnt')):
-            #             _em = myemail.MyEmail(self.prams.get('emacnt'), emheader)
-            #             problems = _em.send(
-            #                 f"@{asctime(localtime(timenow))}, {self.prams.get('emsub')}"
-            #             )
-                                
-            #             if problems:
-            #                 _l = ['']
-            #                 _l.extend([k + ' -> ' + ss for k, ss
-            #                             in problems.items()])
-            #                 _msg:str = '\nError:**'.join(_l)
-            #                 LOGGER.warning(_msg)
-            #         elif self.prams.get('testing'):
-            #             problems['testing']='testing mode no email account info'
-                        
-                        
-            #     else:
-            #         print('mailtime {asctime(localtime(timenow))}')
-            #--------------------------
-
             if self.time_of_last_email is None:
                 self.timeidx = 0
                 self._send_email(donotsend)
             else:
-                nowis = time()
-                nextsched = self.time_of_last_email + \
+                nowis:float = time()
+                nextsched:float = self.time_of_last_email + \
                     self.timeinc[self.timeidx]
                 if nowis >= nextsched:
                     self._send_email(donotsend)
@@ -236,8 +189,6 @@ class PsudoMain:
             does the work
             """
             emailonly: bool = self.prams.get('emailonly')
-            # if not emailonly:  # ! why is this here?
-            #     emailonly = False
 
             self.c4ni: Check4noInit = Check4noInit(self.prams)
             tups: Check4noInit.Result = self.c4ni.doit(age=age1)
@@ -306,7 +257,6 @@ def _setup_parser() -> argparse.Namespace:
 
     return _parser.parse_args()
 
-
 def _logsetup():
     """_logsetup()
 
@@ -320,8 +270,6 @@ def _logsetup():
     THE_LOGGER.addHandler(LF_HANDLER)
     THE_LOGGER.addHandler(LC_HANDLER)
 
-
-# def internet_on()->Tuple[bool, Any]:
 def internet_on() -> INResponse:
     import requests
     result: INResponse = INResponse(ok=False, rescode=None)
@@ -334,7 +282,6 @@ def internet_on() -> INResponse:
         except requests.exceptions.RequestException as err:
             result = INResponse(ok=False, rescode=err)
     return result
-
 
 def _main(startup_delay: float = None)->Dict[str,Any]:
     """_main(Startup_delay=None)
@@ -358,8 +305,7 @@ def _main(startup_delay: float = None)->Dict[str,Any]:
 tncmonitor executed as main
 ****************************************************""")
 
-    LOGGER.setLevel(logging.INFO)
-    
+    LOGGER.setLevel(logging.INFO) 
     THE_LOGGER.info('Current Path is: %s', str(os.path.abspath('.')))
 
     args: argparse.Namespace = _setup_parser()
@@ -379,18 +325,17 @@ tncmonitor executed as main
 
     if startup_delay:
         sleep(startup_delay)
-    
-    #global START_END_EMAIL
-    #START_END_EMAIL = args.emstartend
 
-    #global VERSION_DATE
     THE_LOGGER.info("""
     *****************************
     Starting %s
     *****************************
         """, VERSION_DATE)
-    prams: Dict[Any, Any] = {}
+    prams: Dict[str, Any] = {}
     prams = json.loads(Path(args.pramfile).read_text())
+    prototype:bool =prams.get('isprototype',None)
+    if prototype:
+        raise ValueError(f'{Path(args.pramfile)} is a prototype pramfile')
 
     acnt:MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(prams.get("account"), prams.get("password"), )
     prams['emacnt']=acnt    
@@ -399,10 +344,7 @@ tncmonitor executed as main
     prams['start_end_email'] =args.emstartend
     
     try:
-        #global PRAMS
-        #PRAMS = copy.copy(prams)
-        rms_log_path = Path(prams.get('rmslogdir'))
-
+        rms_log_path:Path = Path(prams.get('rmslogdir'))
         internetok: INResponse = internet_on()
         if not internetok.ok:
             THE_LOGGER.warning('Network error: ' + internetok.rescode)
@@ -429,6 +371,7 @@ tncmonitor executed as main
 
             except (KeyboardInterrupt, SystemExit):
                 raise
+            
             except IOError as _e:
                 print(_e.args)
                 print('Input directory {} is not readable'.format(rms_log_path))
@@ -443,7 +386,6 @@ tncmonitor executed as main
 
             else:
                 _pm = PsudoMain(prams)
-                #_pm.doit(timers=(1, 1), age1=2, count=1)
                 _pm.doit()
 
         else:

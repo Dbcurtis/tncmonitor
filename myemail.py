@@ -4,12 +4,10 @@
     Module to send e-mail via a goggle account
 """
 from typing import Any, Union, Tuple, Callable, TypeVar, Generic, Sequence, Mapping, List, Dict, Set, Deque
-import smtplib  #* see: https://docs.python.org/3.8/library/smtplib.html
+import smtplib  # * see: https://docs.python.org/3.8/library/smtplib.html
 from smtplib import SMTP, SMTPAuthenticationError
-#from email.message import EmailMessage
 import logging
 from time import asctime, localtime, time
-#import pathlib
 from collections import namedtuple
 
 LOGGER = logging.getLogger(__name__)
@@ -37,9 +35,9 @@ class MyEmail:
 
         self.emdata: MyEmail.Email_Arg = emdata
         self.accnt: MyEmail.Accnt_Arg = acct
-        self.problems:Dict[str,str]={}
-        
-        def _make_header()->str:
+        self.problems: Dict[str, str] = {}
+
+        def _make_header() -> str:
             """
                 Returns:
                     str: similar to:
@@ -48,30 +46,30 @@ class MyEmail:
                         CC: emailadd \n 
                         Subject: string \n\n 
             """
-            header:str = f'From: {self.emdata.fremail}\n'  # from_addr
-            aa:Any = self.emdata.addto
-            if isinstance(aa,list):
-                aa= ", ".join(self.emdata.addto)
-                
-            tostr:str = aa
-            header += f'To: {tostr.strip()}\n'
-            
-            aa = self.emdata.addcc
-            if aa:
-                if isinstance(aa,list):
-                    aa= ", ".join(self.emdata.addto)
+            header: str = f'From: {self.emdata.fremail}\n'  # from_addr
+            _aa: Any = self.emdata.addto
+            if isinstance(_aa, list):
+                _aa = ", ".join(self.emdata.addto)
 
-                ccstr:str = aa.strip()
-                
+            tostr: str = _aa
+            header += f'To: {tostr.strip()}\n'
+
+            _aa = self.emdata.addcc
+            if _aa:
+                if isinstance(_aa, list):
+                    _aa = ", ".join(self.emdata.addto)
+
+                ccstr: str = _aa.strip()
+
                 if ccstr:
-                        header += f'Cc: {ccstr}\n'
-                    
+                    header += f'Cc: {ccstr}\n'
+
             header += f'Subject: {self.emdata.subj.strip()}\n\n'
-            return header 
-        
-        self.header:str = _make_header()
-        self.lastemail:str = None  #! TODO perhaps have this be current email and add a fixed length dequeue for history
-        
+            return header
+
+        self.header: str = _make_header()
+        # ! TODO perhaps have this be current email and add a fixed length dequeue for history
+        self.lastemail: str = None
 
     def __str__(self) -> str:
         return f'Header: {self.header}'
@@ -79,7 +77,7 @@ class MyEmail:
     def __repr__(self) -> str:
         return self.__str__()
 
-    def send(self, msg: str)->Dict[str,str]:
+    def send(self, msg: str) -> Dict[str, str]:
         """send(msg:str)
 
         Args:
@@ -87,10 +85,10 @@ class MyEmail:
 
         Returns:
             Dict[str, str]: with any problems... Generally empty
-        """        
+        """
 
-        #---------------------
-        def _send_email(msg: str, mtpserver='smtp.gmail.com:587')->Dict[str,str]:
+        # ---------------------
+        def _send_email(msg: str, mtpserver='smtp.gmail.com:587') -> Dict[str, str]:
             """_send_email(mst,mtpserver=)
 
             Args:
@@ -101,40 +99,42 @@ class MyEmail:
                 Dict[str,str]: [description]
             """
 
-            #---------------------               
+            # ---------------------
             def makemessage() -> str:
                 """makemessage()
-                
+
                 combines the self.header with the msg
-                
+
                 """
-                mess:str = f'{self.header}{msg}'
+                #! RFC 5322 2.1.1 suggests 78 characters per line
+                #! TODO handle this intelegently
+                mess: str = f'{self.header}{msg}'
                 return mess
-            #---------------------
+            # ---------------------
 
-            logmsg:List[str] = ['Attempt to send e-mail at ',
-                        asctime(localtime(time())), ' ']  # will join the list after it s built
-            #problems:Dict[str,str] = {}
+            logmsg: List[str] = [
+                'Attempt to send e-mail at ',
+                asctime(localtime(time())), ' '
+            ]  # will join the list after it s built
 
-            #message:str = makemessage()    
-            self.lastemail =  makemessage()       
+            self.lastemail = makemessage()
 
-            server:SMTP = SMTP(mtpserver)
+            server: SMTP = SMTP(mtpserver)
             try:
                 server.starttls()  # start tls protection
                 server.login(self.accnt.accountid, self.accnt.password)
                 self.problems = server.sendmail(
                     self.accnt.accountid, self.emdata.addto, self.lastemail)  # send the message
-                
+
             except (KeyboardInterrupt, SystemExit):
                 raise
 
             except SMTPAuthenticationError as _:
-                st_=f'error: {str(_.smtp_code)}, err: {_.smtp_error.decode()}'
-                    # LOGGER.critical(st_)
+                st_ = f'error: {str(_.smtp_code)}, err: {_.smtp_error.decode()}'
+                # LOGGER.critical(st_)
                 self.problems['SMTPError'] = st_
                 raise _
-            
+
             finally:
                 server.quit()
                 if self.problems:
@@ -142,12 +142,12 @@ class MyEmail:
                 else:
                     logmsg.append('succeeded')
 
-                lmsg:str = ''.join(logmsg)
+                lmsg: str = ''.join(logmsg)
                 LOGGER.info(lmsg)
             return self.problems
-        #---------------------
-        
-        self.problems={}
+        # ---------------------
+
+        self.problems = {}
         return _send_email(msg)
 
 
@@ -157,9 +157,9 @@ if __name__ == '__main__':
         "your account login", "your account password", )
     emarg: MyEmail.Email_Arg = MyEmail.Email_Arg(
         "test email- ignore", "your from email address", ['receiver1@gmail.com', 'receiver2@gmail.com'], [],)
-    acntarg: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg( # ! delete this line
+    acntarg: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(  # ! delete this line
         "K7RVM.R", "pEPbjVu4hkZctZJKVWlJ", )  # ! delete this line
-    emarg: MyEmail.Email_Arg = MyEmail.Email_Arg( # ! delete this line
+    emarg: MyEmail.Email_Arg = MyEmail.Email_Arg(  # ! delete this line
         "test email- ignore", "k7rvm.r@gmail.com", ["dbcurtis@gmail.com", "k7rvm.r@gmail.com"], ["rita.derbas@gmail.com"],)  # ! delete this line
     EM = MyEmail(acntarg, emarg)
     MY_PROBLEMS = EM.send('Email to test the myemail.py main call\n')

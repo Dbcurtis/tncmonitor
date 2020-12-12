@@ -5,12 +5,6 @@ Module to reset a device by removing power
 from the device and then
 restoring power after a short delay.
 """
-#! this is a test of comment types.
-# ? this is
-# //what is this
-# todo -- this needs to be done
-# * what do you think of this
-# what about this
 from typing import Any, Union, Tuple, Callable, TypeVar, Generic, \
     Sequence, Mapping, List, Dict, Set, Deque
 import subprocess
@@ -18,8 +12,6 @@ from subprocess import CompletedProcess
 import time
 from time import sleep
 from collections import deque
-
-
 from pathlib import Path
 import logging
 
@@ -30,11 +22,10 @@ VERSION_DATE = 'resettnc.py v0.2 20201126'
 class ResetTNC:
     """ResetTNC
 
-
     Class used to turn off the power of the TNC and then turn it back on
     """
 
-    def __init__(self, prams: Dict[str, str], debug_program: Path = None, hist_size=20):
+    def __init__(self, prams: Dict[str, str], debug_program: Path = None, hist_size: int = 20):
         """[summary]
 
         Args:
@@ -55,15 +46,14 @@ class ResetTNC:
             self.program: str = debug_program
         self.cpi: CompletedProcess = None
         self.state: str = 'Unknown'
-        self.history:Deque[Tuple[str, ...]]= deque(maxlen=hist_size)
+        self.history: Deque[Tuple[str, ...]] = deque(maxlen=hist_size)
         self.powerup()
-        
 
     def __repr__(self) -> str:
         return '%s(%r)' % (self.__class__, self.__dict__)
-    
-    def __str__(self)->str:
-        result:str = ''
+
+    def __str__(self) -> str:
+        result: str = ''
         result = f'TNC prams:{self.prams}, state: {self.state}'
         return result
 
@@ -76,22 +66,25 @@ class ResetTNC:
         """
         cmd: List[Any] = [self.program, self.prams.get(
             'moduleid'), 'open', self.prams.get('relay')]
-        self.cpi = subprocess.run(cmd,
-                                    input=None,
-                                    timeout=1,
-                                    shell=False,
-                                    check=False,
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE,
-                                    encoding='ascii'
-                                )
+        self.cpi = subprocess.run(
+            cmd,
+            input=None,
+            timeout=1,
+            shell=False,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding='ascii'
+        )
         if self.cpi.returncode:
-            LOGGER.warning("Powerdown returned error code %d",
-                            self.cpi.returncode)
+            LOGGER.warning(
+                "Powerdown returned error code %d",
+                self.cpi.returncode)
             self.state = 'Unknown -EPD'
         else:
             self.state = 'PD'
-        self.history.append((time.asctime(time.localtime(time.time())),self.state))
+        self.history.append(
+            (time.asctime(time.localtime(time.time())), self.state))
 
     def powerup(self):
         """powerup()
@@ -103,22 +96,26 @@ class ResetTNC:
         """
         cmd: List[Any] = [self.program, self.prams.get(
             'moduleid'), 'close', self.prams.get('relay')]
-        self.cpi = subprocess.run(cmd,
-                                    input=None,
-                                    timeout=1,
-                                    check=False,
-                                    shell=False,
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE,
-                                    encoding='ascii'
-                                    )
+        self.cpi = subprocess.run(
+            cmd,
+            input=None,
+            timeout=1,
+            check=False,
+            shell=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding='ascii'
+        )
         if self.cpi.returncode:
-            LOGGER.warning("Powerup returned error code %d",
-                            self.cpi.returncode)
+            LOGGER.warning(
+                "Powerup returned error code %d",
+                self.cpi.returncode)
             self.state = 'Unknown -EPU'
         else:
             self.state = 'PU'
-        self.history.append((time.asctime(time.localtime(time.time())),self.state))
+        self.history.append(
+            (time.asctime(time.localtime(time.time())), self.state)
+        )
 
     def doit(self, delay=None):
         """doit
@@ -186,8 +183,8 @@ def _main():
             "powerofftime": 0.75,
 
         }
-        TNC:ResetTNC = ResetTNC(_prms,hist_size=10)  # powers up on creation
-        
+        TNC: ResetTNC = ResetTNC(_prms, hist_size=10)  # powers up on creation
+
         if TNC.cpi.returncode != 0:
             print("relay not connected or incorrectly configured")
             print(TNC.cpi)

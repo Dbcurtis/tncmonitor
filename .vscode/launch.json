@@ -4,14 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [ 
-
         
         {
             "name": "Python tncmonitor",
             "type": "python",
             "request": "launch",
             "program": "${workspaceRoot}/tncmonitor.py",  
-            "args": ["-ld" "-eo", "-ese", "tncprams.json"],
+            "args": ["-ld", "-eo", "-ese", "tncprams.json"],
             "justMyCode": false,
             "console": "integratedTerminal"
         },
@@ -21,7 +20,17 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceRoot}/tncmonitor.py",  
-            "args": ["-ld" "-eo", "-ese", "-t", "tncprams.json"],
+            "args": ["-ld", "-eo", "-ese", "-t", "tncprams.json"],
+            "justMyCode": false,
+            "console": "integratedTerminal"
+        },
+
+        {
+            "name": "Python tncmonitor testing protopref",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceRoot}/tncmonitor.py",  
+            "args": ["-ld", "-eo", "-ese", "-t", "prototypetncprams.json"],
             "justMyCode": false,
             "console": "integratedTerminal"
         },

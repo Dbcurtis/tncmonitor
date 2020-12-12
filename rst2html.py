@@ -8,9 +8,9 @@ import docutils.core
 import logging
 import logging.handlers
 
-
 LOGGER = logging.getLogger(__name__)
 THE_LOGGER = logging.getLogger()
+
 
 def _main():
     docutils.core.publish_file(
@@ -23,7 +23,6 @@ def _main():
 
 if __name__ == '__main__':
     try:
-
         _main()
 
     except IOError as ioe:
