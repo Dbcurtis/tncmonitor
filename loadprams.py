@@ -106,7 +106,7 @@ def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
         result['emacnt'] = acnt  # this is the SMTP info
         return result
 
-    # get the json pramiters and email info
+    # get the json paramiters and email info
     prams = _setup_basic_prams(Path(args.pramfile))
     prams['emailonly'] = args.emailonly  # add flags from the command line
     prams['testing'] = args.testdata

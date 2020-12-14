@@ -24,7 +24,7 @@
     ],
     "comments": [
         "c1: program adds 'testing', 'emailonly', and 'emacnt' values",
-        "c2: isprotpye must be removed",
+        "c2: isprotpye should be removed",
         "c3: smtp.gmail.com:587 is the gmail smtp server address, it is also the default, so you can remove SMTPServer if you are using gmail -- or not"
     ]
 }

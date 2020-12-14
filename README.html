@@ -384,7 +384,7 @@ relays on the board.  The relay module has a unique <em>moduleid</em> that must 
 <p>The software for Windows and Linux can be found at <a class="reference external" href="http://www.giga.co.za/ocart/index.php?route=product/product&amp;product_id=229">http://www.giga.co.za/ocart/index.php?route=product/product&amp;product_id=229</a> .</p>
 <dl class="docutils">
 <dt>For windows:</dt>
-<dd><p class="first">The application can be invoked from the cmd command line as CommandApp_USBRelay.exe [device id] [close / open] [relay nr]</p>
+<dd><p class="first">The application can be invoked from the cmd command line as CommandApp_USBRelay.exe [moduleid] [close | open] [relay-id]</p>
 <p class="last">And if you want a GUI interface, use GuiApp_Engilish.exe</p>
 </dd>
 </dl>
@@ -458,9 +458,11 @@ relays on the board.  The relay module has a unique <em>moduleid</em> that must 
 </div>
 <div class="section" id="parameter-file">
 <h2>Parameter file</h2>
-<p>The parameters are in the file <tt class="docutils literal">tncprams.json</tt> which contains:</p>
+<p>The parameters are in the file <tt class="docutils literal">prototypetncprams.json</tt> which contains the following which, after being filled out
+should be renamed to <tt class="docutils literal">tncprams.json</tt></p>
 <pre class="literal-block">
 {
+    &quot;isprototype&quot;: &quot;true&quot;,
     &quot;account&quot;: &quot;email account&quot;,
     &quot;password&quot;: &quot;email password&quot;,
     &quot;fromemail&quot;: &quot;from_email address&quot;,
@@ -480,7 +482,7 @@ relays on the board.  The relay module has a unique <em>moduleid</em> that must 
 These include:</p>
 <ul class="simple">
 <li><em>emailonly</em> -- boolean, if True does the email operations without trying to reset the relay</li>
-<li><em>testing</em>  -- boolean, if True, then do not use the &quot;rmslogdir&quot; as the source to the rms logger data</li>
+<li><em>testing</em>  -- boolean, if True, then do not use the &quot;rmslogdir&quot; as the source to the rms logger data (doesn't do anything)</li>
 </ul>
 <p>Where:</p>
 <ol class="arabic simple">
@@ -501,7 +503,62 @@ These include:</p>
 <p>The program can be manually executed by running <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor tncprams.json</tt> in the tncmonitor directory.
 The tncmonitor program maintains a log at ./log/tncMonitor.  The program runs checks the RMS log file directory every 10 minutes
 and responds to the communication error as previously specified.</p>
-<p>Generally, the program should be executed out of the distribution directory when the computer is restarted, or at least at the same time RMS is started.</p>
+<p>Generally, the program should be executed out of the distribution directory when the computer is restarted, or at least at the same time RMS is stvarted.</p>
+</div>
+<div class="section" id="first-time-configuration">
+<h2>First Time Configuration</h2>
+<p>1) run tncmonitor with a command line (for windows: python -m tncmonitor -h) (for linux: python3 -m tncmonitor -h)
+both executed in the tncmonitor directory.
+This verifies that the help switch works as that and the starting meesage should be the only output.</p>
+<ol class="arabic simple" start="2">
+<li>edit test_resettnc.py and enter your values in <tt class="docutils literal">argdic</tt> for test_01...</li>
+</ol>
+<p>3) run the test, you should hear the relay clicking.  I had to run the test from visual studio code,
+using launch.json of:</p>
+<pre class="literal-block">
+{
+  &quot;name&quot;: &quot;Python: Current File&quot;,
+  &quot;type&quot;: &quot;python&quot;,
+  &quot;request&quot;: &quot;launch&quot;,
+  &quot;program&quot;: &quot;${file}&quot;,
+  &quot;args&quot;: [ ],
+  &quot;justMyCode&quot;: false,
+  &quot;console&quot;: &quot;integratedTerminal&quot;
+}
+</pre>
+<p>4) create a <tt class="docutils literal">testtncprams.json</tt> file based off of <tt class="docutils literal">prototypetncprams.json</tt>
+and in the same directory with the email addresses and rmslogdir setup for testing.</p>
+<dl class="docutils">
+<dt>Delete the <tt class="docutils literal">isprototype</tt> field and add the required information</dt>
+<dd><ul class="first last simple">
+<li>&quot;rmslogdir&quot;: &quot;[absolute path to]/tncmonitor/tests/testLogData&quot;,</li>
+<li>the <tt class="docutils literal">account</tt> field is the account used for your SMTP server</li>
+<li>the <tt class="docutils literal">SMTPServer</tt> field is the url for your SMTP Server</li>
+<li>the <tt class="docutils literal">password</tt> field is the password for your SMTP account</li>
+<li>the <tt class="docutils literal">fromemail</tt> field is the email address associated with your SMTP accountid</li>
+<li>the <tt class="docutils literal">toemail</tt> field contains a list of email addresses who are your recipients following the format in <tt class="docutils literal">prototypetncprams.json</tt></li>
+<li>the <tt class="docutils literal">rmslogdir</tt> field contains the absolute path to the RMS log directory,</li>
+<li>the <tt class="docutils literal">program</tt> field for windows should be  <tt class="docutils literal">CommandApp_USBRelay</tt> unknown for Linux yet</li>
+<li>the <tt class="docutils literal">powerofftime</tt> field is the number of seconds the tnc remains unpowered. 10 worked for us.</li>
+<li>the <tt class="docutils literal">moduleid</tt> field is relay module identification,</li>
+<li>the <tt class="docutils literal">relay</tt> field is a two digit string of the relay number to operate</li>
+<li>the <tt class="docutils literal">emsub</tt> field is a string used for the subject of the email messages: we used &quot;TNC was reset&quot;,</li>
+<li>the <tt class="docutils literal">age</tt> and <tt class="docutils literal">count</tt> fields should be 0 as they are only used for debugging</li>
+<li>the <tt class="docutils literal">timers</tt> field is a list of two values for setting the delay in seconds between reset attempts and check attempts. We found that 60, 600 that provides a 1 min check if an init problems was detected and 10 min check if no problems works</li>
+</ul>
+</dd>
+</dl>
+<p>5) create a <tt class="docutils literal">tncprams.json</tt> based off of <tt class="docutils literal">testtncprams.json</tt> with real email addresses
+and <tt class="docutils literal">rmslogdir</tt> being an absolute path to the actual RMS log directory.</p>
+</div>
+<div class="section" id="testing-sequence">
+<h2>Testing Sequence</h2>
+<p>2B compleated</p>
+</div>
+<div class="section" id="how-do-i-make-the-html-for-this-file">
+<h2>How do I make the html for this file?</h2>
+<p>run makehtml.py</p>
+<p>It will generate the html in the same direcotry.</p>
 </div>
 </div>
 </div>

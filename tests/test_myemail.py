@@ -133,6 +133,7 @@ class TestMyEmail(unittest.TestCase):
             self.assertTrue('error: 535' in mem.problems.get('SMTPError1'))
             
         except SMTPServerDisconnected as _:
+            #! TODO, this must be an incorrect test
             self.assertTrue('error: 535' in mem.problems.get('SMTPError0'))
             
         except Exception as ex:
@@ -145,6 +146,8 @@ class TestMyEmail(unittest.TestCase):
     def test_03send_goodAccount(self):
         print('remove private data from this test')
         from myemail import MyEmail
+        import loadprams
+        
         accnt:str = "K7RVM.R"
         psswd:str = "pEPbjVu4hkZctZJKVWlJ"
         fmem:str = "k7rvm.r@gmail.com"

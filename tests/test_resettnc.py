@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Test file for tncmonitor
+
+You will need to set the argdic values in test_01...
+
 """
 import os
 import sys
@@ -68,6 +71,7 @@ class TestResettnc(unittest.TestCase):
         """test_01instant
             check that the relay works
         """
+        #! TODO setup the argdic values to your configuration
         argdic = {
             'moduleid': '3D0V2',
             'relay': '01',
@@ -95,7 +99,7 @@ class TestResettnc(unittest.TestCase):
 
     def test_00subprocess(self):
         """test_00subprocess
-            checks that I can call subprocesses
+            check that I can call subprocesses on windows and linux
         """
         print('need to check this on a unix system')
         #dbp:str = {'Linux':'testecho.sh', 'Windows':'testecho.bat', }.get(platform.system(),None)

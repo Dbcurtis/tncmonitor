@@ -21,7 +21,7 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceRoot}/tncmonitor.py",  
-            "args": ["-ld", "-eo", "-ese", "-t", "tncprams.json"],
+            "args": ["-ld", "-eo", "-ese", "-t", "testtncprams.json"],
             "justMyCode": false,
             "console": "integratedTerminal"
         },
@@ -51,7 +51,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": [ "-eo","tncprams.json"],
+            "args": [ ],
             "justMyCode": false,
             "console": "integratedTerminal"
         }

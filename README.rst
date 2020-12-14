@@ -117,11 +117,55 @@ Generally, the program should be executed out of the distribution directory when
 
 First Time Configuration
 ========================
-1) edit ``prototypetncprams.json`` adding the required information and deleating the "isprototype" field.
-2) 
+1) run tncmonitor with a command line (for windows: python -m tncmonitor -h) (for linux: python3 -m tncmonitor -h)
+both executed in the tncmonitor directory.
+This verifies that the help switch works as that and the starting meesage should be the only output.
 
+2) edit test_resettnc.py and enter your values in ``argdic`` for test_01...
 
+3) run the test, you should hear the relay clicking.  I had to run the test from visual studio code, 
+using launch.json of::
+
+  {
+    "name": "Python: Current File",
+    "type": "python",
+    "request": "launch",
+    "program": "${file}",
+    "args": [ ],
+    "justMyCode": false,
+    "console": "integratedTerminal"
+  }
+
+4) create a ``testtncprams.json`` file based off of ``prototypetncprams.json`` 
+and in the same directory with the email addresses and rmslogdir setup for testing.
+
+Delete the ``isprototype`` field and add the required information
+   * "rmslogdir": "[absolute path to]/tncmonitor/tests/testLogData",
+   * the ``account`` field is the account used for your SMTP server
+   * the ``SMTPServer`` field is the url for your SMTP Server
+   * the ``password`` field is the password for your SMTP account
+   * the ``fromemail`` field is the email address associated with your SMTP accountid
+   * the ``toemail`` field contains a list of email addresses who are your recipients following the format in ``prototypetncprams.json``
+   * the ``rmslogdir`` field contains the absolute path to the RMS log directory,
+   * the ``program`` field for windows should be  ``CommandApp_USBRelay`` unknown for Linux yet
+   * the ``powerofftime`` field is the number of seconds the tnc remains unpowered. 10 worked for us.
+   * the ``moduleid`` field is relay module identification,
+   * the ``relay`` field is a two digit string of the relay number to operate
+   * the ``emsub`` field is a string used for the subject of the email messages: we used "TNC was reset",
+   * the ``age`` and ``count`` fields should be 0 as they are only used for debugging
+   * the ``timers`` field is a list of two values for setting the delay in seconds between reset attempts and check attempts. We found that 60, 600 that provides a 1 min check if an init problems was detected and 10 min check if no problems works
+
+5) create a ``tncprams.json`` based off of ``testtncprams.json`` with real email addresses
+and ``rmslogdir`` being an absolute path to the actual RMS log directory.
 
 Testing Sequence
 ========================
-TB compleated
+2B compleated
+
+
+How do I make the html for this file?
+=====================================
+run makehtml.py
+
+
+It will generate the html in the same direcotry.
