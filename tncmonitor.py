@@ -369,9 +369,14 @@ if __name__ == '__main__':
 
     except (KeyboardInterrupt, SystemExit) as _:
         pass
+    
+    except KeyError as ke:
+        THE_LOGGER.exception(ke)
+        print('pram file incomplete')
 
     if prams.get('start_end_email'):
         _send_end_email(prams)
+        
 
     print("Exiting")
     THE_LOGGER.info("""

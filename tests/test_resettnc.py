@@ -29,6 +29,13 @@ class TestResettnc(unittest.TestCase):
         pass
 
     def _setpath(self)->Path:
+        """_setpath()
+        finds the .bat (for windows) or .sh (for linux) echo test files
+        to allow use of the test programs on windows or linux
+
+        Returns:
+            Path: [description]
+        """
         dbp:str = {'Linux':'testecho.sh', 'Windows':'testecho.bat', }.get(platform.system(),None)
         cwdp:Path = Path(os.getcwd())
         if 'tests' not in cwdp.parts:
