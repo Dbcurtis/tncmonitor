@@ -5,13 +5,12 @@
 """
 from typing import Any, Union, Tuple, Callable, TypeVar, Generic, Sequence, Mapping, List, Dict, Set, Deque
 import smtplib  # * see: https://docs.python.org/3.8/library/smtplib.html
-from smtplib import SMTP, SMTPAuthenticationError
+from smtplib import SMTP, SMTPAuthenticationError, SMTPServerDisconnected
 import logging
 from time import asctime, localtime, time
 from collections import namedtuple
 
 LOGGER = logging.getLogger(__name__)
-
 
 class MyEmail:
     """MyEmail
@@ -21,7 +20,13 @@ class MyEmail:
 
     # named tuple arguments
     Email_Arg = namedtuple('Email_Arg', "subj fremail addto addcc")
-    Accnt_Arg = namedtuple('Accnt_Arg', "accountid password")
+    """
+    named tuple that contains the from, to and cc addresses for the email
+    """
+    Accnt_Arg = namedtuple('Accnt_Arg', "accountid password url")
+    """
+    named tuple that contains the login information for the SMTP server
+    """
 
     def __init__(self, acct: Accnt_Arg, emdata: Email_Arg):
         """MyEmail(tolist)
@@ -88,12 +93,13 @@ class MyEmail:
         """
 
         # ---------------------
-        def _send_email(msg: str, mtpserver='smtp.gmail.com:587') -> Dict[str, str]:
+        def _send_email(msg: str) -> Dict[str, str]:
             """_send_email(mst,mtpserver=)
 
             Args:
                 msg (str): is the text for the body of the email
                 mtpserver (str, optional): is a SMTP serfer address, Defaults to 'smtp.gmail.com:587' for google smtp
+            
 
             Returns:
                 Dict[str,str]: [description]
@@ -119,7 +125,7 @@ class MyEmail:
 
             self.lastemail = makemessage()
 
-            server: SMTP = SMTP(mtpserver)
+            server: SMTP = SMTP(self.accnt.url)
             try:
                 server.starttls()  # start tls protection
                 server.login(self.accnt.accountid, self.accnt.password)
@@ -128,12 +134,22 @@ class MyEmail:
 
             except (KeyboardInterrupt, SystemExit):
                 raise
+            
+            except SMTPServerDisconnected as _:
+                st_ = str(_)
+                # LOGGER.critical(st_)
+                self.problems['SMTPError0'] = st_
+                raise _
 
             except SMTPAuthenticationError as _:
                 st_ = f'error: {str(_.smtp_code)}, err: {_.smtp_error.decode()}'
                 # LOGGER.critical(st_)
-                self.problems['SMTPError'] = st_
+                self.problems['SMTPError1'] = st_
                 raise _
+            
+            except BaseException as _:
+                a=0
+                
 
             finally:
                 server.quit()
@@ -154,11 +170,11 @@ class MyEmail:
 if __name__ == '__main__':
 
     acntarg: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-        "your account login", "your account password", )
+        "your account login", "your account password", "your SMTP Server url")
     emarg: MyEmail.Email_Arg = MyEmail.Email_Arg(
         "test email- ignore", "your from email address", ['receiver1@gmail.com', 'receiver2@gmail.com'], [],)
     acntarg: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(  # ! delete this line
-        "K7RVM.R", "pEPbjVu4hkZctZJKVWlJ", )  # ! delete this line
+        'K7RVM.R', 'pEPbjVu4hkZctZJKVWlJ', 'smtp.gmail.com:587')  # ! delete this line
     emarg: MyEmail.Email_Arg = MyEmail.Email_Arg(  # ! delete this line
         "test email- ignore", "k7rvm.r@gmail.com", ["dbcurtis@gmail.com", "k7rvm.r@gmail.com"], ["rita.derbas@gmail.com"],)  # ! delete this line
     EM = MyEmail(acntarg, emarg)

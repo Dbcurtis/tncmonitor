@@ -12,7 +12,7 @@ from typing import Any, List, Dict
 
 ppath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ppath)
-from tncmonitor import FindLogFile, Check4noInit, PsudoMain, internet_on, _setup_parser, \
+from tncmonitor import FindLogFile, Check4noInit, PsudoMain, internet_on, setup_parser, \
     _send_end_email, _send_start_email, INResponse
 
 def execution_path(filename) -> Path: #! TODO you do not know what this is for or what it does
@@ -98,7 +98,10 @@ class TestTncmonitor(unittest.TestCase):
         })
         
         from myemail import MyEmail
-        acnt:MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(accountid='K7RVM.R',password='pEPbjVu4hkZctZJKVWlJ', )
+        acnt:MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
+            accountid='K7RVM.R',
+            password='pEPbjVu4hkZctZJKVWlJ', 
+            url='smtp.gmail.com:587')
         pm.prams['emacnt']=acnt 
         aa=None
         aa= pm._send_email(True)

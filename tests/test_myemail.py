@@ -7,7 +7,7 @@ import sys
 from typing import List, Any, Dict, Tuple
 import platform
 from time import sleep
-from smtplib import SMTP, SMTPAuthenticationError
+from smtplib import SMTP, SMTPAuthenticationError, SMTPServerDisconnected
 #import subprocess
 #from subprocess import CompletedProcess
 #import inspect
@@ -47,7 +47,8 @@ class TestMyEmail(unittest.TestCase):
 
         """
         acct1: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid="jjj", password="kkk")
+            accountid="jjj", password="kkk",
+            url=None)
         emdata1: MyEmail.Email_Arg = MyEmail.Email_Arg(
             subj="mysubject1",
             fremail="somebody@junk.jnk",
@@ -55,7 +56,7 @@ class TestMyEmail(unittest.TestCase):
             addcc="cc@junk.jnk",
         )
 
-        bbb = "Accnt_Arg(accountid='jjj', password='kkk')"
+        bbb = "Accnt_Arg(accountid='jjj', password='kkk', url=None)"
         aaa = "Email_Arg(subj='mysubject1', fremail='somebody@junk.jnk', addto='to@junk.jnk', addcc='cc@junk.jnk')"
 
         self.assertEqual(bbb, str(acct1))
@@ -68,7 +69,8 @@ class TestMyEmail(unittest.TestCase):
         self.assertEqual("kkk", acct1.password)
 
         acct2: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid="jjjj", password="kkkk")
+            accountid="jjjj", password="kkkk",
+            url=None)
         emdata2: MyEmail.Email_Arg = MyEmail.Email_Arg(
             subj="mysubject2",
             fremail="somebody@junk.jnk",
@@ -90,21 +92,48 @@ class TestMyEmail(unittest.TestCase):
     def test_02send_badAccount(self):
         from myemail import MyEmail
         acct1: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid="jjj", password="kkk")
+            accountid="jjj", password="kkk", url=None)
         emdata1: MyEmail.Email_Arg = MyEmail.Email_Arg(
             subj="mysubject1",
             fremail="somebody@junk.jnk",
             addto="to@junk.jnk",
             addcc="cc@junk.jnk",
         )
-        mem = MyEmail(acct1, emdata1)
+        
         problems:Dict[str,str]={}
+        mem:MyEmail = MyEmail(acct1, emdata1)
+        try:
+            problems=mem.send("this is my body text")
+            self.fail('did not detect bad url')
+        
+        except SMTPAuthenticationError as _:
+            self.assertTrue('error: 535' in mem.problems.get('SMTPError1'))
+            
+        except SMTPServerDisconnected as _:
+            self.assertTrue('please run' in mem.problems.get('SMTPError0'))
+            
+        except Exception as ex:
+            self.fail(str(ex))
+            
+        finally:
+            self.assertEqual(1,len(mem.problems))
+            self.assertFalse(problems)     
+        
+        acct2: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
+            accountid="jjj", password="kkk", url="smtp.gmail.com:587")
+
+        problems.clear()
+        mem:MyEmail = MyEmail(acct2, emdata1)
+        
         try:
             problems=mem.send("this is my body text")
             self.fail('did not detect wrong account at server login')
         
         except SMTPAuthenticationError as _:
-            self.assertTrue('error: 535' in mem.problems.get('SMTPError'))
+            self.assertTrue('error: 535' in mem.problems.get('SMTPError1'))
+            
+        except SMTPServerDisconnected as _:
+            self.assertTrue('error: 535' in mem.problems.get('SMTPError0'))
             
         except Exception as ex:
             self.fail(str(ex))
@@ -125,7 +154,7 @@ class TestMyEmail(unittest.TestCase):
         
         
         acct1: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid=accnt, password=psswd)
+            accountid=accnt, password=psswd, url="smtp.gmail.com:587")
         emdata1: MyEmail.Email_Arg = MyEmail.Email_Arg(
             subj=sub,
             fremail=fmem,
@@ -161,7 +190,7 @@ class TestMyEmail(unittest.TestCase):
         sub:str = "test of a good send multiple to and cc"
         
         acct1: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid=accnt, password=psswd)
+            accountid=accnt, password=psswd, url="smtp.gmail.com:587")
         emdata1: MyEmail.Email_Arg = MyEmail.Email_Arg(
             subj=sub,
             fremail=fmem,

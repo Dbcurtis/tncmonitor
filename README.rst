@@ -31,7 +31,7 @@ relays on the board.  The relay module has a unique *moduleid* that must be incl
 The software for Windows and Linux can be found at http://www.giga.co.za/ocart/index.php?route=product/product&product_id=229 .
 
 For windows: 
-  The application can be invoked from the cmd command line as CommandApp_USBRelay.exe [device id] [close / open] [relay nr]
+  The application can be invoked from the cmd command line as CommandApp_USBRelay.exe [moduleid] [close | open] [relay-id]
 
   And if you want a GUI interface, use GuiApp_Engilish.exe
 
@@ -66,9 +66,11 @@ Invoke the program in accordance with::
 
 Parameter file
 ==============
-The parameters are in the file ``tncprams.json`` which contains::
+The parameters are in the file ``prototypetncprams.json`` which contains the following which, after being filled out 
+should be renamed to ``tncprams.json`` ::
 
     {
+        "isprototype": "true",
         "account": "email account",
         "password": "email password",
         "fromemail": "from_email address",
@@ -92,6 +94,7 @@ These include:
 
 Where:
 
+
 1. *account, password,* and *fromemail* specify the login information for the mail server.
 2. *toemail* is a list of the email addresses that are to receive the email.
 3. *rmslogdir* is the absolute path to the RMS logging directory (click on logs in the RMS program to get the path).
@@ -110,4 +113,15 @@ The program can be manually executed by running ``python -m tncmonitor tncprams.
 The tncmonitor program maintains a log at ./log/tncMonitor.  The program runs checks the RMS log file directory every 10 minutes
 and responds to the communication error as previously specified.
 
-Generally, the program should be executed out of the distribution directory when the computer is restarted, or at least at the same time RMS is started.
+Generally, the program should be executed out of the distribution directory when the computer is restarted, or at least at the same time RMS is stvarted.
+
+First Time Configuration
+========================
+1) edit ``prototypetncprams.json`` adding the required information and deleating the "isprototype" field.
+2) 
+
+
+
+Testing Sequence
+========================
+TB compleated

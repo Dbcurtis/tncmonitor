@@ -20,6 +20,7 @@ import myemail
 from myemail import MyEmail
 from findlogfile import FindLogFile
 from check4noInit import Check4noInit
+from loadprams import  get_prams, setup_parser
 
 INResponse = namedtuple('INResponse', 'ok rescode')
 
@@ -219,44 +220,6 @@ class PsudoMain:
             raise fnf
 
 
-def _setup_parser() -> argparse.Namespace:
-    """_setup_parser()
-
-    reduces statment count in _main
-    defines the parser and generates the parsed args
-    """
-    _parser = argparse.ArgumentParser(
-        description='Monitor TNC Error Logs')
-
-    _parser.add_argument('-li', '--loginfo',
-                            help='enable INFO logging',
-                            action="store_true")
-
-    _parser.add_argument('-ld', '--logdebug',
-                            help='enable DEBUG logging',
-                            action="store_true")
-
-    _parser.add_argument('-eo', '--emailonly', default=False,
-                            help='do not attempt to reset the TNC',
-                            action="store_true")
-
-    _parser.add_argument('pramfile', default='sys.stdin', action='store',
-                            help='input parameter file JSON path')
-
-    _parser.add_argument('-ese', '--emstartend', default=False, action='store_true',
-                            help='enable sending an email when the program starts or ends')
-    
-    _parser.add_argument('-t', '--testdata', default=False, action='store_true',
-                            help='use testing data in ./tests/testLogData')
-
-    # _parser.add_argument('rnum', nargs='?', default=1, action='store',
-    # help='Relay number on card, defaults to 1')
-
-    # _parser.add_argument('rsn', nargs='?', default='3X9XI', action='store',
-    # help='Relay card serial number defaults to 3X9XI')
-
-    return _parser.parse_args()
-
 def _logsetup():
     """_logsetup()
 
@@ -299,16 +262,18 @@ def _main(startup_delay: float = None)->Dict[str,Any]:
     #loglevel = logging.INFO
     #loglevel = logging.DEBUG
     #loglevel = logging.NOTSET
+    
+    LOGGER.setLevel(logging.INFO) 
 
     THE_LOGGER.info("""
 ****************************************************
 tncmonitor executed as main
 ****************************************************""")
 
-    LOGGER.setLevel(logging.INFO) 
+
     THE_LOGGER.info('Current Path is: %s', str(os.path.abspath('.')))
 
-    args: argparse.Namespace = _setup_parser()
+    args: argparse.Namespace = setup_parser()
     _ = [THE_LOGGER.info('args:%s, %s', i[0], i[1])
             for i in vars(args).items()]
     
@@ -331,17 +296,7 @@ tncmonitor executed as main
     Starting %s
     *****************************
         """, VERSION_DATE)
-    prams: Dict[str, Any] = {}
-    prams = json.loads(Path(args.pramfile).read_text())
-    prototype:bool =prams.get('isprototype',None)
-    if prototype:
-        raise ValueError(f'{Path(args.pramfile)} is a prototype pramfile')
-
-    acnt:MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(prams.get("account"), prams.get("password"), )
-    prams['emacnt']=acnt    
-    prams['emailonly'] = args.emailonly
-    prams['testing'] = args.testdata
-    prams['start_end_email'] =args.emstartend
+    prams: Dict[str, Any] = get_prams(args)
     
     try:
         rms_log_path:Path = Path(prams.get('rmslogdir'))
@@ -402,6 +357,7 @@ if __name__ == '__main__':
     try:
         print(f'Starting {VERSION_DATE}')
         prams=_main(startup_delay=12)  # =120)
+        
 
     except IOError as ioe:
         THE_LOGGER.exception(ioe)
