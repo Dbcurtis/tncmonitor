@@ -38,7 +38,7 @@ _legalpramkeyset: Set[str] = frozenset([
 
 ])
 
-def setup_parser() -> argparse.Namespace:
+def setup_parser(args:List[str]=sys.argv) -> argparse.Namespace:
     """_setup_parser()
 
     defines the parser and generates the parsed args
@@ -75,7 +75,7 @@ def setup_parser() -> argparse.Namespace:
 
     #result: argparse.Namespace = _parser.parse_args()
 
-    return _parser.parse_args()
+    return _parser.parse_args(args)
 
 
 def get_prams(args: argparse.Namespace) -> Dict[str, Any]:

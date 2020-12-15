@@ -51,7 +51,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": [ ],
+            "args": [],
             "justMyCode": false,
             "console": "integratedTerminal"
         }
