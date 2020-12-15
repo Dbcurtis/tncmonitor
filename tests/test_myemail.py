@@ -21,6 +21,7 @@ import myemail
 from myemail import MyEmail
 
 
+
 class TestMyEmail(unittest.TestCase):
     """"""
 
@@ -144,32 +145,21 @@ class TestMyEmail(unittest.TestCase):
             self.assertFalse(problems)     
     
     def test_03send_goodAccount(self):
-        print('remove private data from this test')
+        
         from myemail import MyEmail
         import loadprams
+        import argparse
         
-        accnt:str = "K7RVM.R"
-        psswd:str = "pEPbjVu4hkZctZJKVWlJ"
-        fmem:str = "k7rvm.r@gmail.com"
-        to:str = "dbcurtis@gmail.com"
-        cc:str = "rita.derbas@gmail.com"
-        sub:str = "test of a good send -- ignore"
+        aa = ['-ld', '-eo', '-t', 'testtncprams.json']
+        ns: argparse.Namespace = loadprams.setup_parser(aa)
+        prams:Dict[str,Any]=loadprams.get_prams(ns)
         
-        
-        acct1: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid=accnt, password=psswd, url="smtp.gmail.com:587")
-        emdata1: MyEmail.Email_Arg = MyEmail.Email_Arg(
-            subj=sub,
-            fremail=fmem,
-            addto=to,
-            addcc=cc,
-        )
-        mem:MyEmail = MyEmail(acct1,emdata1)
+        mem:MyEmail = MyEmail(prams['emacnt'],prams['emhead'])
         problems:Dict[str,str]={}
         try:
             problems = mem.send("body, just ignore this message")
             self.assertFalse(problems)
-            aa:str ='From: k7rvm.r@gmail.com\nTo: dbcurtis@gmail.com\nCc: rita.derbas@gmail.com\nSubject: test of a good send -- ignore\n\nbody, just ignore this message' #mem.lastemail
+            aa:str ='From: k7rvm.r@gmail.com\nTo: dbcurtis@gmail.com, rita.dergas@gmail.com, k7rvm.r@gmail.com\nSubject: TNC was reset test --- ignore this message\n\nbody, just ignore this message' #mem.lastemail
             self.assertEqual(aa,mem.lastemail)
         
         except SMTPAuthenticationError as _:

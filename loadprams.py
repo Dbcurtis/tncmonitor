@@ -104,6 +104,14 @@ def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
             result.get('SMTPServer', None),
         )
         result['emacnt'] = acnt  # this is the SMTP info
+        
+        ehead: MyEmail.Email_Arg = MyEmail.Email_Arg( # subj fremail addto addcc
+            result.get('emsub'),
+            result.get('fromemail'),
+            result.get('toemail'),
+            result.get('ccemail',None), 
+        )
+        result['emhead']=ehead
         return result
 
     # get the json paramiters and email info
