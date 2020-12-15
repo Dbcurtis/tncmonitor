@@ -87,8 +87,50 @@ def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
     Returns:
         Dict[str,Any]: [description]
     """
+    def _remove_comments(fromjson:Dict[str,Any]):
+        """[summary]
+
+        Args:
+            fromjson (Dict[str,Any]): [description]
+        """
+        # remove comment-like keys
+        keyS:Set[str] = set(fromjson.keys())
+        #ukeyL:List[str] = [k.upper() for k in keyS]
+        ukeyS:Set[str]= set([k.upper() for k in keyS])
+        cmtkeyL:List[str] = [_ for _ in ukeyS if "COMMENT" in _]
+        if cmtkeyL:
+            kstartingwithc:List[str] = [_ for _ in keyS if _.startswith("C") or _.startswith("c")]
+            keystodelete:List[str] = []
+            for k in kstartingwithc:
+                if "COMMENT" in k.upper():
+                    keystodelete.append(k)
+            
+            for k in keystodelete:
+                fromjson.pop(k)
+        
+        
+        item:Tuple[str,Any] = ()
+        keyl:List[str]=[
+                item[0] for item in fromjson.items() if isinstance(item[1],str) 
+                and 'COMMENT' in item[1].upper()
+            ]                    
+        for _ in keyl:
+            fromjson.pop(_)
+    
 
     def _setup_basic_prams(pram_path: Path) -> Dict[str, Any]:
+        """[summary]
+
+        Args:
+            pram_path (Path): [description]
+
+        Raises:
+            ValueError: [description]
+            ValueError: [description]
+
+        Returns:
+            Dict[str, Any]: [description]
+        """
         # verify the path is to an existing file
         if not (pram_path.exists() and pram_path.is_file()):
             raise ValueError(f'{pram_path} does not exist or is not a file')
@@ -97,6 +139,9 @@ def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
         result: Dict[str, Any] = json.loads(pram_path.read_text())
         if result.get('isprototype', None):
             raise ValueError(f'{pram_path} is a prototype pramfile')
+        
+        # remove comment fields and values containing comments
+        _remove_comments(result)
 
         acnt: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
             result.get("account"),

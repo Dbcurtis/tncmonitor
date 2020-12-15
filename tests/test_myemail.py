@@ -159,14 +159,14 @@ class TestMyEmail(unittest.TestCase):
         try:
             problems = mem.send("body, just ignore this message")
             self.assertFalse(problems)
-            aa:str ='From: k7rvm.r@gmail.com\nTo: dbcurtis@gmail.com, rita.dergas@gmail.com, k7rvm.r@gmail.com\nSubject: TNC was reset test --- ignore this message\n\nbody, just ignore this message' #mem.lastemail
+            aa:str = 'From: k7rvm.r@gmail.com\nTo: dbcurtis@gmail.com, rita.derbas@gmail.com, k7rvm.r@gmail.com\nSubject: TNC was reset test --- ignore this message\n\nbody, just ignore this message'
             self.assertEqual(aa,mem.lastemail)
         
         except SMTPAuthenticationError as _:
             self.fail(f'authn: {str(_)}')
             
-        except Exception as ex:
-            self.fail(str(ex))
+        # except Exception as ex:
+        #     self.fail(str(ex))
             
         finally:
             self.assertFalse(mem.problems)
