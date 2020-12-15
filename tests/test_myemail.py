@@ -175,24 +175,17 @@ class TestMyEmail(unittest.TestCase):
     def test_04send_goodAccountmulti(self):
         print('remove private data from this test')
         from myemail import MyEmail
-        accnt:str = "K7RVM.R"
-        psswd:str = "pEPbjVu4hkZctZJKVWlJ"
-        fmem:str = "k7rvm.r@gmail.com"
-        to:str = ["dbcurtis@gmail.com","wesf@outlook.com"]
-        cc:str = ["rita.derbas@gmail.com","dbcurtis@gmail.com"]
-        sub:str = "test of a good send multiple to and cc"
+        import loadprams
+        import argparse
+
         
-        acct1: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid=accnt, password=psswd, url="smtp.gmail.com:587")
-        emdata1: MyEmail.Email_Arg = MyEmail.Email_Arg(
-            subj=sub,
-            fremail=fmem,
-            addto=to,
-            addcc=cc,
-        )
+        aa = ['-ld', '-eo', '-t', 'testtncprams.json']
+        ns: argparse.Namespace = loadprams.setup_parser(aa)
+        prams:Dict[str,Any]=loadprams.get_prams(ns)
+        
         
         problems={}
-        mem:MyEmail = MyEmail(acct1,emdata1)
+        mem:MyEmail =MyEmail(prams['emacnt'],prams['emhead'])
         try:
             problems = mem.send("body, test multiple cc and to just ignore this message")
             self.assertFalse(problems)
@@ -201,8 +194,6 @@ class TestMyEmail(unittest.TestCase):
         except SMTPAuthenticationError as _:
             self.fail(f'authn: {str(_)}')
             
-        except Exception as ex:
-            self.fail(str(ex))
             
         finally:
             self.assertFalse(mem.problems)
