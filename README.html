@@ -372,7 +372,8 @@ use "rst2html README.rst readme.html" to convert file to html -->
 <p>The problem has been that the RMS communication with the TNC would stop working after 2-3 months or thereabouts.
 Once this happened, the TNC needed to be reset at which point the RMS Packet software would successfully connect.</p>
 <p>The RMS Packet Software keeps a logs of various information on disk files in a specific directory.</p>
-<p>This program (<cite>tncmonitor.py</cite>) periodically reads that directory, looks for the files that have the communication logging information,
+<p>This program (<tt class="docutils literal">tncmonitor.py</tt>) periodically reads that directory,
+looks for the files that have the communication logging information,
 reads backwards through the most current logging file to find records that show if the communication has
 been successful, or not.</p>
 <p>If everything is ok, the program sleeps for 10 minutes.
@@ -406,52 +407,22 @@ relays on the board.  The relay module has a unique <em>moduleid</em> that must 
 <dl class="docutils">
 <dt>Required argument :</dt>
 <dd><dl class="first last docutils">
-<dt><cite>pramfile</cite></dt>
-<dd>where <cite>pramfile</cite> is a Parameter file that is a subsequently described <tt class="docutils literal">.json</tt> file.</dd>
+<dt><tt class="docutils literal">pramfile</tt></dt>
+<dd>where <tt class="docutils literal">pramfile</tt> is a Parameter file that is a subsequently described <tt class="docutils literal">.json</tt> file.</dd>
 </dl>
 </dd>
-<dt>optional arguments :</dt>
-<dd><table border="1" class="first last docutils">
-<colgroup>
-<col width="7%" />
-<col width="19%" />
-<col width="74%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="head">opt</th>
-<th class="head">lopt</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>-h</td>
-<td>--help</td>
-<td>show this help message and exit</td>
-</tr>
-<tr><td>-li</td>
-<td>--loginfo</td>
-<td>enable INFO logging</td>
-</tr>
-<tr><td>-ld</td>
-<td>--logdebug</td>
-<td>enable DEBUG logging</td>
-</tr>
-<tr><td>-eo</td>
-<td>--emailonly</td>
-<td>do not unpower the tnc just send email</td>
-</tr>
-<tr><td>-ese</td>
-<td>--emstartend</td>
-<td>send email when program starts and when it ends</td>
-</tr>
-<tr><td>-t</td>
-<td>--testing</td>
-<td>use testing data from the ./tests/testLogData dir</td>
-</tr>
-</tbody>
-</table>
-</dd>
 </dl>
+<p>optional arguments :
+===== ============= =================================================
+opt    lopt          Description
+===== ============= =================================================
+-h    --help         show this help message and exit
+-li   --loginfo      enable INFO logging
+-ld   --logdebug     enable DEBUG logging
+-eo   --emailonly    do not unpower the tnc just send email
+-ese  --emstartend   send email when program starts and when it ends
+-t    --testing      use testing data from the ./tests/testLogData dir
+===== ============= =================================================</p>
 </blockquote>
 </dd>
 </dl>
@@ -517,7 +488,8 @@ This verifies that the help switch works as that and the starting meesage should
 <li>edit test_resettnc.py and enter your values in <tt class="docutils literal">argdic</tt> for test_01...</li>
 </ol>
 <p>3) run the test, you should hear the relay clicking.  I had to run the test from visual studio code,
-using launch.json of:</p>
+using launch.json of:
+.. code-block:</p>
 <pre class="literal-block">
 {
   &quot;name&quot;: &quot;Python: Current File&quot;,

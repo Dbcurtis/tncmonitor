@@ -9,6 +9,7 @@
         "to2@jnk.com",
         "to3r@junk.com"
     ],
+    "ccemail": [],
     "rmslogdir": "absolute path to the RMS log",
     "program": "CommandApp_USBRelay",
     "powerofftime": 10,

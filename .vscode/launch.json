@@ -54,6 +54,16 @@
             "args": [],
             "justMyCode": false,
             "console": "integratedTerminal"
+        },
+        
+        {
+            "name": "json 2 yaml",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceRoot}/json2yaml.py",  
+            "args": [  "prototypetncprams.json", "prototypetncprams.yml"],
+            "justMyCode": false,
+            "console": "integratedTerminal"
         }
     ]
 }

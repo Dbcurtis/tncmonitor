@@ -16,7 +16,8 @@ Once this happened, the TNC needed to be reset at which point the RMS Packet sof
 
 The RMS Packet Software keeps a logs of various information on disk files in a specific directory.
 
-This program (`tncmonitor.py`) periodically reads that directory, looks for the files that have the communication logging information,
+This program (``tncmonitor.py``) periodically reads that directory, 
+looks for the files that have the communication logging information,
 reads backwards through the most current logging file to find records that show if the communication has
 been successful, or not.
 
@@ -48,20 +49,20 @@ Invoke the program in accordance with::
   usage: ``tncmonitor.py [-h] [-li] [-ld] [-eo] [-ese] [-t] pramfile``
 
     Required argument :
-      `pramfile`
-          where `pramfile` is a Parameter file that is a subsequently described ``.json`` file.
+      ``pramfile``
+          where ``pramfile`` is a Parameter file that is a subsequently described ``.json`` file.
 
     optional arguments : 
-      ===== ============= =================================================
-      opt    lopt          Description
-      ===== ============= =================================================
-      -h    --help         show this help message and exit
-      -li   --loginfo      enable INFO logging
-      -ld   --logdebug     enable DEBUG logging
-      -eo   --emailonly    do not unpower the tnc just send email
-      -ese  --emstartend   send email when program starts and when it ends
-      -t    --testing      use testing data from the ./tests/testLogData dir
-      ===== ============= =================================================
+    ===== ============= =================================================
+    opt    lopt          Description
+    ===== ============= =================================================
+    -h    --help         show this help message and exit
+    -li   --loginfo      enable INFO logging
+    -ld   --logdebug     enable DEBUG logging
+    -eo   --emailonly    do not unpower the tnc just send email
+    -ese  --emstartend   send email when program starts and when it ends
+    -t    --testing      use testing data from the ./tests/testLogData dir
+    ===== ============= =================================================
 
 
 Parameter file
@@ -126,7 +127,8 @@ This verifies that the help switch works as that and the starting meesage should
 2) edit test_resettnc.py and enter your values in ``argdic`` for test_01...
 
 3) run the test, you should hear the relay clicking.  I had to run the test from visual studio code, 
-using launch.json of::
+using launch.json of:
+.. code-block::
 
   {
     "name": "Python: Current File",

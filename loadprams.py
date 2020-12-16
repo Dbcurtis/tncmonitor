@@ -112,7 +112,7 @@ def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
         item:Tuple[str,Any] = ()
         keyl:List[str]=[
                 item[0] for item in fromjson.items() if isinstance(item[1],str) 
-                and 'COMMENT' in item[1].upper()
+                and '--COMMENT--' in item[1].upper()
             ]                    
         for _ in keyl:
             fromjson.pop(_)
