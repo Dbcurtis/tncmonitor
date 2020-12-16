@@ -62,11 +62,11 @@ class TestTncmonitor(unittest.TestCase):
                         'relay': '01', 'powerofftime': 1, 'emsub': 'just a test...ignore',
                         "account": "junk",
                         "password": "password",
-                        "fromemail": "k7rvm.r@gmail.com",
+                        "fromemail": "junk.r@gmail.com",
                         "toemail": [
-                            "dbcurtis@gmail.com",
-                            "wesf@outlook.com",
-                            "k7rvm.r@gmail.com"
+                            "junk@gmail.com",
+                            "junk@outlook.com",
+                            "junk.r@gmail.com"
                         ],
                         'emailonly': True,
                         'testing': True,
@@ -85,11 +85,11 @@ class TestTncmonitor(unittest.TestCase):
         pt: Path = execution_path('testLogData')
         pm = PsudoMain({'rmslogdir': str(pt), 'moduleid': '1234a', 'age': 0, 'program': './tests/testecho.bat',
                         'relay': '01', 'powerofftime': 1, 'emsub': 'just a test...ignore',
-                        "fromemail": "k7rvm.r@gmail.com",
+                        "fromemail": "junk.r@gmail.com",
                         "toemail": [
-                            "dbcurtis@gmail.com",
-                            "wesf@outlook.com",
-                            "k7rvm.r@gmail.com"
+                            "junk@gmail.com",
+                            "junk@outlook.com",
+                            "junk.r@gmail.com"
                         ],
                         'emailonly': True,
                         'testing': True,

@@ -17,7 +17,6 @@ ppath=os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ppath)
 from findlogfile import FindLogFile
 
-
 class TestFindlogfile(unittest.TestCase):
     """"""
 
@@ -105,9 +104,6 @@ class TestFindlogfile(unittest.TestCase):
         self.assertTrue('20180614.log' in str(result1))
         self.assertTrue('20180608.log' in str(result7))
         
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
