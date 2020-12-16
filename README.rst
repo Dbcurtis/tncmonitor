@@ -2,9 +2,9 @@
    From inside a python 3 virtual environment that has spinx installed,
    use "rst2html README.rst readme.html" to convert file to html
 
-############
-Overview
-############
+####################
+TNCMONITOR Overview
+####################
 
 This module is a tool for detecting when the RMS Packet software has lost communications with the attached TNC.
 
@@ -94,7 +94,6 @@ These include:
 
 Where:
 
-
 1. *account, password,* and *fromemail* specify the login information for the mail server.
 2. *toemail* is a list of the email addresses that are to receive the email.
 3. *rmslogdir* is the absolute path to the RMS logging directory (click on logs in the RMS program to get the path).
@@ -106,6 +105,9 @@ Where:
 9. *age* and *count* are for debugging.
 10. *timers* is a list of seconds to wait after a power reset before reattempting the checks, and the number of seconds to wait between normal checks.
 
+The file can include a key that is some varient of comment and that key and value will be removed when the file is processed.
+In addition, if a value includes some varient of comment, that key value will also be removed when the file is processed.
+Not removed from the file, but no corrsponding dict value will be passed to the program.
 
 Starting the program
 ====================
@@ -166,6 +168,5 @@ Testing Sequence
 How do I make the html for this file?
 =====================================
 run makehtml.py
-
 
 It will generate the html in the same direcotry.

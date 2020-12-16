@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils 0.16: http://docutils.sourceforge.net/" />
-<title>Overview</title>
+<title>TNCMONITOR Overview</title>
 <style type="text/css">
 
 /*
@@ -360,8 +360,8 @@ ul.auto-toc {
 </style>
 </head>
 <body>
-<div class="document" id="overview">
-<h1 class="title">Overview</h1>
+<div class="document" id="tncmonitor-overview">
+<h1 class="title">TNCMONITOR Overview</h1>
 
 <!-- This is the README file for the tncmonitor Python 3 module.
 From inside a python 3 virtual environment that has spinx installed,
@@ -497,6 +497,9 @@ These include:</p>
 <li><em>age</em> and <em>count</em> are for debugging.</li>
 <li><em>timers</em> is a list of seconds to wait after a power reset before reattempting the checks, and the number of seconds to wait between normal checks.</li>
 </ol>
+<p>The file can include a key that is some varient of comment and that key and value will be removed when the file is processed.
+In addition, if a value includes some varient of comment, that key value will also be removed when the file is processed.
+Not removed from the file, but no corrsponding dict value will be passed to the program.</p>
 </div>
 <div class="section" id="starting-the-program">
 <h2>Starting the program</h2>
