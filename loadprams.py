@@ -76,7 +76,7 @@ def setup_parser(args:List[str]=sys.argv) -> argparse.Namespace:
 
     #result: argparse.Namespace = _parser.parse_args()
 
-    return _parser.parse_args()
+    return _parser.parse_args(args)
 
 
 def get_prams(args: argparse.Namespace) -> Dict[str, Any]:

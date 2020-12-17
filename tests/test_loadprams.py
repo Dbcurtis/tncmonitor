@@ -50,7 +50,7 @@ class Testloadprams(unittest.TestCase):
             check that the relay works
         """
         aa = sys.argv
-        aa = ['-h','fakename.json']
+        aa = ['-h','fakename.yaml']
         try:
             ns: argparse.Namespace = loadprams.setup_parser(aa)
             self.fail('-h did not cause exit')

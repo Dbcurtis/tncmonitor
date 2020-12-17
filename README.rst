@@ -1,6 +1,6 @@
 .. This is the README file for the tncmonitor Python 3 module.
-   From inside a python 3 virtual environment that has spinx installed,
-   use "rst2html README.rst readme.html" to convert file to html
+  From inside a python 3 virtual environment that has spinx installed,
+  use "rst2html README.rst readme.html" to convert file to html
 
 ####################
 TNCMONITOR Overview
