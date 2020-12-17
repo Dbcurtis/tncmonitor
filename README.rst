@@ -48,11 +48,11 @@ Usage to Monitor the TNC Error Logs
 Invoke the program in accordance with::
   usage: ``tncmonitor.py [-h] [-li] [-ld] [-eo] [-ese] [-t] pramfile``
 
-    Required argument :
-      ``pramfile``
-          where ``pramfile`` is a Parameter file that is a subsequently described ``.json`` file.
+  Required argument :
+    ``pramfile``
+          where ``pramfile`` is a Parameter file that is a subsequently described ``.yaml`` file.
 
-    optional arguments : 
+  Optional arguments : 
     ===== ============= =================================================
     opt    lopt          Description
     ===== ============= =================================================
@@ -67,25 +67,7 @@ Invoke the program in accordance with::
 
 Parameter file
 ==============
-The parameters are in the file ``prototypetncprams.json`` which contains the following which, after being filled out 
-should be renamed to ``tncprams.json`` ::
-
-    {
-        "isprototype": "true",
-        "account": "email account",
-        "password": "email password",
-        "fromemail": "from_email address",
-        "toemail": ["person1@gmail.com", "person2@outlook.com", "from_email address"],
-        "rmslogdir": "an absolute path to ../RMS/RMS Packet/Logs",
-        "program": "CommandApp_USBRelay",
-        "powerofftime": 10,
-        "moduleid": "3X9XI",
-        "relay": "01",
-        "emsub": "TNC was reset",
-        "age": 0,
-        "count": 0,
-        "timers": [60,600]
-    }
+The parameters are described in the file ``prototypetncprams.yaml``.  This file should be copied ``tncprams.yaml`` and the values provided.
 
 Additional Parameters are added to the dict created by the above file by the program.
 These include:
@@ -93,42 +75,32 @@ These include:
 * *emailonly* -- boolean, if True does the email operations without trying to reset the relay
 * *testing*  -- boolean, if True, then do not use the "rmslogdir" as the source to the rms logger data (doesn't do anything)
 
-Where:
-
-1. *account, password,* and *fromemail* specify the login information for the mail server.
-2. *toemail* is a list of the email addresses that are to receive the email.
-3. *rmslogdir* is the absolute path to the RMS logging directory (click on logs in the RMS program to get the path).
-4. *program* is the name of the program in that executes the commands to open and close a relay and that was provided with the relay board. **Depending** on the above program, resettnc.py may need to be modified to invoke that program.
-5. *powerofftime* is the time in seconds for which the power will be removed from the TNC.
-6. *moduleid* is the ID of the relay board if needed for your board.
-7. *relay* is the disignator for a specific relay on the board that controls the power to the TNC.
-8. *emsub* is the subject line for the email messages.
-9. *age* and *count* are for debugging.
-10. *timers* is a list of seconds to wait after a power reset before reattempting the checks, and the number of seconds to wait between normal checks.
-
-The file can include a key that is some varient of comment and that key and value will be removed when the file is processed.
-In addition, if a value includes some varient of comment, that key value will also be removed when the file is processed.
+In addition, if a value includes ``--comment--``, that key and value will removed when the file is processed.
 Not removed from the file, but no corrsponding dict value will be passed to the program.
 
 Starting the program
 ====================
 The program can be manually executed by running ``python -m tncmonitor tncprams.json`` in the tncmonitor directory.
-The tncmonitor program maintains a log at ./log/tncMonitor.  The program runs checks the RMS log file directory every 10 minutes
+The tncmonitor program maintains a log at ``./log/tncMonitor``.  The tncmonitor program runs checks the RMS log file directory every 10 minutes
 and responds to the communication error as previously specified.
 
 Generally, the program should be executed out of the distribution directory when the computer is restarted, or at least at the same time RMS is stvarted.
 
 First Time Configuration
 ========================
-1) run tncmonitor with a command line (for windows: python -m tncmonitor -h) (for linux: python3 -m tncmonitor -h)
-both executed in the tncmonitor directory.
-This verifies that the help switch works as that and the starting meesage should be the only output.
+1) run tncmonitor with a command line. For windows: ``python -m tncmonitor -h``. 
+For linux: ``python3 -m tncmonitor -h``.
+Both executed in the tncmonitor directory.
+This verifies that the help switch works 
+as it and the starting meesage should be the only output.
 
-2) edit test_resettnc.py and enter your values in ``argdic`` for test_01...
+2) edit test_resettnc.py and enter your values for the relay
+module id and relay number in the ``argdic`` Dict for ``test_01instant``
+because the test program does not use the .yaml configuration file.
 
 3) run the test, you should hear the relay clicking.  I had to run the test from visual studio code, 
 using launch.json of:
-.. code-block::
+::
 
   {
     "name": "Python: Current File",
@@ -140,26 +112,11 @@ using launch.json of:
     "console": "integratedTerminal"
   }
 
-4) create a ``testtncprams.json`` file based off of ``prototypetncprams.json`` 
+4) create a ``testtncprams.yaml`` file based off of ``prototypetncprams.yaml`` 
 and in the same directory with the email addresses and rmslogdir setup for testing.
 
-Delete the ``isprototype`` field and add the required information
-   * "rmslogdir": "[absolute path to]/tncmonitor/tests/testLogData",
-   * the ``account`` field is the account used for your SMTP server
-   * the ``SMTPServer`` field is the url for your SMTP Server
-   * the ``password`` field is the password for your SMTP account
-   * the ``fromemail`` field is the email address associated with your SMTP accountid
-   * the ``toemail`` field contains a list of email addresses who are your recipients following the format in ``prototypetncprams.json``
-   * the ``rmslogdir`` field contains the absolute path to the RMS log directory,
-   * the ``program`` field for windows should be  ``CommandApp_USBRelay`` unknown for Linux yet
-   * the ``powerofftime`` field is the number of seconds the tnc remains unpowered. 10 worked for us.
-   * the ``moduleid`` field is relay module identification,
-   * the ``relay`` field is a two digit string of the relay number to operate
-   * the ``emsub`` field is a string used for the subject of the email messages: we used "TNC was reset",
-   * the ``age`` and ``count`` fields should be 0 as they are only used for debugging
-   * the ``timers`` field is a list of two values for setting the delay in seconds between reset attempts and check attempts. We found that 60, 600 that provides a 1 min check if an init problems was detected and 10 min check if no problems works
 
-5) create a ``tncprams.json`` based off of ``testtncprams.json`` with real email addresses
+5) create a ``tncprams.yaml`` based off of ``testtncprams.yaml`` with real email addresses
 and ``rmslogdir`` being an absolute path to the actual RMS log directory.
 
 Testing Sequence

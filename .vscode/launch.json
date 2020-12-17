@@ -31,7 +31,7 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceRoot}/tncmonitor.py",  
-            "args": ["-ld", "-eo", "-ese", "-t", "prototypetncprams.json"],
+            "args": ["-ld", "-eo", "-ese", "-t", "prototypetncprams.yaml"],
             "justMyCode": false,
             "console": "integratedTerminal"
         },

@@ -11,7 +11,8 @@ from typing import Any, Union, Tuple, Callable, TypeVar, Generic, \
 import subprocess
 from pathlib import Path
 import argparse
-import json
+import yaml
+#import json
 import logging
 from myemail import MyEmail
 
@@ -75,7 +76,7 @@ def setup_parser(args:List[str]=sys.argv) -> argparse.Namespace:
 
     #result: argparse.Namespace = _parser.parse_args()
 
-    return _parser.parse_args(args)
+    return _parser.parse_args()
 
 
 def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
@@ -136,7 +137,11 @@ def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
             raise ValueError(f'{pram_path} does not exist or is not a file')
 
         # ? need to do the loads here as windows path did not work
-        result: Dict[str, Any] = json.loads(pram_path.read_text())
+        #result: Dict[str, Any] = json.loads(pram_path.read_text())
+        result:Dict[str,Any]={}
+        with open(pram_path,'r') as fl:
+            result = yaml.full_load(fl)
+
         if result.get('isprototype', None):
             raise ValueError(f'{pram_path} is a prototype pramfile')
         

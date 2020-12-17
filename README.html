@@ -403,93 +403,89 @@ relays on the board.  The relay module has a unique <em>moduleid</em> that must 
 <dl class="docutils">
 <dt>Invoke the program in accordance with::</dt>
 <dd><p class="first">usage: <tt class="docutils literal">tncmonitor.py <span class="pre">[-h]</span> <span class="pre">[-li]</span> <span class="pre">[-ld]</span> <span class="pre">[-eo]</span> <span class="pre">[-ese]</span> <span class="pre">[-t]</span> pramfile</tt></p>
-<blockquote class="last">
-<dl class="docutils">
+<dl class="last docutils">
 <dt>Required argument :</dt>
 <dd><dl class="first last docutils">
 <dt><tt class="docutils literal">pramfile</tt></dt>
-<dd>where <tt class="docutils literal">pramfile</tt> is a Parameter file that is a subsequently described <tt class="docutils literal">.json</tt> file.</dd>
+<dd>where <tt class="docutils literal">pramfile</tt> is a Parameter file that is a subsequently described <tt class="docutils literal">.yaml</tt> file.</dd>
 </dl>
 </dd>
+<dt>Optional arguments :</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="7%" />
+<col width="19%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">opt</th>
+<th class="head">lopt</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>-h</td>
+<td>--help</td>
+<td>show this help message and exit</td>
+</tr>
+<tr><td>-li</td>
+<td>--loginfo</td>
+<td>enable INFO logging</td>
+</tr>
+<tr><td>-ld</td>
+<td>--logdebug</td>
+<td>enable DEBUG logging</td>
+</tr>
+<tr><td>-eo</td>
+<td>--emailonly</td>
+<td>do not unpower the tnc just send email</td>
+</tr>
+<tr><td>-ese</td>
+<td>--emstartend</td>
+<td>send email when program starts and when it ends</td>
+</tr>
+<tr><td>-t</td>
+<td>--testing</td>
+<td>use testing data from the ./tests/testLogData dir</td>
+</tr>
+</tbody>
+</table>
+</dd>
 </dl>
-<p>optional arguments :
-===== ============= =================================================
-opt    lopt          Description
-===== ============= =================================================
--h    --help         show this help message and exit
--li   --loginfo      enable INFO logging
--ld   --logdebug     enable DEBUG logging
--eo   --emailonly    do not unpower the tnc just send email
--ese  --emstartend   send email when program starts and when it ends
--t    --testing      use testing data from the ./tests/testLogData dir
-===== ============= =================================================</p>
-</blockquote>
 </dd>
 </dl>
 </div>
 <div class="section" id="parameter-file">
 <h2>Parameter file</h2>
-<p>The parameters are in the file <tt class="docutils literal">prototypetncprams.json</tt> which contains the following which, after being filled out
-should be renamed to <tt class="docutils literal">tncprams.json</tt></p>
-<pre class="literal-block">
-{
-    &quot;isprototype&quot;: &quot;true&quot;,
-    &quot;account&quot;: &quot;email account&quot;,
-    &quot;password&quot;: &quot;email password&quot;,
-    &quot;fromemail&quot;: &quot;from_email address&quot;,
-    &quot;toemail&quot;: [&quot;person1&#64;gmail.com&quot;, &quot;person2&#64;outlook.com&quot;, &quot;from_email address&quot;],
-    &quot;rmslogdir&quot;: &quot;an absolute path to ../RMS/RMS Packet/Logs&quot;,
-    &quot;program&quot;: &quot;CommandApp_USBRelay&quot;,
-    &quot;powerofftime&quot;: 10,
-    &quot;moduleid&quot;: &quot;3X9XI&quot;,
-    &quot;relay&quot;: &quot;01&quot;,
-    &quot;emsub&quot;: &quot;TNC was reset&quot;,
-    &quot;age&quot;: 0,
-    &quot;count&quot;: 0,
-    &quot;timers&quot;: [60,600]
-}
-</pre>
+<p>The parameters are described in the file <tt class="docutils literal">prototypetncprams.yaml</tt>.  This file should be copied <tt class="docutils literal">tncprams.yaml</tt> and the values provided.</p>
 <p>Additional Parameters are added to the dict created by the above file by the program.
 These include:</p>
 <ul class="simple">
 <li><em>emailonly</em> -- boolean, if True does the email operations without trying to reset the relay</li>
 <li><em>testing</em>  -- boolean, if True, then do not use the &quot;rmslogdir&quot; as the source to the rms logger data (doesn't do anything)</li>
 </ul>
-<p>Where:</p>
-<ol class="arabic simple">
-<li><em>account, password,</em> and <em>fromemail</em> specify the login information for the mail server.</li>
-<li><em>toemail</em> is a list of the email addresses that are to receive the email.</li>
-<li><em>rmslogdir</em> is the absolute path to the RMS logging directory (click on logs in the RMS program to get the path).</li>
-<li><em>program</em> is the name of the program in that executes the commands to open and close a relay and that was provided with the relay board. <strong>Depending</strong> on the above program, resettnc.py may need to be modified to invoke that program.</li>
-<li><em>powerofftime</em> is the time in seconds for which the power will be removed from the TNC.</li>
-<li><em>moduleid</em> is the ID of the relay board if needed for your board.</li>
-<li><em>relay</em> is the disignator for a specific relay on the board that controls the power to the TNC.</li>
-<li><em>emsub</em> is the subject line for the email messages.</li>
-<li><em>age</em> and <em>count</em> are for debugging.</li>
-<li><em>timers</em> is a list of seconds to wait after a power reset before reattempting the checks, and the number of seconds to wait between normal checks.</li>
-</ol>
-<p>The file can include a key that is some varient of comment and that key and value will be removed when the file is processed.
-In addition, if a value includes some varient of comment, that key value will also be removed when the file is processed.
+<p>In addition, if a value includes <tt class="docutils literal"><span class="pre">--comment--</span></tt>, that key and value will removed when the file is processed.
 Not removed from the file, but no corrsponding dict value will be passed to the program.</p>
 </div>
 <div class="section" id="starting-the-program">
 <h2>Starting the program</h2>
 <p>The program can be manually executed by running <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor tncprams.json</tt> in the tncmonitor directory.
-The tncmonitor program maintains a log at ./log/tncMonitor.  The program runs checks the RMS log file directory every 10 minutes
+The tncmonitor program maintains a log at <tt class="docutils literal">./log/tncMonitor</tt>.  The tncmonitor program runs checks the RMS log file directory every 10 minutes
 and responds to the communication error as previously specified.</p>
 <p>Generally, the program should be executed out of the distribution directory when the computer is restarted, or at least at the same time RMS is stvarted.</p>
 </div>
 <div class="section" id="first-time-configuration">
 <h2>First Time Configuration</h2>
-<p>1) run tncmonitor with a command line (for windows: python -m tncmonitor -h) (for linux: python3 -m tncmonitor -h)
-both executed in the tncmonitor directory.
-This verifies that the help switch works as that and the starting meesage should be the only output.</p>
-<ol class="arabic simple" start="2">
-<li>edit test_resettnc.py and enter your values in <tt class="docutils literal">argdic</tt> for test_01...</li>
-</ol>
+<p>1) run tncmonitor with a command line. For windows: <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor <span class="pre">-h</span></tt>.
+For linux: <tt class="docutils literal">python3 <span class="pre">-m</span> tncmonitor <span class="pre">-h</span></tt>.
+Both executed in the tncmonitor directory.
+This verifies that the help switch works
+as it and the starting meesage should be the only output.</p>
+<p>2) edit test_resettnc.py and enter your values for the relay
+module id and relay number in the <tt class="docutils literal">argdic</tt> Dict for <tt class="docutils literal">test_01instant</tt>
+because the test program does not use the .yaml configuration file.</p>
 <p>3) run the test, you should hear the relay clicking.  I had to run the test from visual studio code,
-using launch.json of:
-.. code-block:</p>
+using launch.json of:</p>
 <pre class="literal-block">
 {
   &quot;name&quot;: &quot;Python: Current File&quot;,
@@ -501,29 +497,9 @@ using launch.json of:
   &quot;console&quot;: &quot;integratedTerminal&quot;
 }
 </pre>
-<p>4) create a <tt class="docutils literal">testtncprams.json</tt> file based off of <tt class="docutils literal">prototypetncprams.json</tt>
+<p>4) create a <tt class="docutils literal">testtncprams.yaml</tt> file based off of <tt class="docutils literal">prototypetncprams.yaml</tt>
 and in the same directory with the email addresses and rmslogdir setup for testing.</p>
-<dl class="docutils">
-<dt>Delete the <tt class="docutils literal">isprototype</tt> field and add the required information</dt>
-<dd><ul class="first last simple">
-<li>&quot;rmslogdir&quot;: &quot;[absolute path to]/tncmonitor/tests/testLogData&quot;,</li>
-<li>the <tt class="docutils literal">account</tt> field is the account used for your SMTP server</li>
-<li>the <tt class="docutils literal">SMTPServer</tt> field is the url for your SMTP Server</li>
-<li>the <tt class="docutils literal">password</tt> field is the password for your SMTP account</li>
-<li>the <tt class="docutils literal">fromemail</tt> field is the email address associated with your SMTP accountid</li>
-<li>the <tt class="docutils literal">toemail</tt> field contains a list of email addresses who are your recipients following the format in <tt class="docutils literal">prototypetncprams.json</tt></li>
-<li>the <tt class="docutils literal">rmslogdir</tt> field contains the absolute path to the RMS log directory,</li>
-<li>the <tt class="docutils literal">program</tt> field for windows should be  <tt class="docutils literal">CommandApp_USBRelay</tt> unknown for Linux yet</li>
-<li>the <tt class="docutils literal">powerofftime</tt> field is the number of seconds the tnc remains unpowered. 10 worked for us.</li>
-<li>the <tt class="docutils literal">moduleid</tt> field is relay module identification,</li>
-<li>the <tt class="docutils literal">relay</tt> field is a two digit string of the relay number to operate</li>
-<li>the <tt class="docutils literal">emsub</tt> field is a string used for the subject of the email messages: we used &quot;TNC was reset&quot;,</li>
-<li>the <tt class="docutils literal">age</tt> and <tt class="docutils literal">count</tt> fields should be 0 as they are only used for debugging</li>
-<li>the <tt class="docutils literal">timers</tt> field is a list of two values for setting the delay in seconds between reset attempts and check attempts. We found that 60, 600 that provides a 1 min check if an init problems was detected and 10 min check if no problems works</li>
-</ul>
-</dd>
-</dl>
-<p>5) create a <tt class="docutils literal">tncprams.json</tt> based off of <tt class="docutils literal">testtncprams.json</tt> with real email addresses
+<p>5) create a <tt class="docutils literal">tncprams.yaml</tt> based off of <tt class="docutils literal">testtncprams.yaml</tt> with real email addresses
 and <tt class="docutils literal">rmslogdir</tt> being an absolute path to the actual RMS log directory.</p>
 </div>
 <div class="section" id="testing-sequence">

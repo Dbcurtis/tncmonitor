@@ -1,6 +1,6 @@
 ---
-isprototype: 'True'            # delete this line or make False
-SMTPServer: smtp.gmail.com:587 # the default SMTPServer, put in your own
+isprototype: True              # delete or comment this line, or make False
+SMTPServer: smtp.gmail.com:587 # the default SMTPServer, delete or put in your own
 account: account               # the account name for the SMTPServer
 password: password             # and the password
 fromemail: fromemail@jnk.com   # and the from address
@@ -12,12 +12,12 @@ ccemail: []                    # list of cc: recipients
 rmslogdir: C:/RMS/RMS Packet/Logs # absolute path to the RMS log directory
 program: CommandApp_USBRelay   # program to activate the relay
 powerofftime: 10               # number of seconds to unpower
-othermoduleid: 'another module id --comment-- ' # will be removed from the dict because of the --comment--
+# rmslogdiranothermoduleid: 'another module id --comment-- ' # will be removed from the dict because of the --comment--
 moduleid: moduleid             # relay module id 
 relay: relay number            # relay number
 emsub: TNC was reset           # email subject
 age: 0                         # used for debugging
-count: 0                       # used for debuggin
+count: 0                       # used for debugging
 timers:
 - 60                           # number of seconds to wait between log polls when resetting
 - 600                          # number of seconds to wait between log polls when all is working
