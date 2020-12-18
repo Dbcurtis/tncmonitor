@@ -179,7 +179,7 @@ class TestMyEmail(unittest.TestCase):
         import argparse
 
         
-        aa = ['-ld', '-eo', '-t', 'testtncprams.json']
+        aa = ['-ld', '-eo', '-t', 'testtncprams.yaml']
         ns: argparse.Namespace = loadprams.setup_parser(aa)
         prams:Dict[str,Any]=loadprams.get_prams(ns)
         
