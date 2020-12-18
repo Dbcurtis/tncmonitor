@@ -2,10 +2,13 @@
 *.wp[ru]
 
 # ignore all files in the cache
-__pychache__/
+__pycache__/
 
 # ignore all files in the logs dir
 logs/
 
 # my private prams file
 tncprams.json
+tncprams.yaml
+tncprams?*.yaml
+testtncprams.yaml
