@@ -381,25 +381,34 @@ If a problem is detected, the program tuns off the power to the TNC for 60 secon
 An email is sent to specific addresses when this happens.</p>
 <p>We used the &quot;KNACRO SRD-05VDC-SL-C 2-way 5V Relay Module Free driver USB control switch PC intelligent control&quot; USB
 board that we purchased from Amazon.  It comes with a program that will send commands to the board to open and close
-relays on the board.  The relay module has a unique <em>moduleid</em> that must be included as one of the subsequently described parameters.</p>
-<p>The software for Windows and Linux can be found at <a class="reference external" href="http://www.giga.co.za/ocart/index.php?route=product/product&amp;product_id=229">http://www.giga.co.za/ocart/index.php?route=product/product&amp;product_id=229</a> .</p>
+relays on the board.
+The relay module has a unique <em>moduleid</em> that must be included as one of the subsequently described parameters.</p>
+<p>The software for Windows and Linux
+can be found at <a class="reference external" href="http://www.giga.co.za/ocart/index.php?route=product/product&amp;product_id=229">http://www.giga.co.za/ocart/index.php?route=product/product&amp;product_id=229</a> .</p>
 <dl class="docutils">
 <dt>For windows:</dt>
 <dd><p class="first">The application can be invoked from the cmd command line as CommandApp_USBRelay.exe [moduleid] [close | open] [relay-id]</p>
 <p class="last">And if you want a GUI interface, use GuiApp_Engilish.exe</p>
 </dd>
 </dl>
-<p>Linux instructions can be found at <a class="reference external" href="https://github.com/darrylb123/usbrelay">https://github.com/darrylb123/usbrelay</a> . I have not tried a linux implementation of tncmonitor at this time.</p>
+<p>Linux instructions can be found at <a class="reference external" href="https://github.com/darrylb123/usbrelay">https://github.com/darrylb123/usbrelay</a> .
+I have not tried a linux implementation of tncmonitor at this time.</p>
 <dl class="docutils">
 <dt>To test if you have the software correctly installed on Windows 10:</dt>
 <dd><ol class="first last loweralpha simple">
-<li>go to cmd in the same directory as CommandApp_USBRelay.exe and execute <tt class="docutils literal">CommandApp_USBRelay.exe relayid [open|close] NN</tt> where <tt class="docutils literal">NN</tt> is a 2 digit number.</li>
-<li>go to cmd in the same directory as GuiApp_English.exe and execute it.  It will open a window that is pretty obvious how to use it.</li>
+<li>go to cmd in the same directory as CommandApp_USBRelay.exe and
+execute <tt class="docutils literal">CommandApp_USBRelay.exe relayid [open|close] NN</tt> where <tt class="docutils literal">NN</tt> is a 2 digit number.</li>
+<li>go to cmd in the same directory as GuiApp_English.exe and execute it.
+It will open a window that is pretty obvious how to use it.</li>
 </ol>
 </dd>
 </dl>
+<div class="section" id="python-version">
+<h2>Python version</h2>
+<p>I have tested this on windows 10 using python version 3.8.0 using a virtual environment.
+I do not expect it to work using Python 2 or Python 3 prior to 3.7. It &quot;could&quot; work on 3.7, but I have not tried it.</p>
 <div class="section" id="usage-to-monitor-the-tnc-error-logs">
-<h2>Usage to Monitor the TNC Error Logs</h2>
+<h3>Usage to Monitor the TNC Error Logs</h3>
 <dl class="docutils">
 <dt>Invoke the program in accordance with::</dt>
 <dd><p class="first">usage: <tt class="docutils literal">tncmonitor.py <span class="pre">[-h]</span> <span class="pre">[-li]</span> <span class="pre">[-ld]</span> <span class="pre">[-eo]</span> <span class="pre">[-ese]</span> <span class="pre">[-t]</span> pramfile</tt></p>
@@ -456,7 +465,7 @@ relays on the board.  The relay module has a unique <em>moduleid</em> that must 
 </dl>
 </div>
 <div class="section" id="parameter-file">
-<h2>Parameter file</h2>
+<h3>Parameter file</h3>
 <p>The parameters are described in the file <tt class="docutils literal">prototypetncprams.yaml</tt>.  This file should be copied <tt class="docutils literal">tncprams.yaml</tt> and the values provided.</p>
 <p>Additional Parameters are added to the dict created by the above file by the program.
 These include:</p>
@@ -468,23 +477,23 @@ These include:</p>
 Not removed from the file, but no corrsponding dict value will be passed to the program.</p>
 </div>
 <div class="section" id="starting-the-program">
-<h2>Starting the program</h2>
+<h3>Starting the program</h3>
 <p>The program can be manually executed by running <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor tncprams.json</tt> in the tncmonitor directory.
 The tncmonitor program maintains a log at <tt class="docutils literal">./log/tncMonitor</tt>.  The tncmonitor program runs checks the RMS log file directory every 10 minutes
 and responds to the communication error as previously specified.</p>
 <p>Generally, the program should be executed out of the distribution directory when the computer is restarted, or at least at the same time RMS is stvarted.</p>
 </div>
 <div class="section" id="first-time-configuration">
-<h2>First Time Configuration</h2>
-<p>1) run tncmonitor with a command line. For windows: <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor <span class="pre">-h</span></tt>.
+<h3>First Time Configuration</h3>
+<p>1. run tncmonitor with a command line. For windows: <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor <span class="pre">-h</span></tt>.
 For linux: <tt class="docutils literal">python3 <span class="pre">-m</span> tncmonitor <span class="pre">-h</span></tt>.
 Both executed in the tncmonitor directory.
 This verifies that the help switch works
-as it and the starting meesage should be the only output.</p>
-<p>2) edit test_resettnc.py and enter your values for the relay
+as it and the starting message should be the only output.</p>
+<p>2. edit test_resettnc.py and enter your values for the relay
 module id and relay number in the <tt class="docutils literal">argdic</tt> Dict for <tt class="docutils literal">test_01instant</tt>
 because the test program does not use the .yaml configuration file.</p>
-<p>3) run the test, you should hear the relay clicking.  I had to run the test from visual studio code,
+<p>3. run the test, you should hear the relay clicking.  I had to run the test from visual studio code,
 using launch.json of:</p>
 <pre class="literal-block">
 {
@@ -497,19 +506,32 @@ using launch.json of:</p>
   &quot;console&quot;: &quot;integratedTerminal&quot;
 }
 </pre>
-<p>4) create a <tt class="docutils literal">testtncprams.yaml</tt> file based off of <tt class="docutils literal">prototypetncprams.yaml</tt>
-and in the same directory with the email addresses and rmslogdir setup for testing.</p>
-<p>5) create a <tt class="docutils literal">tncprams.yaml</tt> based off of <tt class="docutils literal">testtncprams.yaml</tt> with real email addresses
+<p>4. create a <tt class="docutils literal">testtncprams.yaml</tt> file based off of <tt class="docutils literal">prototypetncprams.yaml</tt>
+and in the same directory with the currect <tt class="docutils literal">SMTPServer</tt> information including the
+account and password as well as  valid email addresses in the <tt class="docutils literal">fromemail</tt>
+and <tt class="docutils literal">toemail</tt> fields.  In addition,
+<tt class="docutils literal">rmslogdir</tt> pointing to a drectory with captured log data for testing (For
+example, data files in the tncmonitor/test/testLogData distribution dirctory).</p>
+<p>5. create a <tt class="docutils literal">tncprams.yaml</tt> based off of <tt class="docutils literal">testtncprams.yaml</tt> with real email addresses
 and <tt class="docutils literal">rmslogdir</tt> being an absolute path to the actual RMS log directory.</p>
 </div>
 <div class="section" id="testing-sequence">
-<h2>Testing Sequence</h2>
-<p>2B compleated</p>
+<h3>Testing Sequence</h3>
+<p>Testing process from the start:
+(I have not verified that you have enough information here to do the tests)</p>
+<ol class="arabic simple">
+<li>verify that test_loadprams.py passes.  If it does not, nothing will work.</li>
+<li>verify that test_resettnc.py passes.  You should hear the relay click.</li>
+<li>verify that test_myemail passes.  Check that you actually receive some test messages.</li>
+<li>verify that test_findlogfile.py passes.</li>
+<li>verify that test_check4noinit.py passes.</li>
+</ol>
 </div>
 <div class="section" id="how-do-i-make-the-html-for-this-file">
-<h2>How do I make the html for this file?</h2>
+<h3>How do I make the html for this file?</h3>
 <p>run makehtml.py</p>
 <p>It will generate the html in the same direcotry.</p>
+</div>
 </div>
 </div>
 </div>

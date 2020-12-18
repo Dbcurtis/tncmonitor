@@ -27,22 +27,33 @@ An email is sent to specific addresses when this happens.
 
 We used the "KNACRO SRD-05VDC-SL-C 2-way 5V Relay Module Free driver USB control switch PC intelligent control" USB
 board that we purchased from Amazon.  It comes with a program that will send commands to the board to open and close
-relays on the board.  The relay module has a unique *moduleid* that must be included as one of the subsequently described parameters.
+relays on the board.  
+The relay module has a unique *moduleid* that must be included as one of the subsequently described parameters.
 
-The software for Windows and Linux can be found at http://www.giga.co.za/ocart/index.php?route=product/product&product_id=229 .
+The software for Windows and Linux 
+can be found at http://www.giga.co.za/ocart/index.php?route=product/product&product_id=229 .
 
 For windows: 
   The application can be invoked from the cmd command line as CommandApp_USBRelay.exe [moduleid] [close | open] [relay-id]
 
   And if you want a GUI interface, use GuiApp_Engilish.exe
 
-Linux instructions can be found at https://github.com/darrylb123/usbrelay . I have not tried a linux implementation of tncmonitor at this time.
+Linux instructions can be found at https://github.com/darrylb123/usbrelay . 
+I have not tried a linux implementation of tncmonitor at this time.
 
 To test if you have the software correctly installed on Windows 10:
-  a) go to cmd in the same directory as CommandApp_USBRelay.exe and execute ``CommandApp_USBRelay.exe relayid [open|close] NN`` where ``NN`` is a 2 digit number.
+  a) go to cmd in the same directory as CommandApp_USBRelay.exe and
+     execute ``CommandApp_USBRelay.exe relayid [open|close] NN`` where ``NN`` is a 2 digit number.
 
-  b) go to cmd in the same directory as GuiApp_English.exe and execute it.  It will open a window that is pretty obvious how to use it.
+  b) go to cmd in the same directory as GuiApp_English.exe and execute it.  
+     It will open a window that is pretty obvious how to use it.
   
+Python version
+---------------
+I have tested this on windows 10 using python version 3.8.0 using a virtual environment.
+I do not expect it to work using Python 2 or Python 3 prior to 3.7. It "could" work on 3.7, but I have not tried it.
+ 
+
 Usage to Monitor the TNC Error Logs
 ======================================
 Invoke the program in accordance with::
@@ -88,19 +99,18 @@ Generally, the program should be executed out of the distribution directory when
 
 First Time Configuration
 ========================
-1) run tncmonitor with a command line. For windows: ``python -m tncmonitor -h``. 
+1. run tncmonitor with a command line. For windows: ``python -m tncmonitor -h``. 
 For linux: ``python3 -m tncmonitor -h``.
 Both executed in the tncmonitor directory.
 This verifies that the help switch works 
-as it and the starting meesage should be the only output.
+as it and the starting message should be the only output.
 
-2) edit test_resettnc.py and enter your values for the relay
+2. edit test_resettnc.py and enter your values for the relay
 module id and relay number in the ``argdic`` Dict for ``test_01instant``
 because the test program does not use the .yaml configuration file.
 
-3) run the test, you should hear the relay clicking.  I had to run the test from visual studio code, 
-using launch.json of:
-::
+3. run the test, you should hear the relay clicking.  I had to run the test from visual studio code, 
+using launch.json of::
 
   {
     "name": "Python: Current File",
@@ -112,16 +122,32 @@ using launch.json of:
     "console": "integratedTerminal"
   }
 
-4) create a ``testtncprams.yaml`` file based off of ``prototypetncprams.yaml`` 
-and in the same directory with the email addresses and rmslogdir setup for testing.
+4. create a ``testtncprams.yaml`` file based off of ``prototypetncprams.yaml`` 
+and in the same directory with the currect ``SMTPServer`` information including the 
+account and password as well as  valid email addresses in the ``fromemail`` 
+and ``toemail`` fields.  In addition, 
+``rmslogdir`` pointing to a drectory with captured log data for testing (For
+example, data files in the tncmonitor/test/testLogData distribution dirctory).
 
-
-5) create a ``tncprams.yaml`` based off of ``testtncprams.yaml`` with real email addresses
+5. create a ``tncprams.yaml`` based off of ``testtncprams.yaml`` with real email addresses
 and ``rmslogdir`` being an absolute path to the actual RMS log directory.
 
 Testing Sequence
 ========================
-2B compleated
+Testing process from the start:
+(I have not verified that you have enough information here to do the tests)
+
+#. verify that test_loadprams.py passes.  If it does not, nothing will work.
+
+#. verify that test_resettnc.py passes.  You should hear the relay click.
+
+#. verify that test_myemail passes.  Check that you actually receive some test messages.
+
+#. verify that test_findlogfile.py passes. 
+
+#. verify that test_check4noinit.py passes.
+
+
 
 
 How do I make the html for this file?
