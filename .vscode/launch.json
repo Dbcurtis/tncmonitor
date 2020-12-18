@@ -11,7 +11,7 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceRoot}/tncmonitor.py",  
-            "args": ["-ld", "-eo", "-ese", "tncprams.yaml"],
+            "args": ["-ld", "-eo", "-ese", "tncpramstest.yaml"],
             "justMyCode": false,
             "console": "integratedTerminal"
         },
