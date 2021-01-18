@@ -11,5 +11,5 @@
     "python.testing.nosetestsEnabled": false,
     "python.terminal.activateEnvironment": true,
     "python.testing.unittestEnabled": true,
-    "python.pythonPath": "tncvenv\\Scripts\\python.exe"
+    "python.pythonPath": ".wvenv\\Scripts\\python.exe"
 }
