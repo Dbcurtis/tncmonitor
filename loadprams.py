@@ -16,7 +16,7 @@ import logging
 from myemail import MyEmail
 
 LOGGER = logging.getLogger(__name__)
-VERSION_DATE = 'loadprams.py v0.2 20201213'
+VERSION_DATE = 'loadprams.py v0.3 20210119'
 
 # the set of required keys in the pram dict
 _legalpramkeyset: Set[str] = frozenset([
