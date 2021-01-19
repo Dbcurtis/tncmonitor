@@ -20,7 +20,7 @@ import myemail
 from myemail import MyEmail
 from findlogfile import FindLogFile
 from check4noInit import Check4noInit
-from loadprams import  get_prams, setup_parser
+from loadprams import get_prams, setup_parser
 
 INResponse = namedtuple('INResponse', 'ok rescode')
 
@@ -33,7 +33,7 @@ _dirok: bool = False
 try:
     LOG_DIR.mkdir(exist_ok=True)
     _dirok = True
-    
+
 except FileNotFoundError as fnfe:
     print(f'Parent file not found in {LOG_DIR}: {fnfe}')
     raise fnfe
@@ -57,7 +57,8 @@ THE_LOGGER = logging.getLogger()
 _FOR_10_MIN: int = 60 * 10
 _FOR_1_MIN: int = 60
 
-def _send_end_email(prams:Dict[str, Any]):
+
+def _send_end_email(prams: Dict[str, Any]):
     """_send_end_email()
     """
     if prams:
@@ -67,11 +68,12 @@ def _send_end_email(prams:Dict[str, Any]):
             addto=prams.get('toemail'),
             addcc=None,
         )
-        _em = myemail.MyEmail(prams.get('emacnt'),emheader)
+        _em = myemail.MyEmail(prams.get('emacnt'), emheader)
         _em.send(
             f'The {VERSION_DATE} is Ending at {asctime(localtime(time()))}')
 
-def _send_start_email(prams:Dict[str, Any]):
+
+def _send_start_email(prams: Dict[str, Any]):
     """[summary]
     """
     if prams:
@@ -81,9 +83,10 @@ def _send_start_email(prams:Dict[str, Any]):
             addto=prams.get('toemail'),
             addcc=None,
         )
-        _em = myemail.MyEmail(prams.get('emacnt'),emheader)
+        _em = myemail.MyEmail(prams.get('emacnt'), emheader)
         _em.send(
             f'The {VERSION_DATE} is Starting at {asctime(localtime(time()))}')
+
 
 class PsudoMain:
     """PsudoMain(prams:Dict)
@@ -97,15 +100,15 @@ class PsudoMain:
 
         self.c4ni = None
         self.prams = copy.copy(prams)
-        self.timeinc:List[float] = [0.0, 2 * 60.0, 10 * 60.0,
-                        30 * 60.0, 60 * 60.0, 120 * 60.0]  # seconds between each email
-        self.timeidx:int = 0
-        self.time_of_last_email:float = None
+        self.timeinc: List[float] = [0.0, 2 * 60.0, 10 * 60.0,
+                                     30 * 60.0, 60 * 60.0, 120 * 60.0]  # seconds between each email
+        self.timeidx: int = 0
+        self.time_of_last_email: float = None
 
-    def __repr__(self)->str:
+    def __repr__(self) -> str:
         return '%s(%r)' % (self.__class__, self.__dict__)
 
-    def gettimeidx(self)->int:
+    def gettimeidx(self) -> int:
         """gettimeids()
 
         """
@@ -114,15 +117,15 @@ class PsudoMain:
             self.timeidx = 0
         return self.timeidx
 
-    def _send_email(self,donotsend:bool)->Dict[str, str]:
+    def _send_email(self, donotsend: bool) -> Dict[str, str]:
         """_send_email  
 
         routine to send the e-mail
         """
-        timenow:float = time()
+        timenow: float = time()
         self.time_of_last_email = timenow
         self.gettimeidx()
-        problems: Dict[str, str]={}
+        problems: Dict[str, str] = {}
         if not donotsend:
             emheader: MyEmail.Email_Arg = MyEmail.Email_Arg(
                 subj=f"{self.prams.get('emsub')}",
@@ -130,29 +133,30 @@ class PsudoMain:
                 addto=self.prams.get('toemail'),
                 addcc=None,
             )
-            
+
             if (self.prams.get('emacnt')):
                 _em = myemail.MyEmail(self.prams.get('emacnt'), emheader)
                 problems = _em.send(
                     f"@{asctime(localtime(timenow))}, {self.prams.get('emsub')}"
                 )
-                        
+
                 if problems:
                     _l = ['']
-                    _l.extend([k + ' -> ' + ss for k, ss
-                                in problems.items()])
-                    _msg:str = '\nError:**'.join(_l)
+                    _l.extend(
+                        [k + ' -> ' + ss for k, ss in problems.items()]
+                    )
+                    _msg: str = '\nError:**'.join(_l)
                     LOGGER.warning(_msg)
                 else:
-                    problems={'sentem':_em.lastemail}
+                    problems = {'sentem': _em.lastemail}
             elif self.prams.get('testing'):
-                problems['testing']='testing mode no email account info'
-                
+                problems['testing'] = 'testing mode no email account info'
+
         else:
-            problems['donotsend']=f'mailtime {asctime(localtime(timenow))}'
+            problems['donotsend'] = f'mailtime {asctime(localtime(timenow))}'
         return problems
 
-    def doit(self, timers=None, count=None, age1:int=None, donotsend:bool=False):
+    def doit(self, timers=None, count=None, age1: int = None, donotsend: bool = False):
         """doit
 
         timers is a tuple for setting the delay between reset attempts and check attempts
@@ -169,7 +173,7 @@ class PsudoMain:
         if age1 is None:
             age1 = self.prams.get('age')
 
-        #--------------------------
+        # --------------------------
         def send_reset_email():
             """set_reset_email()
 
@@ -178,12 +182,13 @@ class PsudoMain:
                 self.timeidx = 0
                 self._send_email(donotsend)
             else:
-                nowis:float = time()
-                nextsched:float = self.time_of_last_email + \
+                nowis: float = time()
+                nextsched: float = self.time_of_last_email + \
                     self.timeinc[self.timeidx]
                 if nowis >= nextsched:
                     self._send_email(donotsend)
-        #--------------------------
+        # --------------------------
+
         def work():
             """work()
 
@@ -205,7 +210,7 @@ class PsudoMain:
             else:
                 self.time_of_last_email = None
                 sleep(timers[1])
-        #--------------------------
+        # --------------------------
 
         try:
             if count > 0:
@@ -233,6 +238,7 @@ def _logsetup():
     THE_LOGGER.addHandler(LF_HANDLER)
     THE_LOGGER.addHandler(LC_HANDLER)
 
+
 def internet_on() -> INResponse:
     import requests
     result: INResponse = INResponse(ok=False, rescode=None)
@@ -246,7 +252,8 @@ def internet_on() -> INResponse:
             result = INResponse(ok=False, rescode=err)
     return result
 
-def _main(startup_delay: float = None)->Dict[str,Any]:
+
+def _main(startup_delay: float = None) -> Dict[str, Any]:
     """_main(Startup_delay=None)
 
     Startup_delay is a float of the number of seconds to wait for the program to actually start
@@ -262,21 +269,21 @@ def _main(startup_delay: float = None)->Dict[str,Any]:
     #loglevel = logging.INFO
     #loglevel = logging.DEBUG
     #loglevel = logging.NOTSET
-    
-    LOGGER.setLevel(logging.INFO) 
+
+    LOGGER.setLevel(logging.INFO)
 
     THE_LOGGER.info("""
 ****************************************************
 tncmonitor executed as main
 ****************************************************""")
 
-
     THE_LOGGER.info('Current Path is: %s', str(os.path.abspath('.')))
 
     args: argparse.Namespace = setup_parser()
-    _ = [THE_LOGGER.info('args:%s, %s', i[0], i[1])
-            for i in vars(args).items()]
-    
+    _ = [
+        THE_LOGGER.info('args:%s, %s', i[0], i[1])
+        for i in vars(args).items()]
+
     loglevel = logging.WARNING
     LC_HANDLER.setLevel(loglevel)
 
@@ -297,9 +304,9 @@ tncmonitor executed as main
     *****************************
         """, VERSION_DATE)
     prams: Dict[str, Any] = get_prams(args)
-    
+
     try:
-        rms_log_path:Path = Path(prams.get('rmslogdir'))
+        rms_log_path: Path = Path(prams.get('rmslogdir'))
         internetok: INResponse = internet_on()
         if not internetok.ok:
             THE_LOGGER.warning('Network error: ' + internetok.rescode)
@@ -326,7 +333,7 @@ tncmonitor executed as main
 
             except (KeyboardInterrupt, SystemExit):
                 raise
-            
+
             except IOError as _e:
                 print(_e.args)
                 print('Input directory {} is not readable'.format(rms_log_path))
@@ -353,11 +360,10 @@ tncmonitor executed as main
 
 
 if __name__ == '__main__':
-    prams:Dict[str,Any] = {}
+    prams: Dict[str, Any] = {}
     try:
         print(f'Starting {VERSION_DATE}')
-        prams=_main(startup_delay=12)  # =120)
-        
+        prams = _main(startup_delay=12)  # =120)
 
     except IOError as ioe:
         THE_LOGGER.exception(ioe)
@@ -369,14 +375,13 @@ if __name__ == '__main__':
 
     except (KeyboardInterrupt, SystemExit) as _:
         pass
-    
+
     except KeyError as ke:
         THE_LOGGER.exception(ke)
         print('pram file incomplete')
 
     if prams.get('start_end_email'):
         _send_end_email(prams)
-        
 
     print("Exiting")
     THE_LOGGER.info("""

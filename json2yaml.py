@@ -27,44 +27,28 @@ def setup_parser() -> argparse.Namespace:
         description='JSON to YAML Convertor')
 
     _parser.add_argument('-li', '--loginfo',
-                         help='enable INFO logging',
-                         action="store_true")
+                        help='enable INFO logging',
+                        action="store_true")
 
     _parser.add_argument('-ld', '--logdebug',
-                         help='enable DEBUG logging',
-                         action="store_true")
-
-    # _parser.add_argument('-eo', '--emailonly', default=False,
-    #                      help='do not attempt to reset the TNC',
-    #                      action="store_true")
+                        help='enable DEBUG logging',
+                        action="store_true")
 
     _parser.add_argument('jinfile', default='sys.stdin', action='store',
-                         help='input parameter file JSON path')
+                        help='input parameter file JSON path')
 
     _parser.add_argument('youtfile', default='sys.stdin', action='store',
-                         help='output parameter file YAML path')
+                        help='output parameter file YAML path')
 
-    # _parser.add_argument('-ese', '--emstartend', default=False, action='store_true',
-    #                      help='enable sending an email when the program starts or ends')
-
-    # _parser.add_argument('-t', '--testdata', default=False, action='store_true',
-    #                      help='use testing data in ./tests/testLogData')
-
-    # _parser.add_argument('rnum', nargs='?', default=1, action='store',
-    # help='Relay number on card, defaults to 1')
-
-    # _parser.add_argument('rsn', nargs='?', default='3X9XI', action='store',
-    # help='Relay card serial number defaults to 3X9XI')
-
-    #result: argparse.Namespace = _parser.parse_args()
-    result:argparse.Namespace=None
+    result: argparse.Namespace = None
     try:
-        result:argparse.Namespace= _parser.parse_args(args)
+        result: argparse.Namespace = _parser.parse_args(args)
     except:
-        jj=sys.exc_info()
-        a=0
-        
+        jj = sys.exc_info()
+        a = 0
+
     return result
+
 
 def json2yaml():
     json_path: Path = Path('tncprams.json')
@@ -79,14 +63,15 @@ def json2yaml():
         docs = yaml.dump(result, fl, sort_keys=True)
         a = 0
     a = 0
-    
+
+
 def ymal2read():
     yaml_path: Path = Path('prototypetncprams.yaml')
-    data:Dict[str,Any]
-    with open(yaml_path,'r') as fl:
-        data=yaml.full_load(fl)
-    
-    a=10
+    data: Dict[str, Any]
+    with open(yaml_path, 'r') as fl:
+        data = yaml.full_load(fl)
+
+    a = 10
     pass
 
 
@@ -105,10 +90,10 @@ def _main():
     #     docs = yaml.dump(result, fl, sort_keys=True)
     #     a = 0
     # a = 0
-    
-    #json2yaml()
+
+    # json2yaml()
     ymal2read()
-    a=0
+    a = 0
 
     pass
 

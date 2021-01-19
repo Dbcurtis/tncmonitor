@@ -12,6 +12,7 @@ from collections import namedtuple
 
 LOGGER = logging.getLogger(__name__)
 
+
 class MyEmail:
     """MyEmail
     A class for sending email meesages via a google account
@@ -99,7 +100,7 @@ class MyEmail:
             Args:
                 msg (str): is the text for the body of the email
                 mtpserver (str, optional): is a SMTP serfer address, Defaults to 'smtp.gmail.com:587' for google smtp
-            
+
 
             Returns:
                 Dict[str,str]: [description]
@@ -121,7 +122,7 @@ class MyEmail:
             logmsg: List[str] = [
                 'Attempt to send e-mail at ',
                 asctime(localtime(time())), ' '
-            ]  # will join the list after it s built
+            ]  # will join the list after it is built
 
             self.lastemail = makemessage()
 
@@ -134,7 +135,7 @@ class MyEmail:
 
             except (KeyboardInterrupt, SystemExit):
                 raise
-            
+
             except SMTPServerDisconnected as _:
                 st_ = str(_)
                 # LOGGER.critical(st_)
@@ -146,10 +147,9 @@ class MyEmail:
                 # LOGGER.critical(st_)
                 self.problems['SMTPError1'] = st_
                 raise _
-            
+
             except BaseException as _:
-                a=0
-                
+                a = 0
 
             finally:
                 server.quit()
@@ -168,7 +168,8 @@ class MyEmail:
 
 
 if __name__ == '__main__':
-
+    from loadprams import get_prams
+    
     acntarg: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
         "your account login", "your account password", "your SMTP Server url")
     emarg: MyEmail.Email_Arg = MyEmail.Email_Arg(

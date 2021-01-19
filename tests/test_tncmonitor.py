@@ -12,8 +12,9 @@ from typing import Any, List, Dict
 
 ppath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ppath)
-from tncmonitor import FindLogFile, Check4noInit, PsudoMain, internet_on, setup_parser, \
-    _send_end_email, _send_start_email, INResponse
+
+# from tncmonitor import FindLogFile, Check4noInit, PsudoMain, internet_on, setup_parser, \
+#     _send_end_email, _send_start_email, INResponse
 
 def execution_path(filename) -> Path: #! TODO you do not know what this is for or what it does
     result: Path = Path(os.path.dirname(
@@ -48,6 +49,7 @@ class TestTncmonitor(unittest.TestCase):
         """
 
         """
+        from tncmonitor import internet_on
         jj: INResponse = internet_on()
         self.assertTrue(jj.ok, 'internet not on')
 
@@ -56,6 +58,7 @@ class TestTncmonitor(unittest.TestCase):
             tests that the check3noinit and findlogfile code is working correctly,
             email is disabled because testing is true and prams['emacnt'] is None
         """
+        from tncmonitor import PsudoMain
         s = self
         pt: Path = execution_path('testLogData')
         pm = PsudoMain({'rmslogdir': str(pt), 'moduleid': '1234a', 'age': 0, 'program': './tests/testecho.bat',
@@ -82,6 +85,8 @@ class TestTncmonitor(unittest.TestCase):
         s.assertTrue('initialization failed' in pm.c4ni.detectedline)
         
     def test_07AAA(self):
+        import loadprams
+        from tncmonitor import PsudoMain
         pt: Path = execution_path('testLogData')
         pm = PsudoMain({'rmslogdir': str(pt), 'moduleid': '1234a', 'age': 0, 'program': './tests/testecho.bat',
                         'relay': '01', 'powerofftime': 1, 'emsub': 'just a test...ignore',
@@ -96,12 +101,15 @@ class TestTncmonitor(unittest.TestCase):
                         'testingaccount': 'junk',
                         'password': 'password'
         })
+        yamlpth: Path =execution_path('testtncprams.yaml')
+        
+        pramdict:Dict[str,Any]=loadprams._setup_basic_prams(yamlpth)
         
         from myemail import MyEmail
         acnt:MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid='K7RVM.R',
-            password='pEPbjVu4hkZctZJKVWlJ', 
-            url='smtp.gmail.com:587')
+            accountid=pramdict['account'],
+            password=pramdict['password'], 
+            url=pramdict['SMTPServer'])
         pm.prams['emacnt']=acnt 
         aa=None
         aa= pm._send_email(True)

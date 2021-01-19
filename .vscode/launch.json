@@ -5,16 +5,9 @@
     "version": "0.2.0",
     "configurations": [ 
 
+
         
-        {
-            "name": "Python tncmonitor",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceRoot}/tncmonitor.py",  
-            "args": ["-ld", "-eo", "-ese", "tncpramstest.yaml"],
-            "justMyCode": false,
-            "console": "integratedTerminal"
-        },
+    
 
         {
             "name": "Python tncmonitor testing",
@@ -52,10 +45,19 @@
             "request": "launch",
             "program": "${file}",
             "args": [],
-            "justMyCode": false,
+            "justMyCode": true,
             "console": "integratedTerminal"
         },
-        
+        {
+            "name": "rst2html",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceRoot}/makehtml.py",  
+            "args": [  ],
+            "justMyCode": false,
+            "console": "integratedTerminal"
+
+        },
         {
             "name": "json 2 yaml",
             "type": "python",

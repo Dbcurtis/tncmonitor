@@ -83,16 +83,16 @@ class Check4noInit:
 
             lines = [line.strip() for line in linesraw]
             lines.reverse()
-            #?
-            #? The returns in the ifs within the for are used to simplify the
-            #? code because of the No detection logger message should only happen after
-            #? all the lines are read, but once the first trigger line is found, no need to complete reading
-            #? the entire file
-            #?
+            # ?
+            # ? The returns in the ifs within the for are used to simplify the
+            # ? code because of the No detection logger message should only happen after
+            # ? all the lines are read, but once the first trigger line is found, no need to complete reading
+            # ? the entire file
+            # ?
             for _ in lines:
                 if '*** Closing - Please standby...' in _ \
-                   or '*** CONNECTED ' in _ \
-                   or '*** DISCONNECTED' in _ \
+                    or '*** CONNECTED ' in _ \
+                    or '*** DISCONNECTED' in _ \
                         or '*** KPC3+ initialization successful' in _ \
                         or '*** Ready' in _:
                     self.detectedline = _

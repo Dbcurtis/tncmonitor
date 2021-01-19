@@ -19,6 +19,9 @@ sys.path.append(ppath)
 
 import myemail
 from myemail import MyEmail
+import loadprams
+
+# 
 
 
 
@@ -173,7 +176,7 @@ class TestMyEmail(unittest.TestCase):
             self.assertFalse(problems)  
             
     def test_04send_goodAccountmulti(self):
-        print('remove private data from this test')
+        
         from myemail import MyEmail
         import loadprams
         import argparse
