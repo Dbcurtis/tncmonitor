@@ -1,6 +1,6 @@
 .. This is the README file for the tncmonitor Python 3 module.
   From inside a python 3 virtual environment that has spinx installed,
-  use "rst2html README.rst readme.html" to convert file to html
+  use "makehtml.py" to convert file to html
 
 ####################
 TNCMONITOR Overview
@@ -70,8 +70,13 @@ using a virtual environment.
 I do not expect it to work using Python 2 or Python 3 
 prior to 3.7. It "could" work on 3.7, but I have not tried it.
 
+Use a virtual Python envrionment that has installed the modules listed in
+``requirements.txt``.  Run the program from a ``cmd`` shell after every reboot 
+of the computer.  It should start executing after RMS has started.
+
 Usage to Monitor the TNC Error Logs
 ======================================
+
 Invoke the program in accordance with:
   usage: ``tncmonitor.py [-h] [-li] [-ld] [-eo] [-ese] [-t] pramfile``
 
@@ -97,7 +102,10 @@ Parameter file
 ==============
 The parameters are described in the 
 file ``prototypetncprams.yaml``.  This file should be 
-copied ``tncprams.yaml`` and the values provided.
+copied into ``./tests/tncprams.yaml`` and the values provided.
+
+In addition, the tncprams.yaml should be copied to the tests directory 
+with any changes that may be needed for testing.
 
 Additional Parameters are added to the dict created by 
 the above file by the program.
@@ -109,41 +117,46 @@ These include:
   the "rmslogdir" as the source to the rms logger data 
   (doesn't do anything)
 
-In addition, if a value includes ``--comment--``, that key and 
+In addition, if a value or key in the ``yaml`` file
+includes ``--comment--``, that key and 
 value will removed when the file is processed.
 Not removed from the file, but no corrsponding dict 
 value will be passed to the program.
 
 Starting the program
 ====================
-The program can be manually executed by 
-running ``python -m tncmonitor tncprams.json`` in the tncmonitor 
+After the python virtual envionment is configured and activated
+(search for python virtual envionment for Windows 10) 
+the program can be manually executed in ``cmd`` by 
+running ``python -m tncmonitor tncprams.yaml`` in the tncmonitor 
 directory.
 The tncmonitor program maintains a 
-log at ``./log/tncMonitor``.  The tncmonitor program runs 
+log at ``./log/tncMonitor``.  The tncmonitor program
 checks the RMS log file directory every 10 minutes
 and responds to the communication error as previously specified.
 
 Generally, the program should be executed out of the 
 distribution directory when the computer is restarted, 
-or at least at the same time RMS is started.
+or at least at or after the same time RMS is started.
 
 First Time Configuration
 ========================
-1. run tncmonitor with a command line. 
+1. activate the python virtual environment.
+
+#. run tncmonitor with a command line. 
    For windows: ``python -m tncmonitor -h``. 
    For linux: ``python3 -m tncmonitor -h``.
    Both executed in the tncmonitor directory.
    This verifies that the help switch works 
    as it and the starting message should be the only output.
 
-2. edit test_resettnc.py and enter your values for the relay
+#. edit test_resettnc.py at approx. line 75 and enter your values for the relay
    module id and relay number in the ``argdic`` Dict 
-   for ``test_01instant``
-   because the test program does not use the .yaml 
+   for ``test_01instant``.
+   This is needed because the test program does not use the .yaml 
    configuration file.
 
-3. run the test, you should hear the relay clicking.  
+#. run the test, you should hear the relay clicking.  
    I ran the test from visual studio code, 
    using launch.json of:
 
@@ -155,23 +168,23 @@ First Time Configuration
       "request": "launch",
       "program": "${file}",
       "args": [ ],
-      "justMyCode": false,
+      "justMyCode": true,
       "console": "integratedTerminal"
     }
 
-4. create a ``testtncprams.yaml`` file based off 
+#. create a ``./tests/testtncprams.yaml`` file based off 
    of ``prototypetncprams.yaml`` 
    and in the same directory with the currect ``SMTPServer`` 
    information including the 
    account and password as well as  valid email addresses 
    in the ``fromemail`` 
    and ``toemail`` fields.  In addition, 
-   ``rmslogdir`` needs to point to a drectory with captured log data 
+   ``rmslogdir`` needs to point to a directory with captured log data 
    for testing (For
    example, data files in the tncmonitor/test/testLogData distribution 
    dirctory).
 
-5. create a ``tncprams.yaml`` based off of ``testtncprams.yaml`` 
+#. create a ``tncprams.yaml`` based off of ``testtncprams.yaml`` 
    with real email addresses and ``rmslogdir`` being an absolute 
    path to the actual RMS log directory.
 
@@ -198,13 +211,14 @@ do the tests)
 How do I make the requirements.txt file?
 =========================================
 
-See: https://blog.jcharistech.com/2020/11/02/how-to-create-requirements-txt-file-in-python/
+See: 
+https://blog.jcharistech.com/2020/11/02/how-to-create-requirements-txt-file-in-python/
 
 Read about ``Pipreqs``.
 
 
 How do I make the html for this file?
 =====================================
-run makehtml.py
+run ``makehtml.py`` in the same directory wherein this file is located.
 
-It will generate the html in the same direcotry.
+It will generate the .html file in the same directory.

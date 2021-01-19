@@ -365,7 +365,7 @@ ul.auto-toc {
 
 <!-- This is the README file for the tncmonitor Python 3 module.
 From inside a python 3 virtual environment that has spinx installed,
-use "rst2html README.rst readme.html" to convert file to html -->
+use "makehtml.py" to convert file to html -->
 <p>This module is a tool for detecting when the RMS Packet
 software has lost communications with the attached TNC.</p>
 <div class="section" id="the-problem">
@@ -420,6 +420,9 @@ It will open a window that is pretty obvious how to use it.</li>
 using a virtual environment.
 I do not expect it to work using Python 2 or Python 3
 prior to 3.7. It &quot;could&quot; work on 3.7, but I have not tried it.</p>
+<p>Use a virtual Python envrionment that has installed the modules listed in
+<tt class="docutils literal">requirements.txt</tt>.  Run the program from a <tt class="docutils literal">cmd</tt> shell after every reboot
+of the computer.  It should start executing after RMS has started.</p>
 <div class="section" id="usage-to-monitor-the-tnc-error-logs">
 <h3>Usage to Monitor the TNC Error Logs</h3>
 <dl class="docutils">
@@ -482,7 +485,9 @@ subsequently described <tt class="docutils literal">.yaml</tt> file.</dd>
 <h3>Parameter file</h3>
 <p>The parameters are described in the
 file <tt class="docutils literal">prototypetncprams.yaml</tt>.  This file should be
-copied <tt class="docutils literal">tncprams.yaml</tt> and the values provided.</p>
+copied into <tt class="docutils literal">./tests/tncprams.yaml</tt> and the values provided.</p>
+<p>In addition, the tncprams.yaml should be copied to the tests directory
+with any changes that may be needed for testing.</p>
 <p>Additional Parameters are added to the dict created by
 the above file by the program.
 These include:</p>
@@ -493,27 +498,32 @@ without trying to reset the relay</li>
 the &quot;rmslogdir&quot; as the source to the rms logger data
 (doesn't do anything)</li>
 </ul>
-<p>In addition, if a value includes <tt class="docutils literal"><span class="pre">--comment--</span></tt>, that key and
+<p>In addition, if a value or key in the <tt class="docutils literal">yaml</tt> file
+includes <tt class="docutils literal"><span class="pre">--comment--</span></tt>, that key and
 value will removed when the file is processed.
 Not removed from the file, but no corrsponding dict
 value will be passed to the program.</p>
 </div>
 <div class="section" id="starting-the-program">
 <h3>Starting the program</h3>
-<p>The program can be manually executed by
-running <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor tncprams.json</tt> in the tncmonitor
+<p>After the python virtual envionment is configured and activated
+(search for python virtual envionment for Windows 10)
+the program can be manually executed in <tt class="docutils literal">cmd</tt> by
+running <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor tncprams.yaml</tt> in the tncmonitor
 directory.
 The tncmonitor program maintains a
-log at <tt class="docutils literal">./log/tncMonitor</tt>.  The tncmonitor program runs
+log at <tt class="docutils literal">./log/tncMonitor</tt>.  The tncmonitor program
 checks the RMS log file directory every 10 minutes
 and responds to the communication error as previously specified.</p>
 <p>Generally, the program should be executed out of the
 distribution directory when the computer is restarted,
-or at least at the same time RMS is started.</p>
+or at least at or after the same time RMS is started.</p>
 </div>
 <div class="section" id="first-time-configuration">
 <h3>First Time Configuration</h3>
 <ol class="arabic">
+<li><p class="first">activate the python virtual environment.</p>
+</li>
 <li><p class="first">run tncmonitor with a command line.
 For windows: <tt class="docutils literal">python <span class="pre">-m</span> tncmonitor <span class="pre">-h</span></tt>.
 For linux: <tt class="docutils literal">python3 <span class="pre">-m</span> tncmonitor <span class="pre">-h</span></tt>.
@@ -521,10 +531,10 @@ Both executed in the tncmonitor directory.
 This verifies that the help switch works
 as it and the starting message should be the only output.</p>
 </li>
-<li><p class="first">edit test_resettnc.py and enter your values for the relay
+<li><p class="first">edit test_resettnc.py at approx. line 75 and enter your values for the relay
 module id and relay number in the <tt class="docutils literal">argdic</tt> Dict
-for <tt class="docutils literal">test_01instant</tt>
-because the test program does not use the .yaml
+for <tt class="docutils literal">test_01instant</tt>.
+This is needed because the test program does not use the .yaml
 configuration file.</p>
 </li>
 <li><p class="first">run the test, you should hear the relay clicking.
@@ -537,19 +547,19 @@ using launch.json of:</p>
   &quot;request&quot;: &quot;launch&quot;,
   &quot;program&quot;: &quot;${file}&quot;,
   &quot;args&quot;: [ ],
-  &quot;justMyCode&quot;: false,
+  &quot;justMyCode&quot;: true,
   &quot;console&quot;: &quot;integratedTerminal&quot;
 }
 </pre>
 </li>
-<li><p class="first">create a <tt class="docutils literal">testtncprams.yaml</tt> file based off
+<li><p class="first">create a <tt class="docutils literal">./tests/testtncprams.yaml</tt> file based off
 of <tt class="docutils literal">prototypetncprams.yaml</tt>
 and in the same directory with the currect <tt class="docutils literal">SMTPServer</tt>
 information including the
 account and password as well as  valid email addresses
 in the <tt class="docutils literal">fromemail</tt>
 and <tt class="docutils literal">toemail</tt> fields.  In addition,
-<tt class="docutils literal">rmslogdir</tt> needs to point to a drectory with captured log data
+<tt class="docutils literal">rmslogdir</tt> needs to point to a directory with captured log data
 for testing (For
 example, data files in the tncmonitor/test/testLogData distribution
 dirctory).</p>
@@ -578,13 +588,14 @@ Check that you actually receive some test messages.</li>
 </div>
 <div class="section" id="how-do-i-make-the-requirements-txt-file">
 <h3>How do I make the requirements.txt file?</h3>
-<p>See: <a class="reference external" href="https://blog.jcharistech.com/2020/11/02/how-to-create-requirements-txt-file-in-python/">https://blog.jcharistech.com/2020/11/02/how-to-create-requirements-txt-file-in-python/</a></p>
+<p>See:
+<a class="reference external" href="https://blog.jcharistech.com/2020/11/02/how-to-create-requirements-txt-file-in-python/">https://blog.jcharistech.com/2020/11/02/how-to-create-requirements-txt-file-in-python/</a></p>
 <p>Read about <tt class="docutils literal">Pipreqs</tt>.</p>
 </div>
 <div class="section" id="how-do-i-make-the-html-for-this-file">
 <h3>How do I make the html for this file?</h3>
-<p>run makehtml.py</p>
-<p>It will generate the html in the same direcotry.</p>
+<p>run <tt class="docutils literal">makehtml.py</tt> in the same directory wherein this file is located.</p>
+<p>It will generate the .html file in the same directory.</p>
 </div>
 </div>
 </div>
