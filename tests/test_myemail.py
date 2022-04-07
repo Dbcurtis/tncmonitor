@@ -1,18 +1,18 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """
 Test file for myemail
 """
 import os
 import sys
-from typing import List, Any, Dict, Tuple
-import platform
-from time import sleep
-from smtplib import SMTP, SMTPAuthenticationError, SMTPServerDisconnected
+from typing import (List, Any, Dict, Tuple, NamedTuple,)
+#import platform
+#from time import sleep
+from smtplib import (SMTP, SMTPAuthenticationError, SMTPServerDisconnected,)
 #import subprocess
 #from subprocess import CompletedProcess
 #import inspect
 import unittest
-from pathlib import Path
+from pathlib import (Path,)
 
 ppath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ppath)
@@ -21,7 +21,7 @@ import myemail
 from myemail import MyEmail
 import loadprams
 
-# 
+
 
 
 
@@ -46,22 +46,56 @@ class TestMyEmail(unittest.TestCase):
         #a = 1
         pass
 
+    def test_limitlinelength(self):
+        acct1: MyEmail.Accntarg = MyEmail.Accntarg(
+            accountid="jjj", password="kkk",
+            url='')
+        emdata1: MyEmail.Emailarg = MyEmail.Emailarg(
+            subj="mysubject1",
+            fremail="somebody@junk.jnk",
+            addto="to@junk.jnk",
+            addcc="cc@junk.jnk",
+        )
+        ss:MyEmail = MyEmail(acct1,emdata1)
+        line:str = ss._limit_line_length('')
+        self.assertFalse(line)
+        shortlineofspaces:str = '      '
+        line= ss._limit_line_length(shortlineofspaces)
+        self.assertFalse(line)
+        
+        longlineofspaces:str = ''.join([' ' for _ in range(90)])
+        line= ss._limit_line_length(longlineofspaces)
+        self.assertFalse(line)
+        
+        
+        ashortline:str = """This is a short line of text"""
+        line= ss._limit_line_length(ashortline)
+        self.assertEqual(ashortline,line)
+        alonglineoftext =' '.join([ashortline for _ in range(40)])
+        
+        line = ss._limit_line_length(alonglineoftext)
+        lines:List[str] = line.split('\n')
+        self.assertEqual(len(lines),17)
+        
+        
+        
+        
     def test_01instant(self):
         """test_01instant
 
         """
-        acct1: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
+        acct1: MyEmail.Accntarg = MyEmail.Accntarg(
             accountid="jjj", password="kkk",
-            url=None)
-        emdata1: MyEmail.Email_Arg = MyEmail.Email_Arg(
+            url='')
+        emdata1: MyEmail.Emailarg = MyEmail.Emailarg(
             subj="mysubject1",
             fremail="somebody@junk.jnk",
             addto="to@junk.jnk",
             addcc="cc@junk.jnk",
         )
 
-        bbb = "Accnt_Arg(accountid='jjj', password='kkk', url=None)"
-        aaa = "Email_Arg(subj='mysubject1', fremail='somebody@junk.jnk', addto='to@junk.jnk', addcc='cc@junk.jnk')"
+        bbb = "Accntarg(accountid='jjj', password='kkk', url='')"
+        aaa = "Emailarg(subj='mysubject1', fremail='somebody@junk.jnk', addto='to@junk.jnk', addcc='cc@junk.jnk')"
 
         self.assertEqual(bbb, str(acct1))
         self.assertEqual(aaa, str(emdata1))
@@ -72,10 +106,10 @@ class TestMyEmail(unittest.TestCase):
         self.assertEqual("jjj", acct1.accountid)
         self.assertEqual("kkk", acct1.password)
 
-        acct2: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
+        acct2: MyEmail.Accntarg = MyEmail.Accntarg(
             accountid="jjjj", password="kkkk",
-            url=None)
-        emdata2: MyEmail.Email_Arg = MyEmail.Email_Arg(
+            url='')
+        emdata2: MyEmail.Emailarg = MyEmail.Emailarg(
             subj="mysubject2",
             fremail="somebody@junk.jnk",
             addto=["to1@junk.jnk", "to2@junk.jnk"],
@@ -95,9 +129,9 @@ class TestMyEmail(unittest.TestCase):
         
     def test_02send_badAccount(self):
         from myemail import MyEmail
-        acct1: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
-            accountid="jjj", password="kkk", url=None)
-        emdata1: MyEmail.Email_Arg = MyEmail.Email_Arg(
+        acct1: MyEmail.Accntarg = MyEmail.Accntarg(
+            accountid="jjj", password="kkk", url='')
+        emdata1: MyEmail.Emailarg = MyEmail.Emailarg(
             subj="mysubject1",
             fremail="somebody@junk.jnk",
             addto="to@junk.jnk",
@@ -123,7 +157,7 @@ class TestMyEmail(unittest.TestCase):
             self.assertEqual(1,len(mem.problems))
             self.assertFalse(problems)     
         
-        acct2: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
+        acct2: MyEmail.Accntarg = MyEmail.Accntarg(
             accountid="jjj", password="kkk", url="smtp.gmail.com:587")
 
         problems.clear()
@@ -153,8 +187,8 @@ class TestMyEmail(unittest.TestCase):
         import loadprams
         import argparse
         
-        aa = ['-ld', '-eo', '-t', 'testtncprams.yaml']
-        ns: argparse.Namespace = loadprams.setup_parser(aa)
+        fakeargs:List[str] = ['-ld', '-eo', '-t', './tests/testtncprams.yaml']
+        ns: argparse.Namespace = loadprams.setup_parser(fakeargs)
         prams:Dict[str,Any]=loadprams.get_prams(ns)
         
         mem:MyEmail = MyEmail(prams['emacnt'],prams['emhead'])
@@ -163,7 +197,7 @@ class TestMyEmail(unittest.TestCase):
             problems = mem.send("body, just ignore this message")
             self.assertFalse(problems)
             aa:str = 'From: k7rvm.r@gmail.com\nTo: dbcurtis@gmail.com, rita.derbas@gmail.com, k7rvm.r@gmail.com\nSubject: TNC was reset test --- ignore this message\n\nbody, just ignore this message'
-            self.assertEqual(aa,mem.lastemail)
+            self.assertEqual(aa,mem.currentemail)
         
         except SMTPAuthenticationError as _:
             self.fail(f'authn: {str(_)}')
@@ -182,13 +216,14 @@ class TestMyEmail(unittest.TestCase):
         import argparse
 
         
-        aa = ['-ld', '-eo', '-t', 'testtncprams.yaml']
+        aa = ['-ld', '-eo', '-t', './tests/testtncprams.yaml']
         ns: argparse.Namespace = loadprams.setup_parser(aa)
         prams:Dict[str,Any]=loadprams.get_prams(ns)
-        
+        ab:Any= prams['emhead']
+        ab.addcc.append('dbcurtis@dbcrd.net')
         
         problems={}
-        mem:MyEmail =MyEmail(prams['emacnt'],prams['emhead'])
+        mem:MyEmail =MyEmail(prams['emacnt'],ab)
         try:
             problems = mem.send("body, test multiple cc and to just ignore this message")
             self.assertFalse(problems)

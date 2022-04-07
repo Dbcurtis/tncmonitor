@@ -1,14 +1,16 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """ email
 
     Module to send e-mail via a goggle account
 """
-from typing import Any, Union, Tuple, Callable, TypeVar, Generic, Sequence, Mapping, List, Dict, Set, Deque
+from typing import (Any, List, Dict, NamedTuple, Deque, Generator,)
+#from typing import (Any, Union, Tuple, Callable, TypeVar, Generic, Sequence, Mapping, List, Dict, Set, Deque,)
 import smtplib  # * see: https://docs.python.org/3.8/library/smtplib.html
-from smtplib import SMTP, SMTPAuthenticationError, SMTPServerDisconnected
+from smtplib import (SMTP, SMTPAuthenticationError, SMTPServerDisconnected,)
+from collections import deque
 import logging
-from time import asctime, localtime, time
-from collections import namedtuple
+from time import (asctime, localtime, time,)
+import textwrap
 
 LOGGER = logging.getLogger(__name__)
 
@@ -19,17 +21,24 @@ class MyEmail:
 
     """
 
-    # named tuple arguments
-    Email_Arg = namedtuple('Email_Arg', "subj fremail addto addcc")
-    """
-    named tuple that contains the from, to and cc addresses for the email
-    """
-    Accnt_Arg = namedtuple('Accnt_Arg', "accountid password url")
-    """
-    named tuple that contains the login information for the SMTP server
-    """
+    @staticmethod
+    def _limit_line_length(instr:str)->str:
+        return  textwrap.fill(instr)
 
-    def __init__(self, acct: Accnt_Arg, emdata: Email_Arg):
+    # named tuple that contains the from, to and cc addresses for the email
+    class Emailarg(NamedTuple):
+        subj: str = ''
+        fremail: str = ''  # from email
+        addto: List[str] | str = ''
+        addcc: List[str] | str = ''
+
+    # named tuple that contains the login information for the SMTP server
+    class Accntarg(NamedTuple):
+        accountid: str = ''
+        password: str = ''
+        url: str = ''
+
+    def __init__(self, acct: Accntarg, emdata: Emailarg):
         """MyEmail(tolist)
 
         the emdata contains the subject, the from-address, the to-addresses, and the cc-addresses
@@ -39,9 +48,12 @@ class MyEmail:
         The content of the email is inserted by the send method
         """
 
-        self.emdata: MyEmail.Email_Arg = emdata
-        self.accnt: MyEmail.Accnt_Arg = acct
-        self.problems: Dict[str, str] = {}
+        self.emdata: MyEmail.Emailarg = emdata
+        self.accnt: MyEmail.Accntarg = acct
+        self.problems: Dict[Any, Any] = {}
+        self.currentemail: str | None = None
+        self.hist: Deque[Any] = deque([Any], maxlen=20)
+        self.currentemail: str | None = None
 
         def _make_header() -> str:
             """
@@ -63,7 +75,7 @@ class MyEmail:
             _aa = self.emdata.addcc
             if _aa:
                 if isinstance(_aa, list):
-                    _aa = ", ".join(self.emdata.addto)
+                    _aa = ", ".join(self.emdata.addcc)
 
                 ccstr: str = _aa.strip()
 
@@ -75,7 +87,6 @@ class MyEmail:
 
         self.header: str = _make_header()
         # ! TODO perhaps have this be current email and add a fixed length dequeue for history
-        self.lastemail: str = None
 
     def __str__(self) -> str:
         return f'Header: {self.header}'
@@ -113,9 +124,11 @@ class MyEmail:
                 combines the self.header with the msg
 
                 """
-                #! RFC 5322 2.1.1 suggests 78 characters per line
-                #! TODO handle this intelegently
-                mess: str = f'{self.header}{msg}'
+                # RFC 5322 2.1.1 suggests 78 characters per line
+                #amsg:str = self._limit_line_length(msg)
+                amsg: str = textwrap.fill(msg)
+
+                mess: str = f'{self.header}{amsg}'
                 return mess
             # ---------------------
 
@@ -124,14 +137,13 @@ class MyEmail:
                 asctime(localtime(time())), ' '
             ]  # will join the list after it is built
 
-            self.lastemail = makemessage()
-
-            server: SMTP = SMTP(self.accnt.url)
+            self.currentemail = makemessage()
             try:
-                server.starttls()  # start tls protection
-                server.login(self.accnt.accountid, self.accnt.password)
-                self.problems = server.sendmail(
-                    self.accnt.accountid, self.emdata.addto, self.lastemail)  # send the message
+                with SMTP(self.accnt.url) as server:
+                    server.starttls()  # start tls protection
+                    server.login(self.accnt.accountid, self.accnt.password)
+                    self.problems= server.sendmail(
+                        self.accnt.accountid, self.emdata.addto, self.currentemail)  # send the message
 
             except (KeyboardInterrupt, SystemExit):
                 raise
@@ -143,7 +155,7 @@ class MyEmail:
                 raise _
 
             except SMTPAuthenticationError as _:
-                st_ = f'error: {str(_.smtp_code)}, err: {_.smtp_error.decode()}'
+                st_ = f'error: {str(_.smtp_code)}, err: {_.smtp_error}'  #do I need a decode here?
                 # LOGGER.critical(st_)
                 self.problems['SMTPError1'] = st_
                 raise _
@@ -152,7 +164,7 @@ class MyEmail:
                 a = 0
 
             finally:
-                server.quit()
+                #server.quit()
                 if self.problems:
                     logmsg.append('failed')
                 else:
@@ -169,14 +181,14 @@ class MyEmail:
 
 if __name__ == '__main__':
     from loadprams import get_prams
-    
-    acntarg: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
+
+    acntarg: MyEmail.Accntarg = MyEmail.Accntarg(
         "your account login", "your account password", "your SMTP Server url")
-    emarg: MyEmail.Email_Arg = MyEmail.Email_Arg(
+    emarg: MyEmail.Emailarg = MyEmail.Emailarg(
         "test email- ignore", "your from email address", ['receiver1@gmail.com', 'receiver2@gmail.com'], [],)
-    acntarg: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(  # ! delete this line
+    acntarg: MyEmail.Accntarg = MyEmail.Accntarg(  # ! delete this line
         'K7RVM.R', 'pEPbjVu4hkZctZJKVWlJ', 'smtp.gmail.com:587')  # ! delete this line
-    emarg: MyEmail.Email_Arg = MyEmail.Email_Arg(  # ! delete this line
+    emarg: MyEmail.Emailarg = MyEmail.Emailarg(  # ! delete this line
         "test email- ignore", "k7rvm.r@gmail.com", ["dbcurtis@gmail.com", "k7rvm.r@gmail.com"], ["rita.derbas@gmail.com"],)  # ! delete this line
     EM = MyEmail(acntarg, emarg)
     MY_PROBLEMS = EM.send('Email to test the myemail.py main call\n')
