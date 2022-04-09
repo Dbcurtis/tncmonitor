@@ -1,15 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """
 Test file for findlogfile
 """
 import os
 import sys
-from typing import List, Any, Dict, Tuple
+from typing import (List, Any, Dict, Tuple,)
 import platform
-from time import sleep
-import subprocess
-from subprocess import CompletedProcess
-import inspect
+#from time import sleep
+#import subprocess
+#from subprocess import CompletedProcess
+#import inspect
 import unittest
 from pathlib import Path
 
@@ -87,20 +87,22 @@ class TestFindlogfile(unittest.TestCase):
         
         dip:Path = self.setdir()
         flf:FindLogFile = FindLogFile({},dip)
-        result:Path = flf.doit(-1)
+        result:Path|None = flf.doit(-1)
         self.assertTrue(result is None)
         result = flf.doit(1000)
         self.assertTrue(result is None)
         result = flf.doit(8)
         self.assertTrue(result is None)
         
-        result0:Path = flf.doit(0)
-        resultn:Path = flf.doit(None)
-        self.assertEqual(result0, resultn)       
+        result0:Path|None = flf.doit(0)
+        resultn:Path|None = flf.doit(None)
+        resultnt:Path|None = flf.doit('0')
+        self.assertEqual(result0, resultn)    
+        self.assertEqual(result0, resultnt)   
         self.assertTrue('20180615.log' in str(result0))
         self.assertTrue('RMS Packet TNC Events' in str(result0))
-        result1:Path = flf.doit(1)
-        result7:Path = flf.doit(7)
+        result1:Path|None = flf.doit(1)
+        result7:Path|None = flf.doit(7)
         self.assertTrue('20180614.log' in str(result1))
         self.assertTrue('20180608.log' in str(result7))
         

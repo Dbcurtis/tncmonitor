@@ -1,12 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """ resettnc
 
 Module to reset a device by removing power
 from the device and then
 restoring power after a short delay.
 """
-from typing import Any, Union, Tuple, Callable, TypeVar, Generic, \
-    Sequence, Mapping, List, Dict, Set, Deque
+import os
+#import sys
+# from typing import (Any, NamedTuple, Tuple,  TypeVar, Generic, Sequence,
+#                     Mapping, List, Dict, Set, Deque,)
+from typing import (Any,  Tuple,  List, Dict,  Deque,)
 import subprocess
 from subprocess import CompletedProcess
 import time
@@ -25,12 +28,14 @@ class ResetTNC:
     Class used to turn off the power of the TNC and then turn it back on
     """
 
-    def __init__(self, prams: Dict[str, str], debug_program: Path = None, hist_size: int = 20):
+    def __init__(self, prams: Dict[str, str],
+                 debug_program: Path = Path(os.getcwd()),
+                 hist_size: int = 20,):
         """[summary]
 
         Args:
             prams ([Dict[str,str]]): {'moduleid': 'modid',
-            'relay': 'relaynyum like 01',
+            'relay': 'relaynum like 01',
             "program": "CommandApp_USBRelay",
             "powerofftime": float seconds,}
             debug_program ([type], optional): [description]. Defaults to None.
@@ -41,10 +46,10 @@ class ResetTNC:
         """
         self.prams: Dict[str, str] = prams
         if debug_program is None:
-            self.program: str = prams.get('program')
+            self.program: Any = prams.get('program')
         else:
-            self.program: str = debug_program
-        self.cpi: CompletedProcess = None
+            self.program: Any = debug_program
+        self.cpi:Any= None
         self.state: str = 'Unknown'
         self.history: Deque[Tuple[str, ...]] = deque(maxlen=hist_size)
         self.powerup()
@@ -53,9 +58,7 @@ class ResetTNC:
         return '%s(%r)' % (self.__class__, self.__dict__)
 
     def __str__(self) -> str:
-        result: str = ''
-        result = f'TNC prams:{self.prams}, state: {self.state}'
-        return result
+        return f'TNC prams:{self.prams}, state: {self.state}'
 
     def powerdown(self):
         """powerdown()
@@ -117,18 +120,19 @@ class ResetTNC:
             (time.asctime(time.localtime(time.time())), self.state)
         )
 
-    def doit(self, delay=None):
+    def doit(self, delay:None|str|float=None):
         """doit
 
         Opens the relay, waits for delay seconds then closes the relay.
         delay is the number of seconds to leave the power off
         """
+        delaya:Any = 0.0 #str|float|None=0.0
         if self.cpi.returncode == 0:
             if delay is None:
-                delay = self.prams.get('powerofftime')
+                delaya = float(self.prams.get('powerofftime'))
             LOGGER.info('TNC Reset initiated')
             self.powerdown()
-            sleep(delay)
+            sleep(float(delaya))
             self.powerup()
 
 
@@ -159,12 +163,12 @@ def _main():
                                                     encoding='ascii',
                                                     )
 
-        if not 'java version' in CPI_TEST.stderr:
+        if 'java version' not in CPI_TEST.stderr:
             print(CPI_TEST)
             raise ValueError('Incorrect subprocess return, is java installed?')
         finished: bool = False
-        modid: str = None
-        relayid: str = None
+        modid: str = ''
+        relayid: str = ''
 
         while not finished:
             modid = input('\n\nenter the module id: something like 3D0V2 ->\n')
@@ -180,7 +184,7 @@ def _main():
             'moduleid': modid,
             'relay': relayid,
             "program": "CommandApp_USBRelay",
-            "powerofftime": 0.75,
+            "powerofftime": '0.75',
 
         }
         TNC: ResetTNC = ResetTNC(_prms, hist_size=10)  # powers up on creation
@@ -190,14 +194,14 @@ def _main():
             print(TNC.cpi)
         else:
             flag: int = 1
-            CNT = 10
+            cnt = 10
             print('You should hear the relay clicking...')
-            while CNT > 0:  # opens and closes the relay 10 times.
-                CNT -= 1
+            while cnt > 0:  # opens and closes the relay 10 times.
+                cnt -= 1
                 TNC.doit()
                 print(flag, end='')
                 flag += 1
-                sleep(_prms.get('powerofftime', 2))
+                sleep(float(_prms.get('powerofftime', 2)))
             # for a,b in TNC.history:
             #     print(a,b)
 
@@ -213,7 +217,7 @@ if __name__ == '__main__':
     THE_LOGGER = logging.getLogger()
 
     try:
-        print("Starting {}".format(VERSION_DATE))
+        print(f"Starting {VERSION_DATE}")
         _main()
         print('\nThe Line above should be "12345678910"')
 
@@ -230,7 +234,7 @@ if __name__ == '__main__':
         print(_)
 
     except (KeyboardInterrupt, SystemExit):
-        pass
+        raise
 
     print("Exiting")
     THE_LOGGER.info("""

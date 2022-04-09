@@ -1,12 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """ loadprams
 
 module to parse the arguments and load the parameter file
 
 """
 import sys
-from typing import Any, Union, Tuple, Callable, TypeVar, Generic, \
-    Sequence, Mapping, List, Dict, Set, Deque
+from typing import (Any, List, Dict, Set,  FrozenSet,)
+
+# from typing import (Any, Union, Tuple, Callable, TypeVar, Generic, 
+#     Sequence, Mapping, List, Dict, Set, Deque, FrozenSet,)
 
 import subprocess
 from pathlib import Path
@@ -19,7 +21,7 @@ LOGGER = logging.getLogger(__name__)
 VERSION_DATE = 'loadprams.py v0.3 20210119'
 
 # the set of required keys in the pram dict
-_legalpramkeyset: Set[str] = frozenset([
+_legalpramkeyset: FrozenSet[str] = frozenset([
 
     "SMTPServer",
     "account",
@@ -77,6 +79,24 @@ def setup_parser(args: List[str] = sys.argv) -> argparse.Namespace:
     return _parser.parse_args(args)
 
 
+def remove_comments(fromymal: Dict[str, Any], key_s: Set[str], cmtkey_l: List[str]):
+    """_summary_
+
+    Args:
+        fromymal (Dict[str, Any]): _description_
+        key_s (Set[str]): _description_
+        cmtkey_l (List[str]): _description_
+    """    
+    if cmtkey_l:
+        kstartingwithc: List[str] = [
+            _ for _ in key_s if _.startswith("C") or _.startswith("c")]
+        keystodelete: List[str] = []
+        for k in kstartingwithc:
+            if "COMMENT" in k.upper():
+                keystodelete.append(k)
+
+        for k in keystodelete:
+            fromymal.pop(k)
 
 def _setup_basic_prams(pram_path: Path) -> Dict[str, Any]:
     """[summary]
@@ -98,28 +118,11 @@ def _setup_basic_prams(pram_path: Path) -> Dict[str, Any]:
             fromymal (Dict[str,Any]): [description]
         """
         # remove comment-like keys
-        keyS: Set[str] = set(fromymal.keys())
-        #ukeyL:List[str] = [k.upper() for k in keyS]
-        ukeyS: Set[str] = set([k.upper() for k in keyS])
-        cmtkeyL: List[str] = [_ for _ in ukeyS if "COMMENT" in _]
-        if cmtkeyL:
-            kstartingwithc: List[str] = [
-                _ for _ in keyS if _.startswith("C") or _.startswith("c")]
-            keystodelete: List[str] = []
-            for k in kstartingwithc:
-                if "COMMENT" in k.upper():
-                    keystodelete.append(k)
+        key_s: Set[str] = set(fromymal.keys())
+        ukey_s: Set[str] = set([k.upper() for k in key_s])
+        cmtkey_l: List[str] = [_ for _ in ukey_s if "COMMENT" in _]
+        remove_comments(fromymal, key_s, cmtkey_l)
 
-            for k in keystodelete:
-                fromymal.pop(k)
-
-        item: Tuple[str, Any] = ()
-        keyl: List[str] = [
-            item[0] for item in fromymal.items() if isinstance(item[1], str)
-            and '--COMMENT--' in item[1].upper()
-        ]
-        for _ in keyl:
-            fromymal.pop(_)
     
     # verify the path is to an existing file
     if not (pram_path.exists() and pram_path.is_file()):
@@ -137,14 +140,14 @@ def _setup_basic_prams(pram_path: Path) -> Dict[str, Any]:
     # remove comment fields and values containing comments
     _remove_comments(result)
 
-    acnt: MyEmail.Accnt_Arg = MyEmail.Accnt_Arg(
+    acnt: MyEmail.Accntarg = MyEmail.Accntarg(
         result.get("account"),
         result.get("password"),
         result.get('SMTPServer', None),
     )
     result['emacnt'] = acnt  # this is the SMTP info
 
-    ehead: MyEmail.Email_Arg = MyEmail.Email_Arg(  # subj fremail addto addcc
+    ehead: MyEmail.Emailarg = MyEmail.Emailarg(  # subj fremail addto addcc
         result.get('emsub'),
         result.get('fromemail'),
         result.get('toemail'),
@@ -168,20 +171,20 @@ def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
     prams['testing'] = args.testdata
     prams['start_end_email'] = args.emstartend
     _pramskey: List[str] = list(prams.keys())
-    #!  debugging line
+    #!  debugging lines
     # pramskey.append('program')
     # pramskey.append('age')
 
     _pramsset: Set[str] = set(_pramskey)
     if len(_pramskey) != len(_pramsset):  # check for duplicate keys
         _pramskey.sort()
-        _pkS: Set[str] = set(
+        _pk_s: Set[str] = set(
             [
                 _pramskey[i] for i in range(len(_pramskey)-1)
                 if _pramskey[i] == _pramskey[i+1]
             ]
         )
-        LOGGER.warning(f'Duplicate key(s) in pram file: {str(list(_pkS))}')
+        LOGGER.warning(f'Duplicate key(s) in pram file: {str(list(_pk_s))}')
 
     _: Set[str] = set(_legalpramkeyset) & _pramsset
     if len(_legalpramkeyset) != len(_):

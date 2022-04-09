@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """
 Test file for loadprams
 
@@ -7,15 +7,15 @@ Test file for loadprams
 """
 import os
 import sys
-from typing import List, Any, Dict, Tuple
-import platform
-from time import sleep
-import subprocess
+from typing import ( Any, Dict,)
+#import platform
+#from time import sleep
+#import subprocess
 import argparse
-from subprocess import CompletedProcess
-import inspect
+#from subprocess import CompletedProcess
+#import inspect
 import unittest
-from pathlib import Path
+#from pathlib import Path
 
 ppath=os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ppath)
@@ -80,7 +80,7 @@ class Testloadprams(unittest.TestCase):
     def test_03get_prams(self):
         """[summary]
         """        
-        aa = ['-ld', '-eo', '-t', 'testtncprams.yaml']
+        aa = ['-ld', '-eo', '-t', './tests/testtncprams.yaml']
         ns: argparse.Namespace = loadprams.setup_parser(aa)
         prams:Dict[str,Any]=loadprams.get_prams(ns)
         self.assertTrue(len(prams)>18)

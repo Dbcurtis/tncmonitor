@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """ check4noInit
 
 Module to read the RMS log file and find error meessages
@@ -7,24 +7,34 @@ Module to read the RMS log file and find error meessages
 import logging
 import os
 import subprocess
-import sys
-import time
-from collections import deque, namedtuple
+#from dataclasses import dataclass
+# import sys
+# import time
+from typing import (NamedTuple, Dict, List, Any,)
+#from collections import deque, namedtuple
 from pathlib import Path
 from subprocess import CompletedProcess
-from time import sleep
+#from time import sleep
 import copy
 
-from typing import (Any, Callable, Dict, Generic, List, Mapping, Sequence,
-                    Tuple, TypeVar, Union)
+# from typing import (Any, Callable, Dict, Generic, List, Mapping, Sequence,
+#                     Tuple, TypeVar, Union)
 #     Sequence, Mapping, List, Dict, Set, Deque
 from findlogfile import FindLogFile
 
 LOGGER = logging.getLogger(__name__)
-VERSION_DATE = 'check4noInit.py v0.1 20201203'
+VERSION_DATE = 'check4noInit.py v0.2 20220403'
 LOG_DIR: Path = Path(os.path.dirname(os.path.abspath(__file__))) / 'logs'
 LOG_FILE: Path = LOG_DIR / 'check4noInit'
 
+class Result(NamedTuple):
+    result:bool
+    status:bool
+    dl:str|None
+    
+ 
+    
+    
 
 class Check4noInit:
     """Check4noInit
@@ -32,9 +42,9 @@ class Check4noInit:
     Class to check for no initialization errors from the logfile
     Once doit is called, filepath and detectedline are filled and can be accessed
     """
-    Result = namedtuple('Result', 'result status dl')
+    #Result = namedtuple('Result', 'result status dl')
 
-    def __init__(self, prams: Dict[str, str], dirpath: Path = None):
+    def __init__(self, prams: Dict[str, str], dirpath: Path|None =None):
         """__init__(self, dirpath)
 
         dirpath is a Path to the directory with the logging files used for debugging.
@@ -46,11 +56,11 @@ class Check4noInit:
         """
         self.prams: Dict[str, str] = copy.copy(prams)
         if dirpath is None:
-            self.dirpath = Path(self.prams.get('rmslogdir', None))
+            self.dirpath = Path(self.prams.get('rmslogdir', os.getcwd()))
         else:
             self.dirpath = dirpath
 
-        self.filepath: Path = None
+        self.filepath: Path|None = None
         self.detectedline = None
 
     def __repr__(self) -> str:
@@ -59,7 +69,7 @@ class Check4noInit:
     def __str__(self) -> str:
         return f'path: {self.filepath}, dline: {self.detectedline}'
 
-    def doit(self, age=None) -> Tuple[bool, bool, str]:
+    def doit(self, age:Any=None) -> Result:
         """doit
 
         age is used for debugging to select files other than the current one
@@ -73,7 +83,7 @@ class Check4noInit:
         """
         self.filepath = FindLogFile(self.prams, self.dirpath).doit(age)
         self.detectedline = None
-        result: Check4noInit.Result = Check4noInit.Result(True, False, None)
+        result: Result = Result(True, False, None)
 
         if self.filepath is not None:
             linesraw: List[str] = []
@@ -97,15 +107,14 @@ class Check4noInit:
                         or '*** Ready' in _:
                     self.detectedline = _
                     LOGGER.debug('Detected %s', self.detectedline)
-                    result = Check4noInit.Result(
-                        False, True, self.detectedline)
+                    result = Result(False, True, self.detectedline)
                     # return (False, True, self.detectedline )
                     return result
 
                 elif '*** KPC3+ initialization failed' in _:
                     self.detectedline = _
                     LOGGER.warning('%s', self.detectedline)
-                    result = Check4noInit.Result(True, True, self.detectedline)
+                    result = Result(True, True, self.detectedline)
                     # return (True, True, self.detectedline )
                     return result
 
@@ -118,24 +127,24 @@ def _main():
         * prints out 'Starting' and the filename and version id
 
     """
-    TEST_DIR: Path = None
+    test_dir: Path = Path(os.getcwd())
     lastpart = Path.cwd().parts[-1]
 
     if lastpart != 'tests' or lastpart != 'tncmonitor':
         if lastpart == 'tncmonitor':
-            TEST_DIR = Path.cwd() / 'tests'
+            test_dir = Path.cwd() / 'tests'
         else:
-            TEST_DIR = Path.cwd()
+            test_dir = Path.cwd()
     else:
         print('Fail not on .../tncmonitor/tests/')
         raise ValueError
 
-    TEST_DIR = TEST_DIR / 'testLogData'
+    test_dir = test_dir / 'testLogData'
     try:
 
         prams: Dict[str, str] = {}
-        c4init: Check4noInit = Check4noInit(prams, dirpath=TEST_DIR)
-        result: Check4noInit.Result = c4init.doit()
+        c4init: Check4noInit = Check4noInit(prams, dirpath=test_dir)
+        result: Result = c4init.doit()
         print(
             'next line should be "2018/06/15 02:06:49 [10] *** DISCONNECTED"')
         print(result.dl)

@@ -3,13 +3,15 @@
 
     See the README.rst file
 """
-from typing import Any, Union, Tuple, Callable, TypeVar, Generic, Sequence, Mapping, List, Dict, Set, Deque
+from typing import (Any,NamedTuple,List, Dict, Tuple, Generator,)
+# from typing import (Any, Union, Tuple, Callable, TypeVar, NamedTuple,
+#                     Generic, Sequence, Mapping, List, Dict, Set, Deque,)
 import os
-import sys
-from collections import namedtuple
-import platform
+#import sys
+#from collections import namedtuple
+#import platform
 import argparse
-import json
+#import json
 import logging
 import logging.handlers
 import copy
@@ -18,11 +20,16 @@ from pathlib import Path
 from resettnc import ResetTNC
 import myemail
 from myemail import MyEmail
-from findlogfile import FindLogFile
+#from findlogfile import FindLogFile
+
 from check4noInit import Check4noInit
 from loadprams import get_prams, setup_parser
 
-INResponse = namedtuple('INResponse', 'ok rescode')
+class INResponse(NamedTuple):
+    ok:Any
+    rescode:Any
+
+#INResponse = namedtuple('INResponse', 'ok rescode')
 
 LOGGER = logging.getLogger(__name__)
 VERSION_DATE: str = 'tncmonitor v0.2 20201126'
@@ -62,11 +69,11 @@ def _send_end_email(prams: Dict[str, Any]):
     """_send_end_email()
     """
     if prams:
-        emheader: MyEmail.Email_Arg = MyEmail.Email_Arg(
+        emheader: MyEmail.Emailarg = MyEmail.Emailarg(
             subj=f"@{asctime(localtime(time()))}: { prams.get('program')} ending ",
             fremail=prams.get('fromemail'),
             addto=prams.get('toemail'),
-            addcc=None,
+            addcc='',
         )
         _em = myemail.MyEmail(prams.get('emacnt'), emheader)
         _em.send(
@@ -77,11 +84,11 @@ def _send_start_email(prams: Dict[str, Any]):
     """[summary]
     """
     if prams:
-        emheader: MyEmail.Email_Arg = MyEmail.Email_Arg(
+        emheader: MyEmail.Emailarg = MyEmail.Emailarg(
             subj=f"@{asctime(localtime(time()))}: {prams.get('program')} starting ",
             fremail=prams.get('fromemail'),
             addto=prams.get('toemail'),
-            addcc=None,
+            addcc='',
         )
         _em = myemail.MyEmail(prams.get('emacnt'), emheader)
         _em.send(
@@ -93,17 +100,17 @@ class PsudoMain:
 
     """
 
-    def __init__(self, prams):
+    def __init__(self, prams:Dict[str, Any]):
         """__init__(self, prams)
         prams is a dict with all the parameters
         """
 
         self.c4ni = None
-        self.prams = copy.copy(prams)
+        self.prams = copy.deepcopy(prams)
         self.timeinc: List[float] = [0.0, 2 * 60.0, 10 * 60.0,
                                      30 * 60.0, 60 * 60.0, 120 * 60.0]  # seconds between each email
         self.timeidx: int = 0
-        self.time_of_last_email: float = None
+        self.time_of_last_email: float|None = None
 
     def __repr__(self) -> str:
         return '%s(%r)' % (self.__class__, self.__dict__)
@@ -117,21 +124,25 @@ class PsudoMain:
             self.timeidx = 0
         return self.timeidx
 
-    def _send_email(self, donotsend: bool) -> Dict[str, str]:
-        """_send_email  
+    def _send_email(self, donotsend: bool=False) -> Dict[str, str]:
+        """_summary_
 
-        routine to send the e-mail
-        """
+        Args:
+            donotsend (bool): True to not send the email Defaults to False
+
+        Returns:
+            Dict[str, str]: _description_
+        """  
         timenow: float = time()
         self.time_of_last_email = timenow
         self.gettimeidx()
         problems: Dict[str, str] = {}
         if not donotsend:
-            emheader: MyEmail.Email_Arg = MyEmail.Email_Arg(
+            emheader: MyEmail.Emailarg = MyEmail.Emailarg(
                 subj=f"{self.prams.get('emsub')}",
                 fremail=self.prams.get('fromemail'),
                 addto=self.prams.get('toemail'),
-                addcc=None,
+                addcc='',
             )
 
             if (self.prams.get('emacnt')):
@@ -147,7 +158,7 @@ class PsudoMain:
                     )
                     _msg: str = '\nError:**'.join(_l)
                     LOGGER.warning(_msg)
-                else:
+                elif _em.lastemail is not None:
                     problems = {'sentem': _em.lastemail}
             elif self.prams.get('testing'):
                 problems['testing'] = 'testing mode no email account info'
@@ -156,7 +167,11 @@ class PsudoMain:
             problems['donotsend'] = f'mailtime {asctime(localtime(timenow))}'
         return problems
 
-    def doit(self, timers=None, count=None, age1: int = None, donotsend: bool = False):
+    def doit(self, 
+             timersin:Tuple[int, ...] | None=None, 
+             count:int|None=None, 
+             age1: int|None = None, 
+             donotsend: bool = False):
         """doit
 
         timers is a tuple for setting the delay between reset attempts and check attempts
@@ -166,12 +181,12 @@ class PsudoMain:
         age1 is used for testing
         """
 
-        if timers is None or len(timers) < 2:
-            timers = tuple(self.prams.get('timers'))
+        if timersin is None or len(timersin) < 2:
+            timers:Tuple[int, ...] = tuple(self.prams.get('timers'))
         if count is None:
             count = self.prams.get('count')
         if age1 is None:
-            age1 = self.prams.get('age')
+            age1 = int(self.prams.get('age'))
 
         # --------------------------
         def send_reset_email():
@@ -183,8 +198,7 @@ class PsudoMain:
                 self._send_email(donotsend)
             else:
                 nowis: float = time()
-                nextsched: float = self.time_of_last_email + \
-                    self.timeinc[self.timeidx]
+                nextsched: float = self.time_of_last_email + self.timeinc[self.timeidx]
                 if nowis >= nextsched:
                     self._send_email(donotsend)
         # --------------------------
@@ -194,10 +208,10 @@ class PsudoMain:
 
             does the work
             """
-            emailonly: bool = self.prams.get('emailonly')
+            emailonly: bool|None = self.prams.get('emailonly')
 
-            self.c4ni: Check4noInit = Check4noInit(self.prams)
-            tups: Check4noInit.Result = self.c4ni.doit(age=age1)
+            self.c4ni = Check4noInit(self.prams)
+            tups = self.c4ni.doit(age=age1)
             if tups.status and tups.result:
                 if emailonly:
                     send_reset_email()
@@ -213,7 +227,7 @@ class PsudoMain:
         # --------------------------
 
         try:
-            if count > 0:
+            if count is not None and count > 0:
                 while count > 0:
                     work()
                     count -= 1
@@ -253,7 +267,7 @@ def internet_on() -> INResponse:
     return result
 
 
-def _main(startup_delay: float = None) -> Dict[str, Any]:
+def _main(startup_delay: float|None = None) -> Dict[str, Any]:
     """_main(Startup_delay=None)
 
     Startup_delay is a float of the number of seconds to wait for the program to actually start
@@ -323,7 +337,7 @@ tncmonitor executed as main
 
         if rms_log_path.exists() and rms_log_path.is_dir():
             try:
-                _f = []
+                _f:List[Any] = []
                 for (_, _, filenames) in os.walk(rms_log_path):
                     _f.extend(filenames)
                     break
@@ -336,7 +350,7 @@ tncmonitor executed as main
 
             except IOError as _e:
                 print(_e.args)
-                print('Input directory {} is not readable'.format(rms_log_path))
+                print(f'Input directory {str(rms_log_path)} is not readable')
                 THE_LOGGER.error(
                     'Input directory %s is not readable', rms_log_path)
                 raise _e
@@ -351,8 +365,7 @@ tncmonitor executed as main
                 _pm.doit()
 
         else:
-            msg = 'path {} either does not exist or is not a directory'.format(
-                rms_log_path)
+            msg = f'path {str(rms_log_path)} either does not exist or is not a directory'
             print(msg)
             LOGGER.critical(msg)
     finally:

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """ json2yaml
 
 module to open a .json file and convert to .yml
@@ -6,8 +6,9 @@ module to open a .json file and convert to .yml
 """
 
 import sys
-from typing import Any, Union, Tuple, Callable, TypeVar, Generic, \
-    Sequence, Mapping, List, Dict, Set, Deque
+from typing import (Any, Dict,)
+# from typing import (Any, Union, Tuple, Callable, TypeVar, Generic,
+#                     Sequence, Mapping, List, Dict, Set, Deque,)
 
 from pathlib import Path
 import argparse
@@ -27,20 +28,20 @@ def setup_parser() -> argparse.Namespace:
         description='JSON to YAML Convertor')
 
     _parser.add_argument('-li', '--loginfo',
-                        help='enable INFO logging',
-                        action="store_true")
+                         help='enable INFO logging',
+                         action="store_true",)
 
     _parser.add_argument('-ld', '--logdebug',
-                        help='enable DEBUG logging',
-                        action="store_true")
+                         help='enable DEBUG logging',
+                         action="store_true",)
 
     _parser.add_argument('jinfile', default='sys.stdin', action='store',
-                        help='input parameter file JSON path')
+                         help='input parameter file JSON path',)
 
     _parser.add_argument('youtfile', default='sys.stdin', action='store',
-                        help='output parameter file YAML path')
+                         help='output parameter file YAML path',)
 
-    result: argparse.Namespace = None
+    result: argparse.Namespace
     try:
         result: argparse.Namespace = _parser.parse_args(args)
     except:

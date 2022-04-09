@@ -1,5 +1,4 @@
 {
-    "restructuredtext.confPath": "",
     "python.testing.unittestArgs": [
         "-v",
         "-s",
@@ -8,8 +7,11 @@
         "test_*.py"
     ],
     "python.testing.pytestEnabled": false,
-    "python.testing.nosetestsEnabled": false,
     "python.terminal.activateEnvironment": true,
     "python.testing.unittestEnabled": true,
-    "python.pythonPath": ".wvenv\\Scripts\\python.exe"
+    "python.pythonPath": ".wvenv\\Scripts\\python.exe",
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "strict",
+    "pythonTestExplorer.testFramework": "unittest",
+    "vsintellicode.features.python.deepLearning": "enabled"
 }

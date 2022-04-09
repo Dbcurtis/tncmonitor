@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """ makehtml.py
 
 Module to convert generate a README.html from the README.rst file.

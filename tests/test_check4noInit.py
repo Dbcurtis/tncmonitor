@@ -1,21 +1,22 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 """
 Test file for check4noInit.py
 """
 import os
 import sys
-from typing import List, Any, Dict, Tuple
-import platform
-from time import sleep
-import subprocess
-from subprocess import CompletedProcess
-import inspect
+from typing import (List, Any, Dict, Tuple, NamedTuple,)
+#import platform
+#from time import sleep
+#import subprocess
+#from subprocess import CompletedProcess
+#import inspect
 import unittest
 from pathlib import Path
-import copy
+#import copy
 
 ppath=os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ppath)
+import check4noInit 
 from check4noInit import Check4noInit
 from findlogfile import FindLogFile
 
@@ -79,10 +80,11 @@ class TestCheck4noInit(unittest.TestCase):
         
         ## check for text path and result from age none
         c4ni: Check4noInit = Check4noInit({'rmslogdir': str(pt)})
-        result: Check4noInit.Result = c4ni.doit()
+        result: check4noInit.Result = c4ni.doit()
         s.assertEqual((False, True), result[0:2])
         s.assertFalse(result.result)
         s.assertTrue(result.status)
+        
         s.assertTrue('20180615' in c4ni.filepath.name)
         s.assertTrue('DISCONNECTED' in c4ni.detectedline)
         s.assertTrue('DISCONNECTED' in result.dl)

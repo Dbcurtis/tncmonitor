@@ -53,7 +53,7 @@ class MyEmail:
         self.problems: Dict[Any, Any] = {}
         self.currentemail: str | None = None
         self.hist: Deque[Any] = deque([Any], maxlen=20)
-        self.currentemail: str | None = None
+        self.lastemail: str | None = None
 
         def _make_header() -> str:
             """
@@ -144,6 +144,7 @@ class MyEmail:
                     server.login(self.accnt.accountid, self.accnt.password)
                     self.problems= server.sendmail(
                         self.accnt.accountid, self.emdata.addto, self.currentemail)  # send the message
+                    self.lastemail=self.currentemail
 
             except (KeyboardInterrupt, SystemExit):
                 raise
