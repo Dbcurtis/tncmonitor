@@ -89,7 +89,7 @@ class TestTncmonitor(unittest.TestCase):
             "toemail": [
                 "junk@gmail.com",
                 "junk@outlook.com",
-                "junk.r@gmail.com"
+                JUNK_com,
             ],
             'emailonly': True,
             'testing': True,
@@ -97,13 +97,14 @@ class TestTncmonitor(unittest.TestCase):
         })
 
         pm.doit(timersin=(1, 1), count=1)
+        if pm.c4ni is not None and pm.c4ni.filepath is not None and pm.c4ni.detectedline is not None:
 
-        s.assertTrue('20180615' in pm.c4ni.filepath.name)
-        s.assertTrue('DISCONNECTED' in pm.c4ni.detectedline)
+            s.assertTrue('20180615' in pm.c4ni.filepath.name)
+            s.assertTrue('DISCONNECTED' in pm.c4ni.detectedline)
 
-        pm.doit(timersin=(1, 1), count=1, age1=2)
-        s.assertTrue('20180613' in pm.c4ni.filepath.name)
-        s.assertTrue('initialization failed' in pm.c4ni.detectedline)
+            pm.doit(timersin=(1, 1), count=1, age1=2)
+            s.assertTrue('20180613' in pm.c4ni.filepath.name)
+            s.assertTrue('initialization failed' in pm.c4ni.detectedline)
 
     def test_07AAA(self):
         import loadprams
@@ -121,7 +122,7 @@ class TestTncmonitor(unittest.TestCase):
             "toemail": [
                 "junk@gmail.com",
                 "junk@outlook.com",
-                "junk.r@gmail.com"
+                JUNK_com,
             ],
             'emailonly': True,
             'testing': True,
@@ -130,7 +131,7 @@ class TestTncmonitor(unittest.TestCase):
         })
         yamlpth: Path = execution_path('testtncprams.yaml')
 
-        pramdict: Dict[str, Any] = loadprams._setup_basic_prams(yamlpth)
+        pramdict: Dict[str, Any] = loadprams.setup_basic_prams(yamlpth)
 
         from myemail import MyEmail
         acnt: MyEmail.Accntarg = MyEmail.Accntarg(
@@ -139,14 +140,13 @@ class TestTncmonitor(unittest.TestCase):
             url=pramdict['SMTPServer'])
         pm.prams['emacnt'] = acnt
         aa = None
-        aa = pm._send_email(True)
+        aa = pm.send_email(True)
         self.assertTrue(aa)
-        aa = pm._send_email(False)
+        aa = pm.send_email(False)
         self.assertEqual(1, len(aa))
         cc = aa.get('sentem')
-        self.assertTrue(TestTncmonitor.JAT in cc)
-
-        pass
+        if cc is not None:
+            self.assertTrue(JAT in cc)
 
 
 if __name__ == '__main__':

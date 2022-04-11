@@ -1,4 +1,4 @@
-#!m:\python\python3_packages\tncmonitor\.wvenv\scripts\python.exe
+#!M:\Python\Python3_packages\tncmonitor\.venv\Scripts\python.exe
 
 # $Id: rst2latex.py 5905 2009-04-16 12:04:49Z milde $
 # Author: David Goodger <goodger@python.org>

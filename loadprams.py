@@ -18,7 +18,7 @@ import logging
 from myemail import MyEmail
 
 LOGGER = logging.getLogger(__name__)
-VERSION_DATE = 'loadprams.py v0.3 20210119'
+VERSION_DATE = 'loadprams.py v0.4 20220409'
 
 # the set of required keys in the pram dict
 _legalpramkeyset: FrozenSet[str] = frozenset([
@@ -98,7 +98,7 @@ def remove_comments(fromymal: Dict[str, Any], key_s: Set[str], cmtkey_l: List[st
         for k in keystodelete:
             fromymal.pop(k)
 
-def _setup_basic_prams(pram_path: Path) -> Dict[str, Any]:
+def setup_basic_prams(pram_path: Path) -> Dict[str, Any]:
     """[summary]
 
     Args:
@@ -166,7 +166,7 @@ def get_prams(args: argparse.Namespace) -> Dict[str, Any]:
         Dict[str,Any]: [description]
     """
     # get the ymal paramiters and email info
-    prams = _setup_basic_prams(Path(args.pramfile))
+    prams = setup_basic_prams(Path(args.pramfile))
     prams['emailonly'] = args.emailonly  # add flags from the command line
     prams['testing'] = args.testdata
     prams['start_end_email'] = args.emstartend

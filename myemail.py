@@ -181,7 +181,7 @@ class MyEmail:
 
 
 if __name__ == '__main__':
-    from loadprams import get_prams
+    #from loadprams import get_prams
 
     acntarg: MyEmail.Accntarg = MyEmail.Accntarg(
         "your account login", "your account password", "your SMTP Server url")

@@ -105,7 +105,7 @@ class PsudoMain:
         prams is a dict with all the parameters
         """
 
-        self.c4ni = None
+        self.c4ni:Check4noInit|None= None
         self.prams = copy.deepcopy(prams)
         self.timeinc: List[float] = [0.0, 2 * 60.0, 10 * 60.0,
                                      30 * 60.0, 60 * 60.0, 120 * 60.0]  # seconds between each email
@@ -124,7 +124,7 @@ class PsudoMain:
             self.timeidx = 0
         return self.timeidx
 
-    def _send_email(self, donotsend: bool=False) -> Dict[str, str]:
+    def send_email(self, donotsend: bool=False) -> Dict[str, str]:
         """_summary_
 
         Args:
@@ -167,6 +167,19 @@ class PsudoMain:
             problems['donotsend'] = f'mailtime {asctime(localtime(timenow))}'
         return problems
 
+    def send_reset_email(self,donotsend:bool):
+        """set_reset_email()
+
+        """
+        if self.time_of_last_email is None:
+            self.timeidx = 0
+            self.send_email(donotsend)
+        else:
+            nowis: float = time()
+            nextsched: float = self.time_of_last_email + self.timeinc[self.timeidx]
+            if nowis >= nextsched:
+                self.send_email(donotsend)
+
     def doit(self, 
              timersin:Tuple[int, ...] | None=None, 
              count:int|None=None, 
@@ -180,27 +193,25 @@ class PsudoMain:
         count is used for testing
         age1 is used for testing
         """
-
-        if timersin is None or len(timersin) < 2:
-            timers:Tuple[int, ...] = tuple(self.prams.get('timers'))
+        timers = self.set_timers(timersin)
         if count is None:
             count = self.prams.get('count')
         if age1 is None:
             age1 = int(self.prams.get('age'))
 
         # --------------------------
-        def send_reset_email():
-            """set_reset_email()
+        # def send_reset_email():
+        #     """set_reset_email()
 
-            """
-            if self.time_of_last_email is None:
-                self.timeidx = 0
-                self._send_email(donotsend)
-            else:
-                nowis: float = time()
-                nextsched: float = self.time_of_last_email + self.timeinc[self.timeidx]
-                if nowis >= nextsched:
-                    self._send_email(donotsend)
+        #     """
+        #     if self.time_of_last_email is None:
+        #         self.timeidx = 0
+        #         self._send_email(donotsend)
+        #     else:
+        #         nowis: float = time()
+        #         nextsched: float = self.time_of_last_email + self.timeinc[self.timeidx]
+        #         if nowis >= nextsched:
+        #             self._send_email(donotsend)
         # --------------------------
 
         def work():
@@ -212,13 +223,13 @@ class PsudoMain:
 
             self.c4ni = Check4noInit(self.prams)
             tups = self.c4ni.doit(age=age1)
-            if tups.status and tups.result:
+            if tups.status and tups.result and len(timers)>1:
                 if emailonly:
-                    send_reset_email()
+                    self.send_reset_email(donotsend)
                     sleep(timers[1])
                 else:
                     ResetTNC(self.prams).doit()
-                    send_reset_email()
+                    self.send_reset_email(donotsend)
                     sleep(timers[0])
 
             else:
@@ -237,6 +248,14 @@ class PsudoMain:
         except FileNotFoundError as fnf:
             LOGGER.fatal('cannot find the program file specified... Aborting ')
             raise fnf
+
+    def set_timers(self, timersin:None|Tuple[int, ...])->Tuple[int, ...]:
+        timers:Tuple[int, ...]=(0,)
+        if timersin is not None:
+            timers=timersin
+        if timersin is None or len(timersin) < 2:
+            timers= tuple(self.prams.get('timers'))
+        return timers
 
 
 def _logsetup():

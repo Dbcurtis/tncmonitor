@@ -1,4 +1,4 @@
-#!m:\python\python3_packages\tncmonitor\.wvenv\scripts\python.exe
+#!M:\Python\Python3_packages\tncmonitor\.venv\Scripts\python.exe
 
 # Author:
 # Contact: grubert@users.sf.net

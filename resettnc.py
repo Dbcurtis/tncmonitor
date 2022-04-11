@@ -37,7 +37,7 @@ class ResetTNC:
             prams ([Dict[str,str]]): {'moduleid': 'modid',
             'relay': 'relaynum like 01',
             "program": "CommandApp_USBRelay",
-            "powerofftime": float seconds,}
+            "powerofftime": str seconds,}
             debug_program ([type], optional): [description]. Defaults to None.
             hist_size is the size of the history deque
 
@@ -45,7 +45,7 @@ class ResetTNC:
             subprocess.TimeoutExpired
         """
         self.prams: Dict[str, str] = prams
-        if debug_program is None:
+        if debug_program is None or debug_program.is_dir():
             self.program: Any = prams.get('program')
         else:
             self.program: Any = debug_program
@@ -150,10 +150,10 @@ def _main():
         * tells you what the display should look like
 
     Raises:
-        ValueError: If java is not installed or if the stderr from the subprocess does not include "java version"
+        ValueError: If Python 3 is not installed or if the stderr from the subprocess does not include "Python 3"
     """
     try:
-        CPI_TEST: CompletedProcess = subprocess.run(['java', '-version'],  # tests ability to run a subprocess.
+        CPI_TEST: CompletedProcess = subprocess.run(['python', '-V'],  # tests ability to run a subprocess.
                                                     input=None,
                                                     timeout=1,
                                                     check=False,
@@ -163,9 +163,9 @@ def _main():
                                                     encoding='ascii',
                                                     )
 
-        if 'java version' not in CPI_TEST.stderr:
+        if 'Python 3.' not in CPI_TEST.stdout:
             print(CPI_TEST)
-            raise ValueError('Incorrect subprocess return, is java installed?')
+            raise ValueError('Incorrect subprocess return, is Python 3 installed?')
         finished: bool = False
         modid: str = ''
         relayid: str = ''

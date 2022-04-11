@@ -39,17 +39,17 @@ class Result(NamedTuple):
 class Check4noInit:
     """Check4noInit
 
-    Class to check for no initialization errors from the logfile
+    Class to check for no initialization errors from the RMS logfile
     Once doit is called, filepath and detectedline are filled and can be accessed
     """
-    #Result = namedtuple('Result', 'result status dl')
+    
 
     def __init__(self, prams: Dict[str, str], dirpath: Path|None =None):
         """__init__(self, dirpath)
 
         dirpath is a Path to the directory with the logging files used for debugging.
         The Path usually used, is obtained from the rmslogdir key of the prams dict.
-        dirpath is ususally used for debugging.
+        dirpath is usually used for debugging.
 
         The prarm dict is explained in the README.rst file
 
