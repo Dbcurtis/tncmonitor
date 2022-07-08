@@ -150,7 +150,7 @@ def setup_basic_prams(pram_path: Path) -> Dict[str, Any]:
     ehead: MyEmail.Emailarg = MyEmail.Emailarg(  # subj fremail addto addcc
         result.get('emsub'),
         result.get('fromemail'),
-        result.get('toemail'),
+        result.get('toemail',''),
         result.get('ccemail', None),
     )
     result['emhead'] = ehead

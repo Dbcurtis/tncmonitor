@@ -3,8 +3,9 @@
 
     Module to send e-mail via a goggle account
 """
-from typing import (Any, List, Dict, NamedTuple, Deque, Generator,)
-#from typing import (Any, Union, Tuple, Callable, TypeVar, Generic, Sequence, Mapping, List, Dict, Set, Deque,)
+from typing import (Any, List, Dict, NamedTuple, Deque, )
+#from typing import (Any, Union, Tuple, Callable, TypeVar, 
+# Generic, Sequence, Mapping, List, Dict, Set, Deque, Generator,)
 import smtplib  # * see: https://docs.python.org/3.8/library/smtplib.html
 from smtplib import (SMTP, SMTPAuthenticationError, SMTPServerDisconnected,)
 from collections import deque
@@ -27,16 +28,16 @@ class MyEmail:
 
     # named tuple that contains the from, to and cc addresses for the email
     class Emailarg(NamedTuple):
-        subj: str = ''
-        fremail: str = ''  # from email
+        subj: str|None = ''
+        fremail: str|None = ''  # from email
         addto: List[str] | str = ''
         addcc: List[str] | str = ''
 
     # named tuple that contains the login information for the SMTP server
     class Accntarg(NamedTuple):
-        accountid: str = ''
-        password: str = ''
-        url: str = ''
+        accountid: str|None = ''
+        password: str|None = ''
+        url: str|None = ''
 
     def __init__(self, acct: Accntarg, emdata: Emailarg):
         """MyEmail(tolist)
@@ -81,8 +82,15 @@ class MyEmail:
 
                 if ccstr:
                     header += f'Cc: {ccstr}\n'
-
-            header += f'Subject: {self.emdata.subj.strip()}\n\n'
+            
+            kks:str =''        
+            kk:str|None =self.emdata.subj
+            if isinstance(kk,str): 
+                kks=kk
+                
+            if kk is None: 
+                kks=''
+            header += f'Subject: {kks.strip()}\n\n'
             return header
 
         self.header: str = _make_header()
@@ -138,12 +146,21 @@ class MyEmail:
             ]  # will join the list after it is built
 
             self.currentemail = makemessage()
+            url:str = ''
+            accountid:str=''
+            password:str=''
             try:
-                with SMTP(self.accnt.url) as server:
+                if isinstance(self.accnt.url,str):
+                    url= self.accnt.url
+                if isinstance(self.accnt.accountid,str):
+                    accountid=self.accnt.accountid
+                if isinstance(self.accnt.password,str):
+                    password = self.accnt.password
+                with SMTP(url) as server:
                     server.starttls()  # start tls protection
-                    server.login(self.accnt.accountid, self.accnt.password)
+                    server.login(accountid, password)
                     self.problems= server.sendmail(
-                        self.accnt.accountid, self.emdata.addto, self.currentemail)  # send the message
+                        accountid, self.emdata.addto, self.currentemail)  # send the message
                     self.lastemail=self.currentemail
 
             except (KeyboardInterrupt, SystemExit):

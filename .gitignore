@@ -1,5 +1,4 @@
-# ignore all wing admin files
-*.wp[ru]
+
 
 # ignore all files in the cache
 __pycache__/
@@ -9,7 +8,7 @@ logs/
 Logs/
 
 # ignore all files in the python virtual env
-.wvenv/
+.venv/
 
 # my private prams file
 tncprams.json
