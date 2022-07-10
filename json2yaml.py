@@ -27,19 +27,23 @@ def setup_parser() -> argparse.Namespace:
     _parser = argparse.ArgumentParser(
         description='JSON to YAML Convertor')
 
-    _parser.add_argument('-li', '--loginfo',
-                         help='enable INFO logging',
-                         action="store_true",)
+    _parser.add_argument(
+        '-li', '--loginfo',
+        help='enable INFO logging',
+        action="store_true",)
 
-    _parser.add_argument('-ld', '--logdebug',
-                         help='enable DEBUG logging',
-                         action="store_true",)
+    _parser.add_argument(
+        '-ld', '--logdebug',
+        help='enable DEBUG logging',
+        action="store_true",)
 
-    _parser.add_argument('jinfile', default='sys.stdin', action='store',
-                         help='input parameter file JSON path',)
+    _parser.add_argument(
+        'jinfile', default='sys.stdin', action='store',
+        help='input parameter file JSON path',)
 
-    _parser.add_argument('youtfile', default='sys.stdin', action='store',
-                         help='output parameter file YAML path',)
+    _parser.add_argument(
+        'youtfile', default='sys.stdin', action='store',
+        help='output parameter file YAML path',)
 
     result: argparse.Namespace
     try:

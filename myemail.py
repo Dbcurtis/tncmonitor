@@ -3,15 +3,16 @@
 
     Module to send e-mail via a goggle account
 """
-from typing import (Any, List, Dict, NamedTuple, Deque, )
+from typing import (Any, List, Dict,  Deque, )
 #from typing import (Any, Union, Tuple, Callable, TypeVar, 
 # Generic, Sequence, Mapping, List, Dict, Set, Deque, Generator,)
-import smtplib  # * see: https://docs.python.org/3.8/library/smtplib.html
+# import smtplib  # * see: https://docs.python.org/3.8/library/smtplib.html
 from smtplib import (SMTP, SMTPAuthenticationError, SMTPServerDisconnected,)
 from collections import deque
 import logging
 from time import (asctime, localtime, time,)
 import textwrap
+from dataclasses import dataclass
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,23 +24,28 @@ class MyEmail:
     """
 
     @staticmethod
-    def _limit_line_length(instr:str)->str:
+    def limit_line_length(instr:str)->str:
         return  textwrap.fill(instr)
 
     # named tuple that contains the from, to and cc addresses for the email
-    class Emailarg(NamedTuple):
+    @dataclass
+    class Emailarg:
         subj: str|None = ''
-        fremail: str|None = ''  # from email
-        addto: List[str] | str = ''
-        addcc: List[str] | str = ''
+        fremail: str|None= ''  # from email
+        addto: List[str] | str |None = ''
+        addcc: List[str] | str |None = ''
 
     # named tuple that contains the login information for the SMTP server
-    class Accntarg(NamedTuple):
+    @dataclass
+    class Accntarg():
         accountid: str|None = ''
         password: str|None = ''
         url: str|None = ''
+    
+    #def __str__():
+        
 
-    def __init__(self, acct: Accntarg, emdata: Emailarg):
+    def __init__(self, acct: Accntarg|None, emdata: Emailarg):
         """MyEmail(tolist)
 
         the emdata contains the subject, the from-address, the to-addresses, and the cc-addresses
@@ -182,7 +188,7 @@ class MyEmail:
                 a = 0
 
             finally:
-                #server.quit()
+                
                 if self.problems:
                     logmsg.append('failed')
                 else:

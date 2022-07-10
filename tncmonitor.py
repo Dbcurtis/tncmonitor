@@ -3,13 +3,10 @@
 
     See the README.rst file
 """
-from typing import (Any,NamedTuple,List, Dict, Tuple, Generator,)
+from typing import (Any, List, Dict, Tuple, )
 # from typing import (Any, Union, Tuple, Callable, TypeVar, NamedTuple,
 #                     Generic, Sequence, Mapping, List, Dict, Set, Deque,)
 import os
-#import sys
-#from collections import namedtuple
-#import platform
 import argparse
 #import json
 import logging
@@ -21,15 +18,19 @@ from resettnc import ResetTNC
 import myemail
 from myemail import MyEmail
 #from findlogfile import FindLogFile
+from dataclasses import dataclass
 
 from check4noInit import Check4noInit
 from loadprams import get_prams, setup_parser
 
-class INResponse(NamedTuple):
-    ok:Any
-    rescode:Any
+
+@dataclass
+class INResponse():
+    ok: Any
+    rescode: Any
 
 #INResponse = namedtuple('INResponse', 'ok rescode')
+
 
 LOGGER = logging.getLogger(__name__)
 VERSION_DATE: str = 'tncmonitor v0.2 20201126'
@@ -61,8 +62,9 @@ LF_FORMATTER = logging.Formatter(
 LC_FORMATTER = logging.Formatter('%(name)s: %(levelname)s - %(message)s')
 THE_LOGGER = logging.getLogger()
 
-_FOR_10_MIN: int = 60 * 10
-_FOR_1_MIN: int = 60
+_FOR_1_MIN: float = 60.0
+_FOR_10_MIN: float = _FOR_1_MIN * 10.0
+
 
 
 def _send_end_email(prams: Dict[str, Any]):
@@ -100,17 +102,17 @@ class PsudoMain:
 
     """
 
-    def __init__(self, prams:Dict[str, Any]):
+    def __init__(self, prams: Dict[str, Any]):
         """__init__(self, prams)
         prams is a dict with all the parameters
         """
 
-        self.c4ni:Check4noInit|None= None
+        self.c4ni: Check4noInit | None = None
         self.prams = copy.deepcopy(prams)
-        self.timeinc: List[float] = [0.0, 2 * 60.0, 10 * 60.0,
-                                     30 * 60.0, 60 * 60.0, 120 * 60.0]  # seconds between each email
+        self.timeinc: List[float] = [0.0, 2 * _FOR_1_MIN, _FOR_10_MIN,
+                                     3 * _FOR_10_MIN, 6 * _FOR_10_MIN, 12 * _FOR_10_MIN]  # seconds between each email
         self.timeidx: int = 0
-        self.time_of_last_email: float|None = None
+        self.time_of_last_email: float | None = None
 
     def __repr__(self) -> str:
         return '%s(%r)' % (self.__class__, self.__dict__)
@@ -124,7 +126,7 @@ class PsudoMain:
             self.timeidx = 0
         return self.timeidx
 
-    def send_email(self, donotsend: bool=False) -> Dict[str, str]:
+    def send_email(self, donotsend: bool = False) -> Dict[str, str]:
         """_summary_
 
         Args:
@@ -132,7 +134,7 @@ class PsudoMain:
 
         Returns:
             Dict[str, str]: _description_
-        """  
+        """
         timenow: float = time()
         self.time_of_last_email = timenow
         self.gettimeidx()
@@ -167,7 +169,7 @@ class PsudoMain:
             problems['donotsend'] = f'mailtime {asctime(localtime(timenow))}'
         return problems
 
-    def send_reset_email(self,donotsend:bool):
+    def send_reset_email(self, donotsend: bool):
         """set_reset_email()
 
         """
@@ -176,14 +178,15 @@ class PsudoMain:
             self.send_email(donotsend)
         else:
             nowis: float = time()
-            nextsched: float = self.time_of_last_email + self.timeinc[self.timeidx]
+            nextsched: float = self.time_of_last_email + \
+                self.timeinc[self.timeidx]
             if nowis >= nextsched:
                 self.send_email(donotsend)
 
-    def doit(self, 
-             timersin:Tuple[int, ...] | None=None, 
-             count:int|None=None, 
-             age1: int|None = None, 
+    def doit(self,
+             timersin: Tuple[int, ...] | None = None,
+             count: int | None = None,
+             age1: int | None = None,
              donotsend: bool = False):
         """doit
 
@@ -197,7 +200,9 @@ class PsudoMain:
         if count is None:
             count = self.prams.get('count')
         if age1 is None:
-            age1 = int(self.prams.get('age'))
+            a: Any = self.prams.get('age')
+            assert isinstance(a, str)
+            age1 = int(a)
 
         # --------------------------
         # def send_reset_email():
@@ -219,11 +224,11 @@ class PsudoMain:
 
             does the work
             """
-            emailonly: bool|None = self.prams.get('emailonly')
+            emailonly: bool | None = self.prams.get('emailonly')
 
             self.c4ni = Check4noInit(self.prams)
             tups = self.c4ni.doit(age=age1)
-            if tups.status and tups.result and len(timers)>1:
+            if tups.status and tups.result and len(timers) > 1:
                 if emailonly:
                     self.send_reset_email(donotsend)
                     sleep(timers[1])
@@ -249,12 +254,12 @@ class PsudoMain:
             LOGGER.fatal('cannot find the program file specified... Aborting ')
             raise fnf
 
-    def set_timers(self, timersin:None|Tuple[int, ...])->Tuple[int, ...]:
-        timers:Tuple[int, ...]=(0,)
+    def set_timers(self, timersin: None | Tuple[int, ...]) -> Tuple[int, ...]:
+        timers: Tuple[int, ...] = (0,)
+
         if timersin is not None:
-            timers=timersin
-        if timersin is None or len(timersin) < 2:
-            timers= tuple(self.prams.get('timers'))
+            timers = timersin
+
         return timers
 
 
@@ -286,7 +291,7 @@ def internet_on() -> INResponse:
     return result
 
 
-def _main(startup_delay: float|None = None) -> Dict[str, Any]:
+def _main(startup_delay: float | None = None) -> Dict[str, Any]:
     """_main(Startup_delay=None)
 
     Startup_delay is a float of the number of seconds to wait for the program to actually start
@@ -339,24 +344,18 @@ tncmonitor executed as main
     prams: Dict[str, Any] = get_prams(args)
 
     try:
-        rms_log_path: Path = Path(prams.get('rmslogdir'))
+        logdir:Any = prams.get('rmslogdir')
+        assert isinstance(logdir,str)
+        rms_log_path: Path = Path(logdir)
         internetok: INResponse = internet_on()
         if not internetok.ok:
             THE_LOGGER.warning('Network error: ' + internetok.rescode)
 
-        if prams['start_end_email']:
-            failemail = True
-            while failemail:
-                try:
-                    _send_start_email(prams)
-                    failemail = False
-                except:
-                    THE_LOGGER.warning('startup email failed')
-                    sleep(60)
+        handle_start_end_email(prams)
 
         if rms_log_path.exists() and rms_log_path.is_dir():
             try:
-                _f:List[Any] = []
+                _f: List[Any] = []
                 for (_, _, filenames) in os.walk(rms_log_path):
                     _f.extend(filenames)
                     break
@@ -388,7 +387,20 @@ tncmonitor executed as main
             print(msg)
             LOGGER.critical(msg)
     finally:
-        return prams
+        pass
+    return prams
+
+
+def handle_start_end_email(prams: Dict[str, Any]):
+    if prams['start_end_email']:
+        failemail = True
+        while failemail:
+            try:
+                _send_start_email(prams)
+                failemail = False
+            except:
+                THE_LOGGER.warning('startup email failed')
+                sleep(_FOR_1_MIN)
 
 
 if __name__ == '__main__':

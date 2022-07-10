@@ -91,12 +91,12 @@ def remove_comments(fromymal: Dict[str, Any], key_s: Set[str], cmtkey_l: List[st
         kstartingwithc: List[str] = [
             _ for _ in key_s if _.startswith("C") or _.startswith("c")]
         keystodelete: List[str] = []
-        for k in kstartingwithc:
-            if "COMMENT" in k.upper():
-                keystodelete.append(k)
+        for _ in kstartingwithc:
+            if "COMMENT" in _.upper():
+                keystodelete.append(_)
 
-        for k in keystodelete:
-            fromymal.pop(k)
+        for _ in keystodelete:
+            fromymal.pop(_)
 
 def setup_basic_prams(pram_path: Path) -> Dict[str, Any]:
     """[summary]

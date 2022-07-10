@@ -11,7 +11,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/tncmonitor.py",  
             "args": ["-ld", "-eo", "-ese", "-t", "testtncprams.yaml"],
-            "justMyCode": false,
+            "justMyCode": true,
             "console": "integratedTerminal"
         },
 
@@ -21,7 +21,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/tncmonitor.py",  
             "args": ["-ld", "-eo", "-ese", "-t", "prototypetncprams.yaml"],
-            "justMyCode": false,
+            "justMyCode": true,
             "console": "integratedTerminal"
         },
 
@@ -31,7 +31,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/tncmonitor.py",  
             "args": ["-h", "-ld", "-eo", "-ese", "-t", "prototypetncprams.yaml"],
-            "justMyCode": false,
+            "justMyCode": true,
             "console": "integratedTerminal"
         },
 
@@ -50,7 +50,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/makehtml.py",  
             "args": [  ],
-            "justMyCode": false,
+            "justMyCode": true,
             "console": "integratedTerminal"
 
         },
@@ -60,7 +60,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/json2yaml.py",  
             "args": [  "prototypetncprams.json", "prototypetncprams.yaml"],
-            "justMyCode": false,
+            "justMyCode": true,
             "console": "integratedTerminal"
         }
     ]

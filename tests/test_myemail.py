@@ -4,7 +4,7 @@ Test file for myemail
 """
 import os
 import sys
-from typing import (List, Any, Dict, Tuple, NamedTuple,)
+from typing import (List, Any, Dict, Tuple,)
 #import platform
 #from time import sleep
 from smtplib import (SMTP, SMTPAuthenticationError, SMTPServerDisconnected,)
@@ -17,7 +17,6 @@ from pathlib import (Path,)
 ppath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ppath)
 
-import myemail
 from myemail import MyEmail
 import loadprams
 
@@ -38,7 +37,8 @@ class TestMyEmail(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        #a = 0
+        cls.JUNK_EMAIL:Tuple[str,str,str]= ("somebody@junk.jnk","to@junk.jnk","cc@junk.jnk",)
+        
         pass
 
     @classmethod
@@ -50,30 +50,36 @@ class TestMyEmail(unittest.TestCase):
         acct1: MyEmail.Accntarg = MyEmail.Accntarg(
             accountid="jjj", password="kkk",
             url='')
+        # emdata1: MyEmail.Emailarg = MyEmail.Emailarg(
+        #     subj="mysubject1",
+        #     fremail="somebody@junk.jnk",
+        #     addto="to@junk.jnk",
+        #     addcc="cc@junk.jnk",
+        # )
         emdata1: MyEmail.Emailarg = MyEmail.Emailarg(
             subj="mysubject1",
-            fremail="somebody@junk.jnk",
-            addto="to@junk.jnk",
-            addcc="cc@junk.jnk",
+            fremail=TestMyEmail.JUNK_EMAIL[0],
+            addto=TestMyEmail.JUNK_EMAIL[1],
+            addcc=TestMyEmail.JUNK_EMAIL[2],
         )
         ss:MyEmail = MyEmail(acct1,emdata1)
-        line:str = ss._limit_line_length('')
+        line:str = MyEmail.limit_line_length('')
         self.assertFalse(line)
         shortlineofspaces:str = '      '
-        line= ss._limit_line_length(shortlineofspaces)
+        line= ss.limit_line_length(shortlineofspaces)
         self.assertFalse(line)
         
         longlineofspaces:str = ''.join([' ' for _ in range(90)])
-        line= ss._limit_line_length(longlineofspaces)
+        line= ss.limit_line_length(longlineofspaces)
         self.assertFalse(line)
         
         
         ashortline:str = """This is a short line of text"""
-        line= ss._limit_line_length(ashortline)
+        line= ss.limit_line_length(ashortline)
         self.assertEqual(ashortline,line)
         alonglineoftext =' '.join([ashortline for _ in range(40)])
         
-        line = ss._limit_line_length(alonglineoftext)
+        line = ss.limit_line_length(alonglineoftext)
         lines:List[str] = line.split('\n')
         self.assertEqual(len(lines),17)
         
@@ -89,13 +95,14 @@ class TestMyEmail(unittest.TestCase):
             url='')
         emdata1: MyEmail.Emailarg = MyEmail.Emailarg(
             subj="mysubject1",
-            fremail="somebody@junk.jnk",
-            addto="to@junk.jnk",
-            addcc="cc@junk.jnk",
+            fremail=TestMyEmail.JUNK_EMAIL[0],
+            addto=TestMyEmail.JUNK_EMAIL[1],
+            addcc=TestMyEmail.JUNK_EMAIL[2],
         )
 
-        bbb = "Accntarg(accountid='jjj', password='kkk', url='')"
-        aaa = "Emailarg(subj='mysubject1', fremail='somebody@junk.jnk', addto='to@junk.jnk', addcc='cc@junk.jnk')"
+
+        bbb = "MyEmail.Accntarg(accountid='jjj', password='kkk', url='')"
+        aaa = "MyEmail.Emailarg(subj='mysubject1', fremail='somebody@junk.jnk', addto='to@junk.jnk', addcc='cc@junk.jnk')"
 
         self.assertEqual(bbb, str(acct1))
         self.assertEqual(aaa, str(emdata1))
@@ -133,9 +140,9 @@ class TestMyEmail(unittest.TestCase):
             accountid="jjj", password="kkk", url='')
         emdata1: MyEmail.Emailarg = MyEmail.Emailarg(
             subj="mysubject1",
-            fremail="somebody@junk.jnk",
-            addto="to@junk.jnk",
-            addcc="cc@junk.jnk",
+            fremail=TestMyEmail.JUNK_EMAIL[0],
+            addto=TestMyEmail.JUNK_EMAIL[1],
+            addcc=TestMyEmail.JUNK_EMAIL[2],
         )
         
         problems:Dict[str,str]={}

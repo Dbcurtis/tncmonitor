@@ -8,13 +8,10 @@ Module to find the RMS log file
 import logging
 import os
 import subprocess
-# import sys
-# import time
-# from collections import deque, namedtuple
+
 from pathlib import Path
-from subprocess import CompletedProcess
-from time import sleep
-from typing import (Any,  Dict,  List,  NamedTuple, )
+
+from typing import (Dict,  List,  NamedTuple, )
 # from typing import (Any, Callable, Dict, Generic, List, Mapping, Sequence,
 #                     Tuple, NamedTuple, TypeVar, Union,)
 
@@ -23,9 +20,11 @@ VERSION_DATE = 'findlogfile.py v0.1 20201203'
 LOG_DIR: Path = Path(os.path.dirname(os.path.abspath(__file__))) / 'logs'
 LOG_FILE: Path = LOG_DIR / 'findlogfile'
 
+
 class DataFileData(NamedTuple):
-    date:str
-    fname:str
+    date: str
+    fname: str
+
 
 class FindLogFile:
     """FindLogFile
@@ -52,7 +51,7 @@ class FindLogFile:
     def __repr__(self) -> str:
         return '%s(%r)' % (self.__class__, self.__dict__)
 
-    def doit(self, age: int| str | None = None) -> Path | None:
+    def doit(self, age: int | str | None = None) -> Path | None:
         """doit
 
         finds the RMS Packet TNC Events files, orders by date and retuns the newest one if age = 0 or None,
@@ -71,8 +70,8 @@ class FindLogFile:
         if age is None:  # really do not like None as an age, so make it 0
             age = self.prams.get('age')
             if age is None:
-                age =0
-        age=int(age)
+                age = 0
+        age = int(age)
 
         _files: List[str] = []
         # return from walk is s 3-tuple (dirpath,dirnames, filenames) we only need the filenames.. its a list
@@ -87,22 +86,24 @@ class FindLogFile:
         #data_file_data:DateFileData = NamedTuple('DateFileData', 'date fname')
 
         # the file names are of the form "RMS Packet Autoupdate YYYYMMDD.log"
-        def _gendfd(arg:str) -> DataFileData:  # generate dated file data
-            _date:str = arg.split("RMS Packet TNC Events ")[1][0:8]  # this selects the 8 char date
-            dfd:DataFileData  = DataFileData(_date, arg)
+        def _gendfd(arg: str) -> DataFileData:  # generate dated file data
+            _date: str = arg.split("RMS Packet TNC Events ")[
+                1][0:8]  # this selects the 8 char date
+            dfd: DataFileData = DataFileData(_date, arg)
             return dfd
 
         _datafile_ts: List[DataFileData] = [_gendfd(_) for _ in _tnceventfiles]
 
-        _ll:List[DataFileData] = sorted(_datafile_ts, key=lambda dfd: dfd.date)
+        _ll: List[DataFileData] = sorted(
+            _datafile_ts, key=lambda dfd: dfd.date)
         _ll.reverse()
-        result:Path = self.dirpath
-        if isinstance(age,int): 
-            iage:int = int(age)
-            if iage < 0 or iage >= len(_ll):
-                return None
-            
-            result = result / Path(_ll[iage].fname)
+        result: Path = self.dirpath
+        # if isinstance(age,int):
+        iage: int = int(age)
+        if iage < 0 or iage >= len(_ll):
+            return None
+
+        result = result / Path(_ll[iage].fname)
         return result
 
 

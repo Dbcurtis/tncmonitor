@@ -126,10 +126,12 @@ class ResetTNC:
         Opens the relay, waits for delay seconds then closes the relay.
         delay is the number of seconds to leave the power off
         """
-        delaya:Any = 0.0 #str|float|None=0.0
+        delaya:str|float|None = 0.0 #str|float|None=0.0
         if self.cpi.returncode == 0:
             if delay is None:
-                delaya = float(self.prams.get('powerofftime'))
+                xx:Any = self.prams.get('powerofftime')
+                assert isinstance(xx,str)
+                delaya = float(xx)
             LOGGER.info('TNC Reset initiated')
             self.powerdown()
             sleep(float(delaya))

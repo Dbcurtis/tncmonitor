@@ -8,7 +8,8 @@ import unittest
 import inspect
 import os
 import sys
-from typing import (Any,  Dict,)
+from typing import (Any,  Dict, Tuple)
+#import urllib3
 import tncmonitor
 
 ppath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -66,6 +67,40 @@ class TestTncmonitor(unittest.TestCase):
         #from tncmonitor import internet_on, INResponse
         jj: tncmonitor.INResponse = tncmonitor.internet_on()
         self.assertTrue(jj.ok, 'internet not on')
+
+    def test_02setTimers(self):
+        """
+
+        """
+        # s = self
+        pt: Path = execution_path('testLogData')
+        pm = tncmonitor.PsudoMain({
+            'rmslogdir': str(pt),
+            'moduleid': '1234a',
+            'age': 0,
+            'program': './tests/testecho.bat',
+            'relay': '01',
+            'powerofftime': 1,
+            'emsub': JAT,
+            "account": "junk",
+            "password": "password",
+            "fromemail": JUNK_com,
+            "toemail": [
+                "junk@gmail.com",
+                "junk@outlook.com",
+                JUNK_com,
+            ],
+            'emailonly': True,
+            'testing': True,
+
+        })
+
+        jj: Tuple[int, ...] = pm.set_timers(None)
+        self.assertEqual(jj, (0,))
+        jj = pm.set_timers((1,))
+        self.assertEqual(jj, (1,))
+        jj = pm.set_timers((1, 2, 3, 4, 5,))
+        self.assertEqual(jj, (1, 2, 3, 4, 5,))
 
     def test_05PsudoMain(self):
         """

@@ -13,7 +13,7 @@ import subprocess
 from typing import (NamedTuple, Dict, List, Any,)
 #from collections import deque, namedtuple
 from pathlib import Path
-from subprocess import CompletedProcess
+# from subprocess import CompletedProcess
 #from time import sleep
 import copy
 
