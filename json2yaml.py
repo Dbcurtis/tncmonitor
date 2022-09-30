@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.10
 """ json2yaml
 
-module to open a .json file and convert to .yml
+module to open a .json file and convert to .yaml
 
 """
 

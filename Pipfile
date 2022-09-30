@@ -8,6 +8,7 @@ requests = "*"
 docutils = "*"
 PyYAML = "*"
 urllib3 = "*"
+cryptography = "*"
 
 [dev-packages]
 

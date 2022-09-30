@@ -1,6 +1,7 @@
 .. This is the README file for the tncmonitor Python 3 module.
   From inside a python 3 virtual environment that has spinx installed,
   use "makehtml.py" to convert file to html
+  To find the syntax for .rst files, see: https://docutils.sourceforge.io/rst.html#reference-documentation
   decided I didn't know how to rebase on 20210119 so it was not done
 
 ####################
@@ -41,7 +42,7 @@ The relay module has a unique *moduleid* that must be
 included as one of the subsequently described parameters.
 
 The software for Windows and Linux 
-can be found 
+can be found (as of 07/10/2022 - it is out of stock)
 at http://www.giga.co.za/ocart/index.php?route=product/product&product_id=229 .
 
 For windows:
@@ -151,7 +152,7 @@ First Time Configuration
    This verifies that the help switch works 
    as it and the starting message should be the only output.
 
-#. edit test_resettnc.py at approx. line 75 and enter your values for the relay
+#. edit test_resettnc.py at approx. line 77 and enter your values for the relay
    module id and relay number in the ``argdic`` Dict 
    for ``test_01instant``.
    This is needed because the test program does not use the .yaml 

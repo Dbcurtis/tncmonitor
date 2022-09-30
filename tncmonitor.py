@@ -14,6 +14,7 @@ import logging.handlers
 import copy
 from time import asctime, localtime, time, sleep
 from pathlib import Path
+from cryptography.fernet import Fernet
 from resettnc import ResetTNC
 import myemail
 from myemail import MyEmail

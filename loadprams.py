@@ -75,6 +75,13 @@ def setup_parser(args: List[str] = sys.argv) -> argparse.Namespace:
     _parser.add_argument(
         '-t', '--testdata', default=False, action='store_true',
         help='use testing data in ./tests/testLogData')
+    
+    _parser.add_argument(
+        '-ec', '--encript', default=False, action='store_true',
+        help='encripts tncprams.yaml')
+    '''
+    
+    '''
 
     return _parser.parse_args(args)
 
